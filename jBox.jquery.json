@@ -1,0 +1,29 @@
+{
+	"name": "jBox",
+	"title": "jBox",
+	"description": "jBox is a powerful and flexible jQuery plugin, taking care of all your modal windows, tooltips, notices and more.",
+	"keywords": [
+		"tooltip",
+		"modal window",
+		"notice",
+		"ui"
+	],
+	"version": "0.1.0",
+	"homepage": "http://stephanwagner.me/jBox",
+	"docs": "http://stephanwagner.me/jBox/documentation",
+	"bugs": "https://github.com/StephanWagner/jBox/issues",
+	"download": "https://github.com/StephanWagner/jBox/archive/master.zip",
+	"author": {
+		"name": "Stephan Wagner",
+		"url": "http://stephanwagner.me"
+	},
+	"licenses": [
+	{
+		"type": "MIT",
+		"url": "http://opensource.org/licenses/mit-license.php"
+	}
+	],
+	"dependencies": {
+		"jquery": ">=1.11"
+	}
+}
