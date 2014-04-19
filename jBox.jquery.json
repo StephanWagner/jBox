@@ -4,11 +4,14 @@
 	"description": "jBox is a powerful and flexible jQuery plugin, taking care of all your modal windows, tooltips, notices and more.",
 	"keywords": [
 		"tooltip",
-		"modal window",
+		"modal",
+		"window",
+		"dialog",
+		"popup",
 		"notice",
 		"ui"
 	],
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"homepage": "http://stephanwagner.me/jBox",
 	"docs": "http://stephanwagner.me/jBox/documentation",
 	"bugs": "https://github.com/StephanWagner/jBox/issues",
