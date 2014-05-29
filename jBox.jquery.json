@@ -9,9 +9,10 @@
 		"dialog",
 		"popup",
 		"notice",
-		"ui"
+		"ui",
+		"images"
 	],
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"homepage": "http://stephanwagner.me/jBox",
 	"docs": "http://stephanwagner.me/jBox/documentation",
 	"bugs": "https://github.com/StephanWagner/jBox/issues",

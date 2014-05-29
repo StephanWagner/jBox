@@ -48,9 +48,19 @@ A notice will open automatically and destroy itself after some time:
 	});
 
 
+Images
+------
+
+To create image modal windows you only need following few lines:
+
+	new jBox('Image');
+	
+	<a href="/image-large.jpg" data-jbox-image="gallery1" title="My image"><img src="/image.jpg" alt=""></a>
+
+
 Learn more
 ----------
 
-These three examples are very basic.
+These few examples are very basic.
 The jBox library is quite powerful and offers a vast variety of options to customize appearance and behavior.
 Learn more in the documentation: http://stephanwagner.me/jBox/documentation

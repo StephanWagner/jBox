@@ -93,15 +93,23 @@ function jBox(type, options) {
 		onCreated: function() {},		// Triggered when jBox is created and is availible in DOM
 		onOpen: function() {},			// Triggered when jBox is opened
 		onClose: function() {},			// Triggered when jBox is closed
+		onCloseComplete: function() {},	// Triggered when jBox is completely closed (when fading is finished, useful if you want to destroy the jBox when it is closed)
 		onAjax: function() {},			// Triggered when the ajax call starts
 		onAjaxComplete: function() {},	// Triggered when the ajax call is completed
 		
-		// Only for Notices:
+		// Only for Notices
 		autoClose: 7000,				// Time when jBox should close automatically
 		color: null,					// Makes your notices colorful, use 'black', 'red', 'green', 'blue', 'yellow'
 		stack: true,					// Set to false to disable notice-stacking
 		audio: false,					// Set the url to an audio file without extention, e.g. '/url/filename'. jBox will look for an .mp3 and an .ogg file
-		volume: 100						// Percent of volume for audio files
+		volume: 100,					// Percent of volume for audio files
+		
+		// Only for Images
+		src: 'href',					// The attribute where jBox gets the image source from, e.g. href="/path_to_image/image.jpg"
+		gallery: 'data-jbox-image',		// The attribute where you define the image gallery, e.g. data-jbox-image="gallery1"
+		imageLabel: 'title',			// The attribute where jBox gets the image label from, e.g. title="My label"
+		imageFade: 600,					// The fade duration for images
+		imageSize: 'cover'				// How to display the images: Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
 	};
 	
 	// Default type options
@@ -130,7 +138,7 @@ function jBox(type, options) {
 			fixed: true,
 			blockScroll: true,
 			closeOnEsc: true,
-			closeOnClick: 'body',
+			closeOnClick: 'overlay',
 			closeButton: 'title',
 			overlay: true,
 			animation: 'zoomOut'
@@ -175,6 +183,142 @@ function jBox(type, options) {
 			_onCloseComplete: function() {
 				this.destroy();
 			}.bind(this)
+		},
+		// Default options for images
+		'Image': {
+			target: jQuery(window),
+			fixed: true,
+			blockScroll: true,
+			closeOnEsc: true,
+			closeOnClick: 'overlay',
+			overlay: true,
+			animation: 'zoomOut',
+			width: 800,
+			height: 533,
+			attach: jQuery('[data-jbox-image]'),
+			preventDefault: true,
+			
+			// TODO: What if the image is not found?
+			// TODO: What if the first image of a gallery needs some time to load, but other images are in content. Maybe add a blank black container
+			
+			_onInit: function() {
+				this.images = this.currentImage = {};
+				this.imageZIndex = 1;
+				
+				// Loop through images, sort and save in global variable
+				jQuery.each(this.attachedElements, function (index, item) {
+					item = jQuery(item);
+					if (item.data('jBox-image-gallery')) return;
+					var gallery = item.attr(this.options.gallery) || 'default';
+					!this.images[gallery] && (this.images[gallery] = []);
+					this.images[gallery].push({src: item.attr(this.options.src), label: (item.attr(this.options.imageLabel) || '')});
+					
+					// Remove the title attribute so it won't show the browsers tooltip
+					this.options.imageLabel == 'title' && item.removeAttr('title');
+					
+					// Store data in source element for easy access
+					item.data('jBox-image-gallery', gallery);
+					item.data('jBox-image-id', (this.images[gallery].length - 1));
+				}.bind(this));
+				
+				// Helper to inject the image into content area
+				var appendImage = function(gallery, id, preload, open) {
+					if (jQuery('#jBox-image-' + gallery + '-' + id).length) return;
+					
+					var image = jQuery('<div/>', {
+						id: 'jBox-image-' + gallery + '-' + id,
+						'class': 'jBox-image-container'
+					}).css({
+						backgroundImage: 'url(' + this.images[gallery][id].src + ')',
+						backgroundSize: this.options.imageSize,
+						opacity: (open ? 1 : 0),
+						zIndex: (preload ? 0 : this.imageZIndex++)
+					}).appendTo(this.content);
+					
+					var text = jQuery('<div/>', {
+						id: 'jBox-image-label-' + gallery + '-' + id,
+						'class': 'jBox-image-label' + (open ? ' active' : '')
+					}).html(this.images[gallery][id].label).appendTo(this.imageLabel);
+					
+					!open && !preload && image.animate({opacity: 1}, this.options.imageFade);
+				}.bind(this);
+				
+				// Helper to show new Image label
+				var showLabel = function(gallery, id) {
+					jQuery('.jBox-image-label.active').removeClass('active');
+					jQuery('#jBox-image-label-' + gallery + '-' + id).addClass('active');
+				};
+				
+				// Show images when they are loaded or load them if not
+				this.showImage = function(img) {
+					// Get the gallery and the image id from the next or the previous image
+					if (img != 'open') {
+						var gallery = this.currentImage.gallery;
+						var id = this.currentImage.id + (1 * (img == 'prev') ? -1 : 1);
+						id = id > (this.images[gallery].length - 1) ? 0 : (id < 0 ? (this.images[gallery].length - 1) : id);
+					// Or get image data from source element
+					} else {
+						var gallery = this.source.data('jBox-image-gallery');
+						var id = this.source.data('jBox-image-id');
+						
+						// Remove or show the next and prev buttons
+						jQuery('.jBox-image-pointer-prev, .jBox-image-pointer-next').css({display: (this.images[gallery].length > 1 ? 'block' : 'none')});
+					}
+					
+					// Set new current image
+					this.currentImage = {gallery: gallery, id: id};
+					
+					// Show image if it already exists
+					if (jQuery('#jBox-image-' + gallery + '-' + id).length) {
+						jQuery('#jBox-image-' + gallery + '-' + id).css({zIndex: this.imageZIndex++, opacity: 0}).animate({opacity: 1}, (img == 'open') ? 0 : this.options.imageFade);
+						showLabel(gallery, id);
+						
+					// Load image if not found
+					} else {
+						this.wrapper.addClass('jBox-loading');
+						var image = jQuery('<img src="' + this.images[gallery][id].src + '">').load(function() {
+							appendImage(gallery, id, false);
+							showLabel(gallery, id);
+							this.wrapper.removeClass('jBox-loading');
+						}.bind(this));
+					}
+					
+					// Preload next image
+					var next_id = id + 1;
+					next_id = next_id > (this.images[gallery].length - 1) ? 0 : (next_id < 0 ? (this.images[gallery].length - 1) : next_id);
+					
+					(!jQuery('#jBox-image-' + gallery + '-' + next_id).length) && jQuery('<img src="' + this.images[gallery][next_id].src + '">').load(function() {
+						appendImage(gallery, next_id, true);
+					});
+				};
+			},
+			_onCreated: function() {
+				this.imageLabel = jQuery('<div/>', {'id': 'jBox-image-label'}).appendTo(this.wrapper);
+				this.wrapper.append(jQuery('<div/>', {'class': 'jBox-image-pointer-prev', click: function() { this.showImage('prev'); }.bind(this)})).append(jQuery('<div/>', {'class': 'jBox-image-pointer-next', click: function() { this.showImage('next'); }.bind(this)}));
+			},
+			_onOpen: function() {
+				// Add a class to body so you can control the appearance of the overlay, fo rimages a darker one is better
+				jQuery('body').addClass('jBox-image-open');
+				
+				// Add key events
+				jQuery(document).on('keyup.jBox-' + this.id, function(ev) {
+					(ev.keyCode == 37) && this.showImage('prev');
+					(ev.keyCode == 39) && this.showImage('next');
+				}.bind(this));
+				
+				// Load the image from the attached element
+				this.showImage('open');
+			},
+			_onClose: function() {
+				jQuery('body').removeClass('jBox-image-open');
+				
+				// Remove key events
+				jQuery(document).off('keyup.jBox-' + this.id);
+			},
+			_onCloseComplete: function() {
+				// Hide all images
+				this.wrapper.find('.jBox-image-container').css('opacity', 0);
+			}
 		}
 	};
 	
@@ -244,10 +388,10 @@ function jBox(type, options) {
 		this.options.closeOnMouseleave && this.wrapper.mouseenter(function() { this.open(); }.bind(this)).mouseleave(function() { this.close(); }.bind(this));
 		
 		// Create container
-		this.container = jQuery('<div/>', {'class': 'jBox-container'}).css({width: this.options.width, height: this.options.height}).appendTo(this.wrapper);
+		this.container = jQuery('<div/>', {'class': 'jBox-container'}).appendTo(this.wrapper);
 		
 		// Create content
-		this.content = jQuery('<div/>', {'class': 'jBox-content'}).appendTo(this.container);
+		this.content = jQuery('<div/>', {'class': 'jBox-content'}).css({width: this.options.width, height: this.options.height}).appendTo(this.container);
 		
 		// Create close button
 		if (this.options.closeButton) {
@@ -376,7 +520,8 @@ function jBox(type, options) {
 		// Closing event: closeOnClick
 		this.options.closeOnClick && jQuery(document).on('click.jBox-' + this.id, function(ev) {
 			if (this.blockBodyClick ||
-				(this.options.closeOnClick == 'box' && ev.target != this.wrapper[0] && !this.wrapper.has(ev.target).length) ||
+				(this.options.closeOnClick == 'overlay' && (!this.overlay || ev.target != this.overlay[0])) || // TODO: for performance reasons move event to overlay
+				(this.options.closeOnClick == 'box' && ev.target != this.wrapper[0] && !this.wrapper.has(ev.target).length) || // TODO: for performance reasons move event to box
 				(this.options.closeOnClick == 'body' && (ev.target == this.wrapper[0] || this.wrapper.has(ev.target).length))) 
 				return;
 			this.close({ignoreDelay: true});
@@ -749,7 +894,7 @@ function jBox(type, options) {
 
 // Attach jBox to elements
 jBox.prototype.attach = function(elements, trigger) {
-	elements || (elements = this.options.attach);
+	elements || (elements = jQuery(this.options.attach.selector));
 	trigger || (trigger = this.options.trigger);
 	
 	elements && elements.length && jQuery.each(elements, function(index, el) {
@@ -1073,6 +1218,7 @@ jBox.prototype.close = function(options) {
 					}.bind(this),
 					complete: function() {
 						this.wrapper.css({display: 'none'});
+						this.options.onCloseComplete && (this.options.onCloseComplete.bind(this))();
 						this.options._onCloseComplete && (this.options._onCloseComplete.bind(this))();
 					}.bind(this),
 					always: function() {
