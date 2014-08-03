@@ -518,7 +518,7 @@ function jBox(type, options) {
 		this.options.closeOnEsc && jQuery(document).on('keyup.jBox-' + this.id, function(ev) { if (ev.keyCode == 27) { this.close({ignoreDelay: true}); }}.bind(this));
 		
 		// Closing event: closeOnClick
-		this.options.closeOnClick && jQuery(document).on('click.jBox-' + this.id, function(ev) {
+		this.options.closeOnClick && jQuery(document).on('touchend.jBox-' + this.id + ' click.jBox-' + this.id, function(ev) {
 			if (this.blockBodyClick ||
 				(this.options.closeOnClick == 'overlay' && (!this.overlay || ev.target != this.overlay[0])) || // TODO: for performance reasons move event to overlay
 				(this.options.closeOnClick == 'box' && ev.target != this.wrapper[0] && !this.wrapper.has(ev.target).length) || // TODO: for performance reasons move event to box
@@ -570,7 +570,7 @@ function jBox(type, options) {
 		this.options.closeOnEsc && jQuery(document).off('keyup.jBox-' + this.id);
 		
 		// Closing event: closeOnClick
-		this.options.closeOnClick && jQuery(document).off('click.jBox-' + this.id);
+		this.options.closeOnClick && jQuery(document).off('touchend.jBox-' + this.id + ' click.jBox-' + this.id);
 		
 		// Positioning events
 		if ((this.options.adjustPosition && this.options.adjustTracker) || this.options.reposition) {
@@ -938,7 +938,7 @@ jBox.prototype.detach = function(elements) {
 	elements && elements.length && jQuery.each(elements, function(index, el) {
 		el = jQuery(el);
 		if (el.data('jBox-attached-' + this.id)) {
-			el.off(el.data('jBox-attached-' + this.id + '.jBox-attach-' + this.id));
+			el.off(el.data('jBox-attached-' + this.id) + '.jBox-attach-' + this.id);
 			el.data('jBox-attached-' + this.id, null);
 		}
 	});

@@ -1,7 +1,7 @@
 {
 	"name": "jBox",
 	"title": "jBox",
-	"description": "jBox is a powerful and flexible jQuery plugin, taking care of all your modal windows, tooltips, notices and more.",
+	"description": "jBox is a powerful and flexible jQuery plugin, taking care of all your popup windows, tooltips, notices and more.",
 	"keywords": [
 		"tooltip",
 		"modal",
@@ -12,7 +12,7 @@
 		"ui",
 		"images"
 	],
-	"version": "0.2.0",
+	"version": "0.2.1",
 	"homepage": "http://stephanwagner.me/jBox",
 	"docs": "http://stephanwagner.me/jBox/documentation",
 	"bugs": "https://github.com/StephanWagner/jBox/issues",
