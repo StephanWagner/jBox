@@ -3,7 +3,7 @@ jBox
 
 jBox is a powerful and flexible jQuery plugin, taking care of all your modal windows, tooltips, notices and more.
 
-Demo: http://stephanwagner.me/jBox
+Demo: http://stephanwagner.me/jBox/demos
 
 Docs: http://stephanwagner.me/jBox/documentation
 
