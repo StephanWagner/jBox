@@ -385,7 +385,12 @@ function jBox(type, options) {
 		}).data('jBox', this);
 		
 		// Add mouseleave event
-		this.options.closeOnMouseleave && this.wrapper.mouseenter(function() { this.open(); }.bind(this)).mouseleave(function() { this.close(); }.bind(this));
+		// TEST: this.source may not change!
+		// TEST: .parents('*') might be a performance nightmare!
+		this.options.closeOnMouseleave && this.wrapper.mouseleave(function(ev) {
+			// Only close when the new target is not the source element
+			!this.source || !(ev.toElement == this.source[0] || jQuery.inArray(this.source[0], jQuery(ev.toElement).parents('*')) !== -1) && this.close();
+		}.bind(this));
 		
 		// Create container
 		this.container = jQuery('<div/>', {'class': 'jBox-container'}).appendTo(this.wrapper);
@@ -910,19 +915,35 @@ jBox.prototype.attach = function(elements, trigger) {
 			
 			// Add click or mouseenter event, click events can prevent default as well
 			el.on(trigger + '.jBox-attach-' + this.id, function(ev) {
+				// Clear timer
+				this.timer && clearTimeout(this.timer);
+				
+				// Block opening when jbox is open and the source element is triggering
+				// TEST: New implemented, not througly testet yet
+				if (trigger == 'mouseenter' && this.isOpen && this.source[0] == el[0])
+					return;
+				
 				// Only close jBox if you click the current target element, otherwise open at new target
 				if (this.isOpen && this.source[0] != el[0]) var forceOpen = true;
 				
 				// Set new source element
 				this.source = el;
 				
+				// Set new target
 				!this.options.target && (this.target = el);
+				
+				// Prevent default action on click
 				trigger == 'click' && this.options.preventDefault && ev.preventDefault();
+				
+				// Toggle or open jBox
 				this[trigger == 'click' && !forceOpen ? 'toggle' : 'open']();
 			}.bind(this));
 			
-			// Add close event for mouseenter
-			(this.options.trigger == 'mouseenter') && el.on('mouseleave', function() { this.close(); }.bind(this));
+			// Add close event for trigger event mouseenter
+			(this.options.trigger == 'mouseenter') && el.on('mouseleave', function(ev) {
+				// If we have set closeOnMouseleave, do not close jBox when leaving attached element and mouse is over jBox
+				if(!this.options.closeOnMouseleave || !(ev.toElement == this.wrapper[0] || jQuery(ev.toElement).parents('#' + this.id).length)) this.close();
+			}.bind(this));
 			
 			el.data('jBox-attached-' + this.id, trigger);
 		}
@@ -941,6 +962,7 @@ jBox.prototype.detach = function(elements) {
 			el.off(el.data('jBox-attached-' + this.id) + '.jBox-attach-' + this.id);
 			el.data('jBox-attached-' + this.id, null);
 		}
+		// TODO: Remove element from collection
 	});
 	return this;
 };
@@ -1206,7 +1228,9 @@ jBox.prototype.close = function(options) {
 			this.options.animation && !this.isOpening && this._animate('close');
 			
 			// Remove source element
-			this.source = null;
+			// TEST: Removed, so it is accessable after closing
+			// TEST: Test delays and notices and autoclose
+			// this.source = null;
 			
 			// Fading animation or show immediately
 			if (this.options.fade) {
