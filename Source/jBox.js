@@ -923,7 +923,7 @@ function jBox(type, options) {
 
 // Attach jBox to elements
 jBox.prototype.attach = function(elements, trigger) {
-	elements || (elements = jQuery(this.options.attach.selector));
+	elements || (elements = jQuery(this.options.attach.selector || this.options.attach));
 	trigger || (trigger = this.options.trigger);
 	
 	elements && elements.length && jQuery.each(elements, function(index, el) {
