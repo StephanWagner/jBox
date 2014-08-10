@@ -341,9 +341,7 @@ function jBox(type, options) {
 	
 	// Get unique ID
 	if (this.options.id === null) {
-		var i = 1;
-		while (jQuery('#jBox' + i).length != 0) i++;
-		this.options.id = 'jBox' + i;
+		this.options.id = 'jBox' + jBox._getUID();
 	}
 	this.id = this.options.id;
 	
@@ -1382,6 +1380,13 @@ jBox.prototype.destroy = function() {
 	this.wrapper.remove();
 	return this;
 };
+
+jBox._getUID = (function () {
+    	var i = 1;
+    	return function () {
+		return i++;
+    	};
+}());
 
 // Make jBox usable with jQuery selectors
 jQuery.fn.jBox = function(type, options) {
