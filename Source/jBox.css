@@ -2,6 +2,7 @@
 /* Global */
 
 .jBox-wrapper {
+	text-align: left;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
