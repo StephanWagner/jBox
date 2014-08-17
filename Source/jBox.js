@@ -10,6 +10,8 @@ requires: jQuery 1.11.0 (http://code.jquery.com/jquery-1.11.0.min.js)
           jQuery 2.1.0 (http://code.jquery.com/jquery-2.1.0.min.js)
 
 documentation: http://stephanwagner.me/jBox/documentation
+
+demos: http://stephanwagner.me/jBox/demos
 ...
 */
 
@@ -18,75 +20,86 @@ function jBox(type, options) {
 	this.options = {
 		
 		// jBox ID
-		id: null,						// Choose a unique id, otherwise jBox will set one for you (jBox1, jBox2, ...)
+		id: null,					// Choose a unique id, otherwise jBox will set one for you (jBoxID1, jBoxID2, ...)
 		
 		// Dimensions
-		width: 'auto',					// Width of container (e.g. 'auto', 100)
-		height: 'auto',					// Height of container
+		width: 'auto',				// Width of content area (e.g. 'auto', 100)
+		height: 'auto',				// Height of content area
+		minWidth: null,				// Minimum width
+		maxHeight: null,			// Minimum height
+		minWidth: null,				// Maximum width
+		maxHeight: null,			// Minimum height
 		
 		// Attach
-		attach: null,					// Attach jBox to elements (if no target element is provided, jBox will use the attached element as target)
-		trigger: 'click',				// The event to open or close your jBoxes, use 'click' or 'mouseenter'
-		preventDefault: false,			// Prevent default event when opening jBox (e.g. don't follow the href in a link when clicking on it)
+		attach: null,				// Attach jBox to elements (if no target element is provided, jBox will use the attached element as target)
+		trigger: 'click',			// The event to open or close your jBoxes, use 'click' or 'mouseenter'
+		preventDefault: false,		// Prevent default event when opening jBox (e.g. don't follow the href in a link when clicking on it)
 		
 		// Content
-		title: null,					// Adds a title to your jBox
-		content: null,					// You can use a string to set text or HTML as content, or an element selector (e.g. jQuery('#jBox-content')) to append one or several elements (elements appended will get style display: 'block', so hide them with CSS style display: 'none' beforehand)
-		getTitle: null,		 			// Get the title from an attribute when jBox opens
-		getContent: null,		 		// Get the content from an attribute when jBox opens
+		title: null,				// Adds a title to your jBox
+		content: null,				// You can use a string to set text or HTML as content, or an element selector (e.g. jQuery('#jBox-content')) to append one or several elements (elements appended will get style display: 'block', so hide them with CSS style display: 'none' beforehand)
+		getTitle: null,				// Get the title from an attribute when jBox opens
+		getContent: null,			// Get the content from an attribute when jBox opens
 		
-		// Content from Ajax
-		ajax: null,						// Set a url to get content from an ajax call and inject into content area
-		data: '',						// Ajax data to send with your ajax call (e.g. 'id=82')
-		reload: false,					// Each time jBox is opened, reload the ajax call
+		// AJAX request
+		ajax: {						// Setting an url will make an AJAX call when jBox opens
+			url: null,				// URL to send the AJAX request to
+			data: '',				// Data to send with your AJAX call (e.g. 'id=82&limit=10')
+									// Optional you can add any jQuery AJAX option (http://api.jquery.com/jquery.ajax/)
+			reload: false,			// Resend the ajax call every time jBox opens
+			getData: 'data-ajax',	// The attribute in the source element where the AJAX will look for the data to send with, e.g. data-ajax="id=82&limit=10"
+			setContent: true,		// Automatically set the response as new content when the AJAX call is finished
+			spinner: true			// Hides the current content and adds a spinner while loading
+		},
 		
 		// Position
-		target: null,					// The target element where jBox will be opened
+		target: null,				// The target element where jBox will be opened
 		position: {
-			x: 'center',				// Horizontal Position (Use a number, 'left', 'right' or 'center')
-			y: 'center'					// Vertical Position (Use a number, 'top', 'bottom' or 'center')
+			x: 'center',			// Horizontal Position (Use a number, 'left', 'right' or 'center')
+			y: 'center'				// Vertical Position (Use a number, 'top', 'bottom' or 'center')
 		},
-		outside: null,					// Use 'x', 'y', or 'xy' to move your jBox outside of the target element
-		offset: 0,						// Offset to final position, you can set different values for x and y with an object e.g. {x: 15, y: 0}
+		outside: null,				// Use 'x', 'y', or 'xy' to move your jBox outside of the target element
+		offset: 0,					// Offset to final position, you can set different values for x and y with an object e.g. {x: 15, y: 0}
 		
-		attributes: {					// Note that attributes can only be 'left' or 'right' when using numbers for position, e.g. {x: 300, y: 20}
-			x: 'left',					// Horizontal position, use 'left' or 'right'
-			y: 'top'					// Vertical position, use 'top' or 'bottom'
+		attributes: {				// Note that attributes can only be 'left' or 'right' when using numbers for position, e.g. {x: 300, y: 20}
+			x: 'left',				// Horizontal position, use 'left' or 'right'
+			y: 'top'				// Vertical position, use 'top' or 'bottom'
 		},
-		adjustPosition: false,			// Adjusts the position when there is not enough space (use true, 'flip' or 'move')
-		adjustTracker: false,			// By default jBox adjusts the position when opening, to adjust when scrolling or resizing, use 'scroll', 'resize' or 'true' (both events)
-		adjustDistance: 5,				// How far from the window edge we start adjusting, use an object to set different values: {bottom: 5, top: 50, left: 5, right: 20}
-		fixed: false,					// Your jBox will stay on position when scrolling
-		reposition: false,				// Calculates new position when the window-size changes
+		adjustPosition: false,		// Adjusts the position when there is not enough space (use true, 'flip' or 'move')
+		adjustTracker: false,		// By default jBox adjusts the position when opening, to adjust when scrolling or resizing, use 'scroll', 'resize' or 'true' (both events)
+		adjustDistance: 5,			// How far from the window edge we start adjusting, use an object to set different values: {bottom: 5, top: 50, left: 5, right: 20}
+		fixed: false,				// Your jBox will stay on position when scrolling
+		reposition: false,			// Calculates new position when the window-size changes
 		
 		// Pointer
-		pointer: false,					// Your pointer will always point towards the target element, so the option outside should be 'x' or 'y'
+		pointer: false,				// Your pointer will always point towards the target element, so the option outside should be 'x' or 'y'
 		
 		// Animations
-		fade: 180,						// Fade duration in ms, set to 0 or false to disable
-		animation: null,				// Animation when opening or closing (use 'pulse', 'zoomIn', 'zoomOut', 'move', 'slide', 'flip', 'tada') (CSS inspired from Daniel Edens Animate.css: http://daneden.me/animate)
+		fade: 180,					// Fade duration in ms, set to 0 or false to disable
+		animation: null,			// Animation when opening or closing (use 'pulse', 'zoomIn', 'zoomOut', 'move', 'slide', 'flip', 'tada') (CSS inspired from Daniel Edens Animate.css: http://daneden.me/animate)
 		
 		// Appearance
-		theme: 'Default',				// Set a jBox theme class
-		addClass: '',					// Adds classes to the wrapper
-		overlay: false,					// Adds an overlay when jBox opens (set color and opacity with CSS)
-		zIndex: 10000,					// Use a high zIndex (your overlay will have the lowest zIndex of all your jBoxes (with overlays) minus one)
+		theme: 'Default',			// Set a jBox theme class
+		addClass: '',				// Adds classes to the wrapper
+		overlay: false,				// Adds an overlay when jBox opens (set color and opacity with CSS)
+		zIndex: 10000,				// Use a high zIndex (your overlay will have the lowest zIndex of all your jBoxes (with overlays) minus one)
 		
 		// Delays
-		delayOpen: 0,					// Delay opening in ms (Note that the delay will be ignored if your jBox didn't finish closing)
-		delayClose: 0,					// Delay closing in ms (Note that there is always a closing delay of at least 10ms to ensure jBox won't be closed when opening right away)
+		delayOpen: 0,				// Delay opening in ms (Note that the delay will be ignored if your jBox didn't finish closing)
+		delayClose: 0,				// Delay closing in ms (Note that there is always a closing delay of at least 10ms to ensure jBox won't be closed when opening right away)
 		
 		// Closing events
-		closeOnEsc: false,				// Close jBox when pressing [esc] key
-		closeOnClick: false,			// Close jBox with mouseclick, use 'true' (click anywhere), 'box' (click on jBox itself), 'body' (click anywhere but jBox)
-		closeOnMouseleave: false,		// Close jBox when the mouse leaves the jBox area or the area of the attached element
-		closeButton: false,				// Adds a close button to your jBox, use 'true', 'title' or 'box' ('true' will put the button in title when there is one, otherwise in box)
+		closeOnEsc: false,			// Close jBox when pressing [esc] key
+		closeOnClick: false,		// Close jBox with mouseclick, use 'true' (click anywhere), 'box' (click on jBox itself), 'overlay' (click on the overlay), 'body' (click anywhere but jBox)
+		closeOnMouseleave: false,	// Close jBox when the mouse leaves the jBox area or the area of the attached element
+		closeButton: false,			// Adds a close button to your jBox, use 'title', 'overlay', 'box' or true (true will add the button to overlay, title or box, in that order if any of those elements can be found)
 		
 		// Other options
-		constructOnInit: false,			// Construct jBox when it's being initialized
-		blockScroll: false,				// When jBox is open, block scrolling
-		appendTo: jQuery('body'), 		// Provide an element if you want the jBox to be positioned inside a specific element (only useful for fixed positions or when position values are numbers)
-		draggable: null,				// Make your jBox draggable (use 'true', 'title' or provide an element as handle) (inspired from Chris Coyiers CSS-Tricks http://css-tricks.com/snippets/jquery/draggable-without-jquery-ui/)
+		constructOnInit: false,		// Construct jBox when it's being initialized
+		blockScroll: false,			// When jBox is open, block scrolling
+		appendTo: jQuery('body'), 	// Provide an element if you want the jBox to be positioned inside a specific element (only useful for fixed positions or when position values are numbers)
+		draggable: null,			// Make your jBox draggable (use 'true', 'title' or provide an element as handle) (inspired from Chris Coyiers CSS-Tricks http://css-tricks.com/snippets/jquery/draggable-without-jquery-ui/)
+		dragOver: true,				// When you have multiple draggable jBoxes, the one you select will always move over the other ones
 		
 		// Events						// Note: You can use 'this' in the event functions, it refers to your jBox object (e.g. onInit: function() { this.open(); })
 		onInit: function() {},			// Triggered when jBox is initialized, just before it's being created
@@ -94,22 +107,20 @@ function jBox(type, options) {
 		onOpen: function() {},			// Triggered when jBox is opened
 		onClose: function() {},			// Triggered when jBox is closed
 		onCloseComplete: function() {},	// Triggered when jBox is completely closed (when fading is finished, useful if you want to destroy the jBox when it is closed)
-		onAjax: function() {},			// Triggered when the ajax call starts
-		onAjaxComplete: function() {},	// Triggered when the ajax call is completed
 		
 		// Only for Notices
-		autoClose: 7000,				// Time when jBox should close automatically
-		color: null,					// Makes your notices colorful, use 'black', 'red', 'green', 'blue', 'yellow'
-		stack: true,					// Set to false to disable notice-stacking
-		audio: false,					// Set the url to an audio file without extention, e.g. '/url/filename'. jBox will look for an .mp3 and an .ogg file
-		volume: 100,					// Percent of volume for audio files
+		autoClose: 7000,			// Time when jBox should close automatically
+		color: null,				// Makes your notices colorful, use 'black', 'red', 'green', 'blue', 'yellow'
+		stack: true,				// Set to false to disable notice-stacking
+		audio: false,				// Set the url to an audio file without extention, e.g. '/url/filename'. jBox will look for an .mp3 and an .ogg file
+		volume: 100,				// Percent of volume for audio files
 		
 		// Only for Images
-		src: 'href',					// The attribute where jBox gets the image source from, e.g. href="/path_to_image/image.jpg"
-		gallery: 'data-jbox-image',		// The attribute where you define the image gallery, e.g. data-jbox-image="gallery1"
-		imageLabel: 'title',			// The attribute where jBox gets the image label from, e.g. title="My label"
-		imageFade: 600,					// The fade duration for images
-		imageSize: 'cover'				// How to display the images: Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
+		src: 'href',				// The attribute where jBox gets the image source from, e.g. href="/path_to_image/image.jpg"
+		gallery: 'data-jbox-image',	// The attribute where you define the image gallery, e.g. data-jbox-image="gallery1"
+		imageLabel: 'title',		// The attribute where jBox gets the image label from, e.g. title="My label"
+		imageFade: 600,				// The fade duration for images
+		imageSize: 'cover'			// How to display the images: Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
 	};
 	
 	// Default type options
@@ -139,7 +150,7 @@ function jBox(type, options) {
 			blockScroll: true,
 			closeOnEsc: true,
 			closeOnClick: 'overlay',
-			closeButton: 'title',
+			closeButton: true,
 			overlay: true,
 			animation: 'zoomOut'
 		},
@@ -155,7 +166,7 @@ function jBox(type, options) {
 				this.open();
 				this.options.delayClose = this.options.autoClose;
 				this.options.delayClose && this.close();
-			}.bind(this),
+			},
 			_onCreated: function() {
 				this.options.color && this.wrapper.addClass('jBox-Notice-color jBox-Notice-' + this.options.color);
 			}, 
@@ -163,26 +174,22 @@ function jBox(type, options) {
 				// Loop through notices at same window corner and either move or destroy them
 				jQuery.each(jQuery('.jBox-Notice'), function(index, el) {
 					el = jQuery(el);
+					
 					if (el.attr('id') == this.id || el.css(this.options.attributes.y) == 'auto' || el.css(this.options.attributes.x) == 'auto') return;
 					if (!this.options.stack) {
 						el.data('jBox').close({ignoreDelay: true});
 						return;
 					}
-					el.css('margin-' + this.options.attributes.y, parseInt(el.css('margin-' + this.options.attributes.y)) + this.dimensions.y + 10);
+					el.css('margin-' + this.options.attributes.y, parseInt(el.css('margin-' + this.options.attributes.y)) + this.wrapper.outerHeight() + 10);
 				}.bind(this));
+				
 				// Play audio file, IE8 doesn't support audio
-				if (this.options.audio && !this.IE8) {
-					this.audio = jQuery('<audio/>');
-					jQuery('<source/>', {src: this.options.audio + '.mp3'}).appendTo(this.audio);
-					jQuery('<source/>', {src: this.options.audio + '.ogg'}).appendTo(this.audio);
-					this.audio[0].volume = Math.min((this.options.volume / 100), 1);
-					this.audio[0].play();
-				}
-			}.bind(this),
+				this.options.audio && this.audio({url: this.options.audio, valume: this.options.volume});
+			},
 			// Remove from DOM when closing finishes
 			_onCloseComplete: function() {
 				this.destroy();
-			}.bind(this)
+			}
 		},
 		// Default options for images
 		'Image': {
@@ -191,6 +198,7 @@ function jBox(type, options) {
 			blockScroll: true,
 			closeOnEsc: true,
 			closeOnClick: 'overlay',
+			closeButton: true,
 			overlay: true,
 			animation: 'zoomOut',
 			width: 800,
@@ -275,6 +283,7 @@ function jBox(type, options) {
 						
 					// Load image if not found
 					} else {
+						// TODO loading not working properly anymore
 						this.wrapper.addClass('jBox-loading');
 						var image = jQuery('<img src="' + this.images[gallery][id].src + '">').load(function() {
 							appendImage(gallery, id, false);
@@ -329,13 +338,11 @@ function jBox(type, options) {
 	}
 	
 	// Merge options
-	this.options = jQuery.extend(this.options, type, options);
+	this.options = jQuery.extend(true, this.options, type, options);
 	
 	// Get unique ID
 	if (this.options.id === null) {
-		var i = 1;
-		while (jQuery('#jBox' + i).length != 0) i++;
-		this.options.id = 'jBox' + i;
+		this.options.id = 'jBoxID' + jBox._getUniqueID();
 	}
 	this.id = this.options.id;
 	
@@ -381,22 +388,33 @@ function jBox(type, options) {
 			opacity: 0,
 			zIndex: this.options.zIndex
 			
-		// Save the jBox instance in the wrapper, so you gan get access to your jBox when you only have the element
+		// Save the jBox instance in the wrapper, so you can get access to your jBox when you only have the element
 		}).data('jBox', this);
 		
-		// Add mouseleave event
-		this.options.closeOnMouseleave && this.wrapper.mouseenter(function() { this.open(); }.bind(this)).mouseleave(function() { this.close(); }.bind(this));
+		// Add mouseleave event (.parents('*') might be a performance nightmare! Maybe there is a better)
+		this.options.closeOnMouseleave && this.wrapper.mouseleave(function(ev) {
+			// Only close when the new target is not the source element
+			!this.source || !(ev.toElement == this.source[0] || jQuery.inArray(this.source[0], jQuery(ev.toElement).parents('*')) !== -1) && this.close();
+		}.bind(this));
+		
+		// Add closeOnClick: 'box' events
+		(this.options.closeOnClick == 'box') && this.wrapper.on('touchend click', function() { this.close({ignoreDelay: true}); }.bind(this));
 		
 		// Create container
 		this.container = jQuery('<div/>', {'class': 'jBox-container'}).appendTo(this.wrapper);
 		
 		// Create content
-		this.content = jQuery('<div/>', {'class': 'jBox-content'}).css({width: this.options.width, height: this.options.height}).appendTo(this.container);
+		this.content = jQuery('<div/>', {'class': 'jBox-content'}).css({width: this.options.width, height: this.options.height, minWidth: this.options.minWidth, minHeight: this.options.minHeight, maxWidth: this.options.maxWidth, maxHeight: this.options.maxHeight}).appendTo(this.container);
 		
 		// Create close button
 		if (this.options.closeButton) {
-			this.closeButton = jQuery('<div/>', {'class': 'jBox-closeButton jBox-noDrag'}).click(function() { this.close(); }.bind(this));
-			if (this.options.closeButton != 'title') {
+			this.closeButton = jQuery('<div/>', {'class': 'jBox-closeButton jBox-noDrag'}).on('touchend click', function(ev) { this.isOpen && this.close({ignoreDelay: true}); }.bind(this));
+			var closeButtonSVG = this._createSVG('svg', [['viewBox', '0 0 24 24']]);
+			this._appendSVG(this._createSVG('path', [['d', 'M22.2,4c0,0,0.5,0.6,0,1.1l-6.8,6.8l6.9,6.9c0.5,0.5,0,1.1,0,1.1L20,22.3c0,0-0.6,0.5-1.1,0L12,15.4l-6.9,6.9c-0.5,0.5-1.1,0-1.1,0L1.7,20c0,0-0.5-0.6,0-1.1L8.6,12L1.7,5.1C1.2,4.6,1.7,4,1.7,4L4,1.7c0,0,0.6-0.5,1.1,0L12,8.5l6.8-6.8c0.5-0.5,1.1,0,1.1,0L22.2,4z']]), closeButtonSVG);
+			this.closeButton.append(closeButtonSVG);
+			
+			// Add close button to jBox container
+			if (this.options.closeButton == 'box' || (this.options.closeButton === true && !this.options.overlay && !this.options.title)) {
 				this.wrapper.addClass('jBox-closeButton-box');
 				this.closeButton.appendTo(this.container);
 			}
@@ -446,14 +464,19 @@ function jBox(type, options) {
 		}
 		
 		// Set title and content
-		this.setContent(this.options.content);
-		this.setTitle(this.options.title);
+		this.setContent(this.options.content, true);
+		this.setTitle(this.options.title, true);
 		
 		// Make jBox draggable
 		if (this.options.draggable) {
-			var handle = (this.options.draggable == 'title') ? this.titleContainer : (this.options.draggable.length > 0 ? this.options.draggable : this.wrapper);
+			var handle = (this.options.draggable == 'title') ? this.titleContainer : (this.options.draggable.length > 0 ? this.options.draggable : (this.options.draggable.selector ? jQuery(this.options.draggable.selector) : this.wrapper));
 			handle.addClass('jBox-draggable').on('mousedown', function(ev) {
 				if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) return;
+				
+				if (this.options.dragOver && this.wrapper.css('zIndex') <= jBox.zIndexMax) {
+					jBox.zIndexMax += 1;
+					this.wrapper.css('zIndex', jBox.zIndexMax);
+				}
 				
 				var drg_h = this.wrapper.outerHeight(),
 					drg_w = this.wrapper.outerWidth(),
@@ -467,6 +490,9 @@ function jBox(type, options) {
 				}.bind(this));
 				ev.preventDefault();
 			}.bind(this)).on('mouseup', function() { jQuery(document).off('mousemove.jBox-draggable-' + this.id); }.bind(this));
+			
+			// Add z-index
+			jBox.zIndexMax = !jBox.zIndexMax ? this.options.zIndex : Math.max(jBox.zIndexMax, this.options.zIndex);
 		}
 
 		// Fire onCreated event
@@ -511,21 +537,20 @@ function jBox(type, options) {
 		this._adjustPosition();
 	};
 	
-	// Attach events
+	// Attach document and window events
 	this._attachEvents = function() {
 		
 		// Closing event: closeOnEsc
 		this.options.closeOnEsc && jQuery(document).on('keyup.jBox-' + this.id, function(ev) { if (ev.keyCode == 27) { this.close({ignoreDelay: true}); }}.bind(this));
 		
 		// Closing event: closeOnClick
-		this.options.closeOnClick && jQuery(document).on('touchend.jBox-' + this.id + ' click.jBox-' + this.id, function(ev) {
-			if (this.blockBodyClick ||
-				(this.options.closeOnClick == 'overlay' && (!this.overlay || ev.target != this.overlay[0])) || // TODO: for performance reasons move event to overlay
-				(this.options.closeOnClick == 'box' && ev.target != this.wrapper[0] && !this.wrapper.has(ev.target).length) || // TODO: for performance reasons move event to box
-				(this.options.closeOnClick == 'body' && (ev.target == this.wrapper[0] || this.wrapper.has(ev.target).length))) 
-				return;
-			this.close({ignoreDelay: true});
-		}.bind(this));
+		if (this.options.closeOnClick === true || this.options.closeOnClick == 'body') {
+			jQuery(document).on('touchend.jBox-' + this.id + ' click.jBox-' + this.id, function(ev) {
+				if (this.blockBodyClick || (this.options.closeOnClick == 'body' && (ev.target == this.wrapper[0] || this.wrapper.has(ev.target).length))) 
+					return;
+				this.close({ignoreDelay: true});
+			}.bind(this));
+		}
 		
 		// Positioning events
 		if (((this.options.adjustPosition && this.options.adjustTracker) || this.options.reposition) && !this.fixed && this.outside) {
@@ -563,14 +588,14 @@ function jBox(type, options) {
 		this.options.target == 'mouse' && jQuery('body').on('mousemove.jBox-' + this.id, function(ev) { this._positionMouse(ev); }.bind(this));
 	};
 	
-	// Detach events
+	// Detach document and window events
 	this._detachEvents = function() {
 		
 		// Closing event: closeOnEsc
 		this.options.closeOnEsc && jQuery(document).off('keyup.jBox-' + this.id);
 		
 		// Closing event: closeOnClick
-		this.options.closeOnClick && jQuery(document).off('touchend.jBox-' + this.id + ' click.jBox-' + this.id);
+		(this.options.closeOnClick === true || this.options.closeOnClick == 'body') && jQuery(document).off('touchend.jBox-' + this.id + ' click.jBox-' + this.id);
 		
 		// Positioning events
 		if ((this.options.adjustPosition && this.options.adjustTracker) || this.options.reposition) {
@@ -586,14 +611,23 @@ function jBox(type, options) {
 	this._addOverlay = function() {
 		
 		// If the overlay isn't cached, set overlay or create it
-		!this.overlay && (this.overlay = jQuery('#jBox-overlay').length ? jQuery('#jBox-overlay').css({zIndex: Math.min(jQuery('#jBox-overlay').css('z-index'), (this.options.zIndex - 1))}) : (jQuery('<div/>', {id: 'jBox-overlay'}).css({display: 'none', opacity: 0, zIndex: (this.options.zIndex - 1)}).appendTo(jQuery('body'))));
+		if (!this.overlay) {
+			// Get the overlay and adjust z-Index
+			this.overlay = jQuery('#jBox-overlay').length ? jQuery('#jBox-overlay').css({zIndex: Math.min(jQuery('#jBox-overlay').css('z-index'), (this.options.zIndex - 1))}) : (jQuery('<div/>', {id: 'jBox-overlay'}).css({display: 'none', opacity: 0, zIndex: (this.options.zIndex - 1)}).appendTo(jQuery('body')));
+			
+			// Add close button to overlay
+			(this.options.closeButton == 'overlay' || this.options.closeButton === true) && ((jQuery('#jBox-overlay .jBox-closeButton').length > 0) ? jQuery('#jBox-overlay .jBox-closeButton').on('touchend click', function() { this.isOpen && this.close({ignoreDelay: true}); }.bind(this)) : this.overlay.append(this.closeButton));
+			
+			// Add closeOnClick: 'overlay' events
+			(this.options.closeOnClick == 'overlay') && this.overlay.on('touchend click', function() { this.isOpen && this.close({ignoreDelay: true}); }.bind(this));
+		}
 		
 		// Add jBox to data
 		var overlay_data = this.overlay.data('jBox') || {};
 		overlay_data['jBox-' + this.id] = true;
 		this.overlay.data('jBox', overlay_data);
 		
-		// Abort if overlay shown already
+		// Abort if overlay is shown already
 		if (this.overlay.css('display') == 'block') return;
 		
 		// Show overlay
@@ -625,6 +659,20 @@ function jBox(type, options) {
 		}
 	};
 	
+	// Create a svg element
+	this._createSVG = function(type, options) {
+		var svg = document.createElementNS('http://www.w3.org/2000/svg', type);
+		$.each(options, function (index, item) {
+			svg.setAttribute(item[0], (item[1] || ''));
+		});
+		return svg;
+	};
+	
+	// Append a svg element to a svg container
+	this._appendSVG = function(source, target) {
+		return target.appendChild(source);
+	};
+		
 	// Generate CSS for animations and append to header
 	this._generateCSS = function() {
 		if (this.IE8) return;
@@ -750,6 +798,7 @@ function jBox(type, options) {
 		jQuery('<style/>').append(css).appendTo(jQuery('head'));
 	};
 	
+	// Block body clicks for 10ms to prevent extra event triggering
 	this._blockBodyClick = function() {
 		this.blockBodyClick = true;
 		setTimeout(function() { this.blockBodyClick = false; }.bind(this), 10);
@@ -841,8 +890,8 @@ function jBox(type, options) {
 				(this.targetDimensions[this._getTL(this.outside)] - windowDimensions[this._getTL(this.outside)])) > this.dimensions[this._getXY(this.outside)] + this.options.adjustDistance[this._getOpp(this.outside)]) {
 				
 				// Adjust wrapper and pointer
-				this.wrapper.css(this._getTL(this.outside), this.pos[this._getTL(this.outside)] + ((this.dimensions[this._getXY(this.outside)] + this.options.offset[this._getXY(this.outside)] + this.targetDimensions[this._getXY(this.outside)]) * (this.outside == 'top' || this.outside == 'left' ? 1 : -1))).removeClass('jBox-pointerPosition-' + this.pointer.position).addClass('jBox-pointerPosition-' + this._getOpp(this.pointer.position));
-				this.pointer && this.wrapper.css('padding', 0).css('padding-' + this.outside, this.pointer.dimensions[this._getXY(this.outside)]);
+				this.wrapper.css(this._getTL(this.outside), this.pos[this._getTL(this.outside)] + ((this.dimensions[this._getXY(this.outside)] + this.options.offset[this._getXY(this.outside)] + this.targetDimensions[this._getXY(this.outside)]) * (this.outside == 'top' || this.outside == 'left' ? 1 : -1)));
+				this.pointer && this.wrapper.removeClass('jBox-pointerPosition-' + this.pointer.position).addClass('jBox-pointerPosition-' + this._getOpp(this.pointer.position)).css('padding', 0).css('padding-' + this.outside, this.pointer.dimensions[this._getXY(this.outside)]);
 				this.pointer && this.pointer.element.attr('class', 'jBox-pointer jBox-pointer-' + this.outside);
 				this.positionAdjusted = true;
 				this.flipped = true;
@@ -894,7 +943,7 @@ function jBox(type, options) {
 
 // Attach jBox to elements
 jBox.prototype.attach = function(elements, trigger) {
-	elements || (elements = jQuery(this.options.attach.selector));
+	elements || (elements = jQuery(this.options.attach.selector || this.options.attach));
 	trigger || (trigger = this.options.trigger);
 	
 	elements && elements.length && jQuery.each(elements, function(index, el) {
@@ -910,19 +959,34 @@ jBox.prototype.attach = function(elements, trigger) {
 			
 			// Add click or mouseenter event, click events can prevent default as well
 			el.on(trigger + '.jBox-attach-' + this.id, function(ev) {
+				// Clear timer
+				this.timer && clearTimeout(this.timer);
+				
+				// Block opening when jbox is open and the source element is triggering
+				if (trigger == 'mouseenter' && this.isOpen && this.source[0] == el[0])
+					return;
+				
 				// Only close jBox if you click the current target element, otherwise open at new target
-				if (this.isOpen && this.source[0] != el[0]) var forceOpen = true;
+				if (this.isOpen && this.source && this.source[0] != el[0]) var forceOpen = true;
 				
 				// Set new source element
 				this.source = el;
 				
+				// Set new target
 				!this.options.target && (this.target = el);
+				
+				// Prevent default action on click
 				trigger == 'click' && this.options.preventDefault && ev.preventDefault();
+				
+				// Toggle or open jBox
 				this[trigger == 'click' && !forceOpen ? 'toggle' : 'open']();
 			}.bind(this));
 			
-			// Add close event for mouseenter
-			(this.options.trigger == 'mouseenter') && el.on('mouseleave', function() { this.close(); }.bind(this));
+			// Add close event for trigger event mouseenter
+			(this.options.trigger == 'mouseenter') && el.on('mouseleave', function(ev) {
+				// If we have set closeOnMouseleave, do not close jBox when leaving attached element and mouse is over jBox
+				if(!this.options.closeOnMouseleave || !(ev.toElement == this.wrapper[0] || jQuery(ev.toElement).parents('#' + this.id).length)) this.close();
+			}.bind(this));
 			
 			el.data('jBox-attached-' + this.id, trigger);
 		}
@@ -937,42 +1001,71 @@ jBox.prototype.detach = function(elements) {
 	
 	elements && elements.length && jQuery.each(elements, function(index, el) {
 		el = jQuery(el);
+		// Remove events
 		if (el.data('jBox-attached-' + this.id)) {
 			el.off(el.data('jBox-attached-' + this.id) + '.jBox-attach-' + this.id);
 			el.data('jBox-attached-' + this.id, null);
 		}
-	});
+		// Remove element from collection
+		this.attachedElements = jQuery.grep(this.attachedElements, function(value) {
+			return value != el[0];
+		});
+	}.bind(this));
+	
 	return this;
 };
 
 // Set title
-jBox.prototype.setTitle = function(title) {
+jBox.prototype.setTitle = function(title, ignore_positioning) {
+	var wrapperHeight = this.wrapper.height(), wrapperWidth = this.wrapper.width();
 	if (title == null || title == undefined) return this;
 	!this.wrapper && this._create();
 	if (!this.title) {
 		this.titleContainer = jQuery('<div/>', {'class': 'jBox-title'});
 		this.title = jQuery('<div/>').appendTo(this.titleContainer);
 		this.wrapper.addClass('jBox-hasTitle');
-		if (this.options.closeButton == 'title') {
+		if (this.options.closeButton == 'title' || (this.options.closeButton === true && !this.options.overlay)) {
 			this.wrapper.addClass('jBox-closeButton-title');
 			this.closeButton.appendTo(this.titleContainer);
 		}
 		this.titleContainer.insertBefore(this.content);
 	}
 	this.title.html(title);
-	this.position();
+	
+	// Reposition if dimensions changed
+	!ignore_positioning && (wrapperHeight != this.wrapper.height() || wrapperWidth != this.wrapper.width()) && this.position();
+	
 	return this;
 };
 
 // Set content
-jBox.prototype.setContent = function(content) {
+jBox.prototype.setContent = function(content, ignore_positioning) {
 	if (content == null) return this;
+	
+	// Create jBox if no wrapper found
 	!this.wrapper && this._create();
+	
+	// Get the width and height of wrapper, only if they change we need to reposition
+	var wrapperHeight = this.wrapper.height(), wrapperWidth = this.wrapper.width();
+	
+	//  Get the width and height of body, if they change with new content, adjust accordingly (happens when a hidden scrollbar changes body dimensions)
+	var bodyHeight = $('body').height(), bodyWidth = $('body').width();
+	
+	// Set the new content
 	switch (jQuery.type(content)) {
 		case 'string': this.content.html(content); break;
 		case 'object': this.content.children().css({display: 'none'}); this.options.content.appendTo(this.content).css({display: 'block'}); break;
 	}
-	this.position();
+	
+	// Calculate the difference to before the content was set
+	var adjustOffset = {
+		x: bodyWidth - $('body').width(),
+		y: bodyHeight - $('body').height()
+	};
+	
+	// Reposition if dimensions changed
+	!ignore_positioning && (wrapperHeight != this.wrapper.height() || wrapperWidth != this.wrapper.width()) && this.position({adjustOffset: adjustOffset});
+	
 	return this;
 };
 
@@ -998,15 +1091,17 @@ jBox.prototype.position = function(options) {
 		return this;
 	}
 	
+	// Add fixed data to target
+	!this.target.data('jBox-fixed') && this.target.data('jBox-fixed', (this.target[0] != jQuery(window)[0] && (this.target.css('position') == 'fixed' || this.target.parents().filter(function() { return $(this).css('position') == 'fixed'; }).length > 0)) ? 'fixed' : 'static');
+	
 	// Total current dimensions of target element
-	var targetOffset = this.target.offset();
+	var targetOffset = this.target[this.target.data('jBox-fixed') == 'fixed' ? 'position' : 'offset']();
 	this.targetDimensions = {
 		x: this.target.outerWidth(),
 		y: this.target.outerHeight(),
 		top: (targetOffset ? targetOffset.top : 0),
 		left: (targetOffset ? targetOffset.left : 0)
 	};
-	
 	this.pos = {};
 	
 	// Calculate positions
@@ -1074,6 +1169,10 @@ jBox.prototype.position = function(options) {
 		this.pos[this._getTL(this._getOpp(this.pointer.xy))] += adjustWrapper;
 	}
 	
+	// Add adjustments
+	options.adjustOffset && options.adjustOffset.x && (this.pos[this.options.attributes.x] += parseInt(options.adjustOffset.x) * (this.options.attributes.x == 'left' ? 1 : -1));
+	options.adjustOffset && options.adjustOffset.y && (this.pos[this.options.attributes.y] += parseInt(options.adjustOffset.y) * (this.options.attributes.y == 'top' ? 1 : -1));
+	
 	// Add final offset
 	this.pos[this.options.attributes.x] += this.options.offset.x;
 	this.pos[this.options.attributes.y] += this.options.offset.y;
@@ -1108,19 +1207,19 @@ jBox.prototype.open = function(options) {
 		
 		// Set title from source element
 		this.source && this.options.getTitle && (this.source.attr(this.options.getTitle) != undefined && this.setTitle(this.source.attr(this.options.getTitle)));
-			
+		
 		// Set content from source element
 		this.source && this.options.getContent && (this.source.data('jBox-getContent') != undefined ? this.setContent(this.source.data('jBox-getContent')) : (this.source.attr(this.options.getContent) != undefined ? this.setContent(this.source.attr(this.options.getContent)) : null));
 		
-		// Set position
-		this.position({target: options.target});
-	
 		// Fire onOpen event
 		(this.options.onOpen.bind(this))();
 		this.options._onOpen && (this.options._onOpen.bind(this))();
 		
 		// Get content from ajax
-		this.options.ajax && (!this.ajaxLoaded || this.options.reload) && this.ajax();
+		this.options.ajax && this.options.ajax.url && (!this.ajaxLoaded || this.options.ajax.reload) && this.ajax();
+		
+		// Set position
+		this.position({target: options.target});
 		
 		// Abort closing
 		this.isClosing && this._abortAnimation();
@@ -1205,9 +1304,6 @@ jBox.prototype.close = function(options) {
 			// Only animate if jBox is compleately closed
 			this.options.animation && !this.isOpening && this._animate('close');
 			
-			// Remove source element
-			this.source = null;
-			
 			// Fading animation or show immediately
 			if (this.options.fade) {
 				this.wrapper.stop().animate({opacity: 0}, {
@@ -1223,7 +1319,7 @@ jBox.prototype.close = function(options) {
 					}.bind(this),
 					always: function() {
 						this.isClosing = false;
-					}.bind(this),
+					}.bind(this)
 				});
 			} else {
 				this.wrapper.css({display: 'none', opacity: 0});
@@ -1260,33 +1356,73 @@ jBox.prototype.enable = function() {
 jBox.prototype.ajax = function(options) {
 	options || (options = {});
 	
-	// Abort running ajax calls
+	// Add data from source element if none set in options
+	(this.options.ajax.getData && !options.data && this.source) && (options.data = this.source.attr(this.options.ajax.getData) || '');
+	
+	// Clone the system options
+	var sysOptions = jQuery.extend(true, {}, this.options.ajax);
+	
+	// Abort running ajax call
 	this.ajaxRequest && this.ajaxRequest.abort();
 	
-	// Set new ajax call
-	this.ajaxRequest = jQuery.ajax({
-		url: options.url || this.options.ajax,
-		data: options.data || this.options.data,
-		beforeSend: function() {
-			// Clear content, add spinner and reposition jBox
-			this.content.html('');
-			this.wrapper.addClass('jBox-loading');
-			this.position();
-			
-			// Fire onAjax event
-			(this.options.onAjax.bind(this))();
-		}.bind(this),
-		complete: function(response) {
-			// Remove spinner, set content and reposition jBox
-			this.wrapper.removeClass('jBox-loading');
-			this.content.html(response.responseText);
-			this.position();
-			this.ajaxLoaded = true;
-			
-			// Fire onAjaxComplete event
-			(this.options.onAjaxComplete.bind(this))();
-		}.bind(this)
-	});
+    // Extract events
+    var beforeSend = options.beforeSend || function () {};
+    var complete = options.complete || function () {};
+    
+    // Merge options
+    var userOptions = jQuery.extend(true, sysOptions, options);
+	
+	// Set new beforeSend event
+    userOptions.beforeSend = function () {
+	
+		// Add loading spinner
+		userOptions.spinner && this.wrapper.addClass('jBox-loading');
+
+        (beforeSend.bind(this))();
+    }.bind(this);
+
+    // Set new complete event 
+    userOptions.complete = function (response) {
+		
+		// Remove spinner, set content and reposition jBox
+		this.wrapper.removeClass('jBox-loading');
+		
+		// Set new content
+		userOptions.setContent && this.setContent(response.responseText);
+		
+		this.ajaxLoaded = true;
+		
+        (complete.bind(this))(response);
+    }.bind(this);
+	
+    // Send new ajax request
+    this.ajaxRequest = jQuery.ajax(userOptions);
+	
+	return this;
+};
+
+// Play an audio file
+jBox.prototype.audio = function(options) {
+	options || (options = {});
+	jBox._audio || (jBox._audio = {});
+	
+	// URL required, no IE8 support
+	if (!options.url || this.IE8) return this;
+	
+	// Create audio if it doesn't exist
+	if (!jBox._audio[options.url]) {
+		var audio = jQuery('<audio/>');
+		jQuery('<source/>', {src: options.url + '.mp3'}).appendTo(audio);
+		jQuery('<source/>', {src: options.url + '.ogg'}).appendTo(audio);
+		jBox._audio[options.url] = audio[0];
+	}
+	
+	// Set volume and play audio
+	jBox._audio[options.url].volume = Math.min((options.volume != undefined ? options.volume : (this.options.volume != undefined ? this.options.volume : 100) / 100), 1);
+	jBox._audio[options.url].pause();
+	try { jBox._audio[options.url].currentTime = 0; } catch (e) {}
+	jBox._audio[options.url].play();	
+	
 	return this;
 };
 
@@ -1296,6 +1432,14 @@ jBox.prototype.destroy = function() {
 	this.wrapper.remove();
 	return this;
 };
+
+// Get a unique ID for jBoxes
+jBox._getUniqueID = (function () {
+	var i = 1;
+	return function () {
+		return i++;
+	};
+}());
 
 // Make jBox usable with jQuery selectors
 jQuery.fn.jBox = function(type, options) {
