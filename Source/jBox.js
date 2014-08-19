@@ -662,7 +662,7 @@ function jBox(type, options) {
 	// Create a svg element
 	this._createSVG = function(type, options) {
 		var svg = document.createElementNS('http://www.w3.org/2000/svg', type);
-		$.each(options, function (index, item) {
+		jQuery.each(options, function (index, item) {
 			svg.setAttribute(item[0], (item[1] || ''));
 		});
 		return svg;
@@ -1049,7 +1049,7 @@ jBox.prototype.setContent = function(content, ignore_positioning) {
 	var wrapperHeight = this.wrapper.height(), wrapperWidth = this.wrapper.width();
 	
 	//  Get the width and height of body, if they change with new content, adjust accordingly (happens when a hidden scrollbar changes body dimensions)
-	var bodyHeight = $('body').height(), bodyWidth = $('body').width();
+	var bodyHeight = jQuery('body').height(), bodyWidth = jQuery('body').width();
 	
 	// Set the new content
 	switch (jQuery.type(content)) {
@@ -1059,8 +1059,8 @@ jBox.prototype.setContent = function(content, ignore_positioning) {
 	
 	// Calculate the difference to before the content was set
 	var adjustOffset = {
-		x: bodyWidth - $('body').width(),
-		y: bodyHeight - $('body').height()
+		x: bodyWidth - jQuery('body').width(),
+		y: bodyHeight - jQuery('body').height()
 	};
 	
 	// Reposition if dimensions changed
@@ -1092,7 +1092,7 @@ jBox.prototype.position = function(options) {
 	}
 	
 	// Add fixed data to target
-	!this.target.data('jBox-fixed') && this.target.data('jBox-fixed', (this.target[0] != jQuery(window)[0] && (this.target.css('position') == 'fixed' || this.target.parents().filter(function() { return $(this).css('position') == 'fixed'; }).length > 0)) ? 'fixed' : 'static');
+	!this.target.data('jBox-fixed') && this.target.data('jBox-fixed', (this.target[0] != jQuery(window)[0] && (this.target.css('position') == 'fixed' || this.target.parents().filter(function() { return jQuery(this).css('position') == 'fixed'; }).length > 0)) ? 'fixed' : 'static');
 	
 	// Total current dimensions of target element
 	var targetOffset = this.target[this.target.data('jBox-fixed') == 'fixed' ? 'position' : 'offset']();
