@@ -454,7 +454,7 @@ function jBox(type, options) {
 			
 			// Set pointer CSS
 			this.pointer.element.css(this.pointer.alignAttribute, (this.pointer.align == 'center' ? '50%' : 0)).css('margin-' + this.pointer.alignAttribute, this.pointer.offset);
-			this.pointer.margin = {margin: this.pointer.element.css('margin')};
+			this.pointer.margin = {}; this.pointer.margin['margin-' + this.pointer.alignAttribute] = this.pointer.offset;
 			
 			// Add a transform to fix centered position
 			(this.pointer.align == 'center') && this.pointer.element.css(this.prefix + 'transform', 'translate(' + (this.pointer.xy == 'y' ? (this.pointer.dimensions.x * -0.5 + 'px') : 0) + ', ' + (this.pointer.xy == 'x' ? (this.pointer.dimensions.y * -0.5 + 'px') : 0) + ')');
