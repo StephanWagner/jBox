@@ -1363,7 +1363,7 @@ jBox.prototype.ajax = function(options) {
 	options || (options = {});
 	
 	// Add data from source element if none set in options
-	(this.options.ajax.getData && !options.data && this.source) && (options.data = this.source.attr(this.options.ajax.getData) || '');
+	(this.options.ajax.getData && !options.data && this.source && this.source.attr(this.options.ajax.getData) != undefined) && (options.data = this.source.attr(this.options.ajax.getData) || '');
 	
 	// Clone the system options
 	var sysOptions = jQuery.extend(true, {}, this.options.ajax);
