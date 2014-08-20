@@ -991,6 +991,10 @@ jBox.prototype.attach = function(elements, trigger) {
 			}.bind(this));
 			
 			el.data('jBox-attached-' + this.id, trigger);
+			
+			// TODO // TODO TOO CLOSE
+			// Fire onAttach event
+			this.options._onAttach && (this.options._onAttach.bind(this))(el);
 		}
 	}.bind(this));
 	
