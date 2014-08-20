@@ -73,6 +73,7 @@ function jBox(type, options) {
 		
 		// Pointer
 		pointer: false,				// Your pointer will always point towards the target element, so the option outside should be 'x' or 'y'
+		pointTo: 'target',			// Setting something else than 'target' will add a pointer even if there is no target element set or found (Use 'top', 'bottom', 'left' or 'right')
 		
 		// Animations
 		fade: 180,					// Fade duration in ms, set to 0 or false to disable
@@ -428,8 +429,8 @@ function jBox(type, options) {
 			
 			// Get pointer vars and save globally
 			this.pointer = {
-				position: this._getOpp(this.outside),
-				xy: this._getXY(this.outside),
+				position: (this.options.pointTo != 'target') ? this.options.pointTo : this._getOpp(this.outside),
+				xy: (this.options.pointTo != 'target') ? this._getXY(this.options.pointTo) : this._getXY(this.outside),
 				align: 'center',
 				offset: 0
 			};
@@ -1139,7 +1140,7 @@ jBox.prototype.position = function(options) {
 	setPosition('y');
 	
 	// Adjust position depending on pointer align
-	if (this.options.pointer) {
+	if (this.options.pointer && jQuery.type(this.options.position.x) != 'number' && jQuery.type(this.options.position.y) != 'number') {
 	
 		var adjustWrapper = 0;
 		
@@ -1364,17 +1365,17 @@ jBox.prototype.ajax = function(options) {
 	
 	// Abort running ajax call
 	this.ajaxRequest && this.ajaxRequest.abort();
-	
-    // Extract events
-    var beforeSend = options.beforeSend || function () {};
-    var complete = options.complete || function () {};
     
+    // Extract events
+    var beforeSend = options.beforeSend || sysOptions.beforeSend || function () {};
+    var complete = options.complete || sysOptions.complete || function () {};
+	
     // Merge options
     var userOptions = jQuery.extend(true, sysOptions, options);
 	
 	// Set new beforeSend event
     userOptions.beforeSend = function () {
-	
+		
 		// Add loading spinner
 		userOptions.spinner && this.wrapper.addClass('jBox-loading');
 
