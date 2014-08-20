@@ -170,13 +170,14 @@ function jBox(type, options) {
 			},
 			_onCreated: function() {
 				this.options.color && this.wrapper.addClass('jBox-Notice-color jBox-Notice-' + this.options.color);
+				this.wrapper.data('jBox-Notice-position', this.options.attributes.x + '-' + this.options.attributes.y);
 			}, 
 			_onOpen: function() {
 				// Loop through notices at same window corner and either move or destroy them
 				jQuery.each(jQuery('.jBox-Notice'), function(index, el) {
 					el = jQuery(el);
 					
-					if (el.attr('id') == this.id || el.css(this.options.attributes.y) == 'auto' || el.css(this.options.attributes.x) == 'auto') return;
+					if (el.attr('id') == this.id || el.data('jBox-Notice-position') != this.options.attributes.x + '-' + this.options.attributes.y) return;
 					if (!this.options.stack) {
 						el.data('jBox').close({ignoreDelay: true});
 						return;
