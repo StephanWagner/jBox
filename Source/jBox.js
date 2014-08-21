@@ -1439,6 +1439,9 @@ jBox.prototype.destroy = function() {
 	return this;
 };
 
+// TODO
+// Find an option to preload audio files
+
 // Get a unique ID for jBoxes
 jBox._getUniqueID = (function () {
 	var i = 1;
