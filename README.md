@@ -38,6 +38,22 @@ But most of times you'd want more variety, like a title or HTML content:
 	<div id="myModal">Click me to open a modal window!</div>
 
 
+
+Confirm windows
+---------------
+
+Confirm windows are modal windows which requires the user to confirm a click action on an element.
+Give the element the data-confirm attribute to attach it:
+
+	new jBox('Confirm', {
+		confirmButton: 'Do it!',
+		cancelButton: 'Nope'
+	});
+	
+	<div onclick="doit()" data-confirm="Do you really want to do this?">Click me!</div>
+	<a href="http://stephanwagner.me" data-confirm="Do you really want to leave this page?">Click me!</a>
+
+
 Notices
 -------
 
