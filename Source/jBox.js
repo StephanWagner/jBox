@@ -109,14 +109,18 @@ function jBox(type, options) {
 		onClose: function() {},			// Triggered when jBox is closed
 		onCloseComplete: function() {},	// Triggered when jBox is completely closed (when fading is finished, useful if you want to destroy the jBox when it is closed)
 		
-		// Only for Notices
+		// Only for type "Confirm"
+		confirmButton: 'Submit',	// Text for the submit button
+		cancelButton: 'Cancel',		// Text for the cancel button
+		
+		// Only for type "Notice"
 		autoClose: 7000,			// Time when jBox should close automatically
 		color: null,				// Makes your notices colorful, use 'black', 'red', 'green', 'blue', 'yellow'
 		stack: true,				// Set to false to disable notice-stacking
 		audio: false,				// Set the url to an audio file without extention, e.g. '/url/filename'. jBox will look for an .mp3 and an .ogg file
 		volume: 100,				// Percent of volume for audio files
 		
-		// Only for Images
+		// Only for type "Image"
 		src: 'href',				// The attribute where jBox gets the image source from, e.g. href="/path_to_image/image.jpg"
 		gallery: 'data-jbox-image',	// The attribute where you define the image gallery, e.g. data-jbox-image="gallery1"
 		imageLabel: 'title',		// The attribute where jBox gets the image label from, e.g. title="My label"
@@ -155,6 +159,39 @@ function jBox(type, options) {
 			overlay: true,
 			animation: 'zoomOut'
 		},
+		// Default options for modal confirm windows
+		'Confirm': {
+			target: jQuery(window),
+			fixed: true,
+			attach: jQuery('[data-confirm]'),
+			getContent: 'data-confirm',
+			content: 'Do you really want to do this?',
+			minWidth: 320,
+			maxWidth: 460,
+			blockScroll: true,
+			closeOnEsc: true,
+			closeOnClick: 'overlay',
+			closeButton: true,
+			overlay: true,
+			animation: 'zoomOut',
+			preventDefault: true,
+			_onAttach: function(el) {
+				// Extract the href or the onclick event
+				var submit = el.attr('onclick') ? el.attr('onclick') : (el.attr('href') ? (el.attr('target') ? 'window.open("' + el.attr('href') + '", "' + el.attr('target') + '");'  : 'window.location.href = "' + el.attr('href') + '";') : '');
+				el.prop('onclick', null).data('jBox-Confirm-submit', submit);
+			},
+			_onCreated: function() {
+				// Add a footer to the jBox container
+				this.footer = jQuery('<div class="jBox-Confirm-footer"/>');
+				jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-cancel"/>').html(this.options.cancelButton).click(function() { this.close(); }.bind(this)).appendTo(this.footer);
+				this.submitButton = jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-submit"/>').html(this.options.confirmButton).appendTo(this.footer);
+				this.footer.appendTo(this.container);
+			},
+			_onOpen: function() {
+				// Set the new action for the submit button
+				this.submitButton.off('click.jBox-Confirm' + this.id).on('click.jBox-Confirm' + this.id, function() { eval(this.source.data('jBox-Confirm-submit')); this.close(); }.bind(this));
+			}
+		},
 		// Default options for notices
 		'Notice': {
 			target: jQuery(window),
@@ -188,7 +225,7 @@ function jBox(type, options) {
 				// Play audio file, IE8 doesn't support audio
 				this.options.audio && this.audio({url: this.options.audio, valume: this.options.volume});
 			},
-			// Remove from DOM when closing finishes
+			// Remove notice from DOM when closing finishes
 			_onCloseComplete: function() {
 				this.destroy();
 			}
@@ -1212,10 +1249,10 @@ jBox.prototype.open = function(options) {
 	var open = function() {
 		
 		// Set title from source element
-		this.source && this.options.getTitle && (this.source.attr(this.options.getTitle) != undefined && this.setTitle(this.source.attr(this.options.getTitle)));
+		this.source && this.options.getTitle && (this.source.attr(this.options.getTitle) && this.setTitle(this.source.attr(this.options.getTitle)));
 		
 		// Set content from source element
-		this.source && this.options.getContent && (this.source.data('jBox-getContent') != undefined ? this.setContent(this.source.data('jBox-getContent')) : (this.source.attr(this.options.getContent) != undefined ? this.setContent(this.source.attr(this.options.getContent)) : null));
+		this.source && this.options.getContent && (this.source.data('jBox-getContent') ? this.setContent(this.source.data('jBox-getContent')) : (this.source.attr(this.options.getContent) ? this.setContent(this.source.attr(this.options.getContent)) : null));
 		
 		// Fire onOpen event
 		(this.options.onOpen.bind(this))();
@@ -1291,6 +1328,7 @@ jBox.prototype.close = function(options) {
 		
 		// Fire onClose event
 		(this.options.onClose.bind(this))();
+		this.options._onClose && (this.options._onClose.bind(this))();
 		
 		// Only close if jBox is open
 		if (this.isOpen) {
