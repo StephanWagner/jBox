@@ -433,7 +433,7 @@ function jBox(type, options) {
 		// Add mouseleave event (.parents('*') might be a performance nightmare! Maybe there is a better)
 		this.options.closeOnMouseleave && this.wrapper.mouseleave(function(ev) {
 			// Only close when the new target is not the source element
-			!this.source || !(ev.toElement == this.source[0] || jQuery.inArray(this.source[0], jQuery(ev.toElement).parents('*')) !== -1) && this.close();
+			!this.source || !(ev.relatedTarget == this.source[0] || jQuery.inArray(this.source[0], jQuery(ev.relatedTarget).parents('*')) !== -1) && this.close();
 		}.bind(this));
 		
 		// Add closeOnClick: 'box' events
@@ -1024,7 +1024,7 @@ jBox.prototype.attach = function(elements, trigger) {
 			// Add close event for trigger event mouseenter
 			(this.options.trigger == 'mouseenter') && el.on('mouseleave', function(ev) {
 				// If we have set closeOnMouseleave, do not close jBox when leaving attached element and mouse is over jBox
-				if(!this.options.closeOnMouseleave || !(ev.toElement == this.wrapper[0] || jQuery(ev.toElement).parents('#' + this.id).length)) this.close();
+				if(!this.options.closeOnMouseleave || !(ev.relatedTarget == this.wrapper[0] || jQuery(ev.relatedTarget).parents('#' + this.id).length)) this.close();
 			}.bind(this));
 			
 			el.data('jBox-attached-' + this.id, trigger);
