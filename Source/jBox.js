@@ -49,7 +49,7 @@ function jBox(type, options) {
 			reload: false,			// Resend the ajax call every time jBox opens
 			getData: 'data-ajax',	// The attribute in the source element where the AJAX will look for the data to send with, e.g. data-ajax="id=82&limit=10"
 			setContent: true,		// Automatically set the response as new content when the AJAX call is finished
-			spinner: true			// Hides the current content and adds a spinner while loading
+			spinner: true			// Hides the current content and adds a spinner while loading, you can pass html content to add your own spinner, e.g. spinner: '<div class="mySpinner"></div>'
 		},
 		
 		// Position
@@ -1426,16 +1426,20 @@ jBox.prototype.ajax = function(options) {
     userOptions.beforeSend = function () {
 		
 		// Add loading spinner
-		userOptions.spinner && this.wrapper.addClass('jBox-loading');
-
+		if (userOptions.spinner) {
+			this.wrapper.addClass('jBox-loading');
+			this.spinner = jQuery(userOptions.spinner !== true ? userOptions.spinner : '<div class="jBox-spinner"></div>').appendTo(this.container);
+		}
+		
         (beforeSend.bind(this))();
     }.bind(this);
 
-    // Set new complete event 
+    // Set new complete event
     userOptions.complete = function (response) {
 		
-		// Remove spinner, set content and reposition jBox
+		// Remove spinner
 		this.wrapper.removeClass('jBox-loading');
+		this.spinner && this.spinner.remove();
 		
 		// Set new content
 		userOptions.setContent && this.setContent(response.responseText);
