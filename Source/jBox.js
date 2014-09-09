@@ -900,8 +900,8 @@ function jBox(type, options) {
 		var windowDimensions = {
 			x: win.width(),
 			y: win.height(),
-			top: win.scrollTop(),
-			left: win.scrollLeft()
+			top: (this.options.fixed && this.target.data('jBox-fixed') ? 0 : win.scrollTop()),
+			left: (this.options.fixed && this.target.data('jBox-fixed') ? 0 : win.scrollLeft())
 		};
 		windowDimensions.bottom = windowDimensions.top + windowDimensions.y;
 		windowDimensions.right = windowDimensions.left + windowDimensions.x;
@@ -1134,11 +1134,18 @@ jBox.prototype.position = function(options) {
 		return this;
 	}
 	
+	// Total current dimensions of target element
+	var targetOffset = this.target.offset();
+	
 	// Add fixed data to target
 	!this.target.data('jBox-fixed') && this.target.data('jBox-fixed', (this.target[0] != jQuery(window)[0] && (this.target.css('position') == 'fixed' || this.target.parents().filter(function() { return jQuery(this).css('position') == 'fixed'; }).length > 0)) ? 'fixed' : 'static');
 	
-	// Total current dimensions of target element
-	var targetOffset = this.target[this.target.data('jBox-fixed') == 'fixed' ? 'position' : 'offset']();
+	// When the target is fixed and jBox is fixed, remove scroll offset
+	if (this.target.data('jBox-fixed') == 'fixed' && this.options.fixed) {
+		targetOffset.top = targetOffset.top - jQuery(window).scrollTop();
+		targetOffset.left = targetOffset.left - jQuery(window).scrollLeft();
+	}
+	
 	this.targetDimensions = {
 		x: this.target.outerWidth(),
 		y: this.target.outerHeight(),
@@ -1170,7 +1177,6 @@ jBox.prototype.position = function(options) {
 		
 		// Move inside
 		(a != this.options.position[p]) && (this.pos[a] += this.targetDimensions[p] - this.dimensions[p]);
-		
 		
 		// Move outside
 		(this.options.outside == p || this.options.outside == 'xy') && (this.pos[a] += this.dimensions[p] * (a != this.options.position[p] ? 1 : -1));
