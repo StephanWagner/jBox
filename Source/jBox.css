@@ -493,30 +493,36 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 .jBox-loading .jBox-content {
-	min-height: 30px;
-	min-width: 30px;
+	min-height: 24px;
+	min-width: 24px;
 	opacity: 0;
 }
 
-.jBox-loading .jBox-container:before {
-	content: 'Loading…';
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 16px;
-	height: 16px;
-	margin-top: -10px;
-	margin-left: -10px;
+.jBox-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+}
+ 
+.jBox-spinner:before {
+    content: 'Loading…';
+    display: block;
+    width: 16px;
+    height: 16px;
 	text-align: center;
 }
-
-.jBox-loading .jBox-container:not(:required):before {
-	content: '';
-	border-radius: 50%;
-	border: 2px solid rgba(0, 0, 0, 0.3);
-	border-top-color: rgba(0, 0, 0, 0.6);
-	-webkit-animation: jBoxLoading .6s linear infinite;
-	animation: jBoxLoading .6s linear infinite;
+ 
+.jBox-spinner:not(:required):before {
+    content: '';
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, .3);
+    border-top-color: rgba(0, 0, 0, .6);
+    animation: jBoxLoading .6s linear infinite;
+    -webkit-animation: jBoxLoading .6s linear infinite;
 }
 
 /* IE8 fixes */
