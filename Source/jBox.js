@@ -395,7 +395,7 @@ function jBox(type, options) {
 	jQuery.type(this.options.offset) != 'object' && (this.options.offset = {x: this.options.offset, y: this.options.offset});
 	this.options.offset.x || (this.options.offset.x = 0);
 	this.options.offset.y || (this.options.offset.y = 0);
-	jQuery.type(this.options.adjustDistance) != 'object' && (this.options.adjustDistance = {top: this.options.adjustDistance, right: this.options.adjustDistance, bottom: this.options.adjustDistance, left: this.options.adjustDistance});
+	jQuery.type(this.options.adjustDistance) != 'object' ? (this.options.adjustDistance = {top: this.options.adjustDistance, right: this.options.adjustDistance, bottom: this.options.adjustDistance, left: this.options.adjustDistance}) : (this.options.adjustDistance = jQuery.extend({top: 5, left: 5, right: 5, bottom: 5}, this.options.adjustDistance));
 	
 	// Save where the jBox is aligned to
 	this.align = (this.options.outside && this.options.outside != 'xy') ? this.options.position[this.options.outside] : (this.options.position.y != 'center' && jQuery.type(this.options.position.y) != 'number' ? this.options.position.x : (this.options.position.x != 'center' && jQuery.type(this.options.position.x) != 'number' ? this.options.position.y : this.options.attributes.x));
@@ -927,11 +927,12 @@ function jBox(type, options) {
 			
 			// Check if enough space is availible on opposite position
 			if (((this.outside == 'top' || this.outside == 'left') ? 
-				(windowDimensions[this._getXY(this.outside)] - (this.targetDimensions[this._getTL(this.outside)] - windowDimensions[this._getTL(this.outside)]) - this.targetDimensions[this._getXY(this.outside)]) :
-				(this.targetDimensions[this._getTL(this.outside)] - windowDimensions[this._getTL(this.outside)])) > this.dimensions[this._getXY(this.outside)] + this.options.adjustDistance[this._getOpp(this.outside)]) {
+				(windowDimensions[this._getXY(this.outside)] - (this.targetDimensions[this._getTL(this.outside)] - windowDimensions[this._getTL(this.outside)]) - this.targetDimensions[this._getXY(this.outside)]) + this.options.offset[this._getXY(this.outside)] :
+				(this.targetDimensions[this._getTL(this.outside)] - windowDimensions[this._getTL(this.outside)]) - this.options.offset[this._getXY(this.outside)]
+				) > this.dimensions[this._getXY(this.outside)] + parseInt(this.options.adjustDistance[this._getOpp(this.outside)])) {
 				
 				// Adjust wrapper and pointer
-				this.wrapper.css(this._getTL(this.outside), this.pos[this._getTL(this.outside)] + ((this.dimensions[this._getXY(this.outside)] + this.options.offset[this._getXY(this.outside)] + this.targetDimensions[this._getXY(this.outside)]) * (this.outside == 'top' || this.outside == 'left' ? 1 : -1)));
+				this.wrapper.css(this._getTL(this.outside), this.pos[this._getTL(this.outside)] + ((this.dimensions[this._getXY(this.outside)] + (this.options.offset[this._getXY(this.outside)] * (this.outside == 'top' || this.outside == 'left' ? -2 : 2)) + this.targetDimensions[this._getXY(this.outside)]) * (this.outside == 'top' || this.outside == 'left' ? 1 : -1)));
 				this.pointer && this.wrapper.removeClass('jBox-pointerPosition-' + this.pointer.position).addClass('jBox-pointerPosition-' + this._getOpp(this.pointer.position)).css('padding', 0).css('padding-' + this.outside, this.pointer.dimensions[this._getXY(this.outside)]);
 				this.pointer && this.pointer.element.attr('class', 'jBox-pointer jBox-pointer-' + this.outside);
 				this.positionAdjusted = true;
