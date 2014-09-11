@@ -70,6 +70,8 @@ function jBox(type, options) {
 		adjustDistance: 5,			// How far from the window edge we start adjusting, use an object to set different values: {bottom: 5, top: 50, left: 5, right: 20}
 		fixed: false,				// Your jBox will stay on position when scrolling
 		reposition: false,			// Calculates new position when the window-size changes
+		repositionOnOpen: true,		// Calculates new position each time jBox opens (rather than only when it opens the first time)
+		repositionOnContent: true,	// Calculates new position when the content changes with .setContent() or .setTitle()
 		
 		// Pointer
 		pointer: false,				// Your pointer will always point towards the target element, so the option outside should be 'x' or 'y'
@@ -1076,7 +1078,7 @@ jBox.prototype.setTitle = function(title, ignore_positioning) {
 	this.title.html(title);
 	
 	// Reposition if dimensions changed
-	!ignore_positioning && (wrapperHeight != this.wrapper.height() || wrapperWidth != this.wrapper.width()) && this.position();
+	!ignore_positioning && this.options.repositionOnContent && (wrapperHeight != this.wrapper.height() || wrapperWidth != this.wrapper.width()) && this.position();
 	
 	return this;
 };
@@ -1107,7 +1109,7 @@ jBox.prototype.setContent = function(content, ignore_positioning) {
 	};
 	
 	// Reposition if dimensions changed
-	!ignore_positioning && (wrapperHeight != this.wrapper.height() || wrapperWidth != this.wrapper.width()) && this.position({adjustOffset: adjustOffset});
+	!ignore_positioning && this.options.repositionOnContent && (wrapperHeight != this.wrapper.height() || wrapperWidth != this.wrapper.width()) && this.position({adjustOffset: adjustOffset});
 	
 	return this;
 };
@@ -1255,10 +1257,10 @@ jBox.prototype.open = function(options) {
 	var open = function() {
 		
 		// Set title from source element
-		this.source && this.options.getTitle && (this.source.attr(this.options.getTitle) && this.setTitle(this.source.attr(this.options.getTitle)));
+		this.source && this.options.getTitle && (this.source.attr(this.options.getTitle) && this.setTitle(this.source.attr(this.options.getTitle)), true);
 		
 		// Set content from source element
-		this.source && this.options.getContent && (this.source.data('jBox-getContent') ? this.setContent(this.source.data('jBox-getContent')) : (this.source.attr(this.options.getContent) ? this.setContent(this.source.attr(this.options.getContent)) : null));
+		this.source && this.options.getContent && (this.source.data('jBox-getContent') ? this.setContent(this.source.data('jBox-getContent'), true) : (this.source.attr(this.options.getContent) ? this.setContent(this.source.attr(this.options.getContent), true) : null));
 		
 		// Fire onOpen event
 		(this.options.onOpen.bind(this))();
@@ -1268,7 +1270,7 @@ jBox.prototype.open = function(options) {
 		this.options.ajax && this.options.ajax.url && (!this.ajaxLoaded || this.options.ajax.reload) && this.ajax();
 		
 		// Set position
-		this.position({target: options.target});
+		(!this.positionedOnOpen || this.options.repositionOnOpen) && this.position({target: options.target}) && (this.positionedOnOpen = true);
 		
 		// Abort closing
 		this.isClosing && this._abortAnimation();
