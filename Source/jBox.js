@@ -1268,7 +1268,7 @@ jBox.prototype.open = function(options) {
 		this.options._onOpen && (this.options._onOpen.bind(this))();
 		
 		// Get content from ajax
-		((this.options.ajax && this.options.ajax.url) || (options.ajax && options.ajax.url)) && (!this.ajaxLoaded || this.options.ajax.reload) && this.ajax(options.ajax || null);
+		((this.options.ajax && this.options.ajax.url && (!this.ajaxLoaded || this.options.ajax.reload)) || (options.ajax && options.ajax.url)) && this.ajax(options.ajax || null);
 		
 		// Set position
 		(!this.positionedOnOpen || this.options.repositionOnOpen) && this.position({target: options.target}) && (this.positionedOnOpen = true);
