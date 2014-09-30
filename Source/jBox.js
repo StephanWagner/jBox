@@ -415,6 +415,20 @@ function jBox(type, options) {
 	this._getXY = function(xy) { return {left: 'x', right: 'x', top: 'y', bottom: 'y', center: 'x'}[xy]; };
 	this._getTL = function(tl) { return {left: 'left', right: 'left', top: 'top', bottom: 'top', center: 'left', x: 'left', y: 'top'}[tl]; };
 	
+	// Create an svg element
+	this._createSVG = function(type, options) {
+		var svg = document.createElementNS('http://www.w3.org/2000/svg', type);
+		jQuery.each(options, function (index, item) {
+			svg.setAttribute(item[0], (item[1] || ''));
+		});
+		return svg;
+	};
+	
+	// Append a svg element to a svg container
+	this._appendSVG = function(source, target) {
+		return target.appendChild(source);
+	};
+	
 	// Create jBox
 	this._create = function() {
 		if (this.wrapper) return;
@@ -698,20 +712,6 @@ function jBox(type, options) {
 				complete: function() { this.overlay.css({display: 'none'}); }.bind(this)
 			})) : this.overlay.css({display: 'none', opacity: 0});
 		}
-	};
-	
-	// Create a svg element
-	this._createSVG = function(type, options) {
-		var svg = document.createElementNS('http://www.w3.org/2000/svg', type);
-		jQuery.each(options, function (index, item) {
-			svg.setAttribute(item[0], (item[1] || ''));
-		});
-		return svg;
-	};
-	
-	// Append a svg element to a svg container
-	this._appendSVG = function(source, target) {
-		return target.appendChild(source);
 	};
 		
 	// Generate CSS for animations and append to header
@@ -1268,7 +1268,7 @@ jBox.prototype.open = function(options) {
 		this.options._onOpen && (this.options._onOpen.bind(this))();
 		
 		// Get content from ajax
-		this.options.ajax && this.options.ajax.url && (!this.ajaxLoaded || this.options.ajax.reload) && this.ajax();
+		((this.options.ajax && this.options.ajax.url) || (options.ajax && options.ajax.url)) && (!this.ajaxLoaded || this.options.ajax.reload) && this.ajax(options.ajax || null);
 		
 		// Set position
 		(!this.positionedOnOpen || this.options.repositionOnOpen) && this.position({target: options.target}) && (this.positionedOnOpen = true);
