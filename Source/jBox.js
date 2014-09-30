@@ -114,6 +114,8 @@ function jBox(type, options) {
 		// Only for type "Confirm"
 		confirmButton: 'Submit',	// Text for the submit button
 		cancelButton: 'Cancel',		// Text for the cancel button
+		confirm: null,				// Function to execute when clicking the submit button. By default jBox will use firstly the onclick and secondly the href attribute
+		cance: null,				// Function to execute when clicking the cancel button
 		
 		// Only for type "Notice"
 		autoClose: 7000,			// Time when jBox should close automatically
@@ -178,20 +180,22 @@ function jBox(type, options) {
 			animation: 'zoomOut',
 			preventDefault: true,
 			_onAttach: function(el) {
-				// Extract the href or the onclick event
-				var submit = el.attr('onclick') ? el.attr('onclick') : (el.attr('href') ? (el.attr('target') ? 'window.open("' + el.attr('href') + '", "' + el.attr('target') + '");'  : 'window.location.href = "' + el.attr('href') + '";') : '');
-				el.prop('onclick', null).data('jBox-Confirm-submit', submit);
+				// Extract the href or the onclick event if no submit event is passed
+				if (!this.options.confirm) {
+					var submit = el.attr('onclick') ? el.attr('onclick') : (el.attr('href') ? (el.attr('target') ? 'window.open("' + el.attr('href') + '", "' + el.attr('target') + '");'  : 'window.location.href = "' + el.attr('href') + '";') : '');
+					el.prop('onclick', null).data('jBox-Confirm-submit', submit);
+				}
 			},
 			_onCreated: function() {
 				// Add a footer to the jBox container
 				this.footer = jQuery('<div class="jBox-Confirm-footer"/>');
-				jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-cancel"/>').html(this.options.cancelButton).click(function() { this.close(); }.bind(this)).appendTo(this.footer);
+				jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-cancel"/>').html(this.options.cancelButton).click(function() { this.options.cancel && this.options.cancel(); this.close(); }.bind(this)).appendTo(this.footer);
 				this.submitButton = jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-submit"/>').html(this.options.confirmButton).appendTo(this.footer);
 				this.footer.appendTo(this.container);
 			},
 			_onOpen: function() {
 				// Set the new action for the submit button
-				this.submitButton.off('click.jBox-Confirm' + this.id).on('click.jBox-Confirm' + this.id, function() { eval(this.source.data('jBox-Confirm-submit')); this.close(); }.bind(this));
+				this.submitButton.off('click.jBox-Confirm' + this.id).on('click.jBox-Confirm' + this.id, function() { this.options.confirm ? this.options.confirm() : eval(this.source.data('jBox-Confirm-submit')); this.close(); }.bind(this));
 			}
 		},
 		// Default options for notices
@@ -677,7 +681,7 @@ function jBox(type, options) {
 			(this.options.closeOnClick == 'overlay') && this.overlay.on('touchend click', function() { this.isOpen && this.close({ignoreDelay: true}); }.bind(this));
 		}
 		
-		// Add jBox to data
+		// Add jBox to overlay data
 		var overlay_data = this.overlay.data('jBox') || {};
 		overlay_data['jBox-' + this.id] = true;
 		this.overlay.data('jBox', overlay_data);
@@ -699,7 +703,7 @@ function jBox(type, options) {
 		// Abort if no overlay found
 		if (!this.overlay) return;
 		
-		// Remove jBox from data
+		// Remove jBox from overlay data
 		var overlay_data = this.overlay.data('jBox');
 		delete overlay_data['jBox-' + this.id];
 		this.overlay.data('jBox', overlay_data);
@@ -1242,6 +1246,9 @@ jBox.prototype.position = function(options) {
 jBox.prototype.open = function(options) {
 	options || (options = {});
 	
+	// Abort if jBox was destroyed
+	if (this.isDestroyed) return false;
+	
 	// Construct jBox if not already constructed
 	!this.wrapper && this._create();
 	
@@ -1322,6 +1329,9 @@ jBox.prototype.open = function(options) {
 // Close jBox
 jBox.prototype.close = function(options) {
 	options || (options = {});
+	
+	// Abort if jBox was destroyed
+	if (this.isDestroyed) return false;
 	
 	// Abort opening
 	this.timer && clearTimeout(this.timer);
@@ -1484,14 +1494,15 @@ jBox.prototype.audio = function(options) {
 };
 
 // Destroy jBox and remove it from DOM
+// TODO: If no other jBox needs an overlay remove it as well
 jBox.prototype.destroy = function() {
-	this.close({ignoreDelay: true});
-	this.wrapper.remove();
+	this.detach().close({ignoreDelay: true});
+	this.wrapper && this.wrapper.remove();
+	this.isDestroyed = true;
 	return this;
 };
 
-// TODO
-// Find an option to preload audio files
+// TODO: Find an option to preload audio files
 
 // Get a unique ID for jBoxes
 jBox._getUniqueID = (function () {
