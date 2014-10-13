@@ -372,6 +372,24 @@
 	fill: #666;
 }
 
+/* Fix : no SVG support for close button */
+
+.jBox-closeButton.jBox-nosvg:before {
+    font-family: Verdana, sans-serif;
+    content: 'x';
+    text-align: center;
+    font-size: 18px;
+    color: #aaa;
+    -webkit-transition: color .2s;
+    transition: color .2s;
+}
+.jBox-closeButton.jBox-nosvg:hover:before {
+    color: #888;
+}
+.jBox-closeButton.jBox-nosvg:active:before {
+    color: #666;
+}
+
 /* Close button in overlay */
 
 #jBox-overlay .jBox-closeButton {
@@ -381,7 +399,8 @@
 	height: 40px;
 }
 
-#jBox-overlay .jBox-closeButton svg {
+#jBox-overlay .jBox-closeButton svg,
+#jBox-overlay .jBox-closeButton span {
 	width: 20px;
 	height: 20px;
 	margin-top: -10px;
@@ -409,7 +428,8 @@
 	width: 40px;
 }
 
-.jBox-closeButton-title .jBox-closeButton svg {
+.jBox-closeButton-title .jBox-closeButton svg,
+.jBox-closeButton-title .jBox-closeButton span {
 	width: 12px;
 	height: 12px;
 	margin-top: -6px;
@@ -427,7 +447,8 @@
 	border-radius: 50%;
 }
 
-.jBox-closeButton-box .jBox-closeButton svg {
+.jBox-closeButton-box .jBox-closeButton svg,
+.jBox-closeButton-box .jBox-closeButton span {
 	width: 10px;
 	height: 10px;
 	margin-top: -5px;
@@ -548,11 +569,4 @@ body[class*=" jBox-blockScroll-"] {
 
 .jBox-IE8.jBox-Modal .jBox-container {
 	border: 3px solid #aaa;
-}
-
-.jBox-IE8 .jBox-closeButton:after {
-	font-family: Verdana, sans-serif;
-	content: 'x';
-	text-align: center;
-	font-size: 18px;
 }
