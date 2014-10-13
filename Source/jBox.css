@@ -399,8 +399,7 @@
 	height: 40px;
 }
 
-#jBox-overlay .jBox-closeButton svg,
-#jBox-overlay .jBox-closeButton span {
+#jBox-overlay .jBox-closeButton svg {
 	width: 20px;
 	height: 20px;
 	margin-top: -10px;
@@ -428,8 +427,7 @@
 	width: 40px;
 }
 
-.jBox-closeButton-title .jBox-closeButton svg,
-.jBox-closeButton-title .jBox-closeButton span {
+.jBox-closeButton-title .jBox-closeButton svg {
 	width: 12px;
 	height: 12px;
 	margin-top: -6px;
@@ -447,8 +445,7 @@
 	border-radius: 50%;
 }
 
-.jBox-closeButton-box .jBox-closeButton svg,
-.jBox-closeButton-box .jBox-closeButton span {
+.jBox-closeButton-box .jBox-closeButton svg {
 	width: 10px;
 	height: 10px;
 	margin-top: -5px;
