@@ -1104,7 +1104,7 @@ jBox.prototype.setContent = function(content, ignore_positioning) {
 	// Set the new content
 	switch (jQuery.type(content)) {
 		case 'string': this.content.html(content); break;
-		case 'object': this.content.children().css({display: 'none'}); this.options.content.appendTo(this.content).css({display: 'block'}); break;
+		case 'object': this.content.children().css({display: 'none'}); content.appendTo(this.content).css({display: 'block'}); break;
 	}
 	
 	// Calculate the difference to before the content was set
