@@ -421,7 +421,7 @@ function jBox(type, options) {
 
     // Check for SVG support
     this._supportsSvg = function() {
-        return document.implementation.hasFeature("http://www.w3.org/TR/SVG11/feature#Shape", "1.0")
+        return document.createElement('svg').getAttributeNS;
     }
 
     // Create an svg element
