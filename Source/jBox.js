@@ -420,7 +420,7 @@ function jBox(type, options) {
     this._getTL = function(tl) { return {left: 'left', right: 'left', top: 'top', bottom: 'top', center: 'left', x: 'left', y: 'top'}[tl]; };
 
     // Check for SVG support
-    this._supportsSvg = function() {
+    this._supportsSVG = function() {
         return document.createElement('svg').getAttributeNS;
     }
 
@@ -474,13 +474,12 @@ function jBox(type, options) {
         if (this.options.closeButton) {
             this.closeButton = jQuery('<div/>', {'class': 'jBox-closeButton jBox-noDrag'}).on('touchend click', function(ev) { this.isOpen && this.close({ignoreDelay: true}); }.bind(this));
 
-            if(this._supportsSvg()){
+            if (this._supportsSVG()){
                 var closeButtonSVG = this._createSVG('svg', [['viewBox', '0 0 24 24']]);
                 this._appendSVG(this._createSVG('path', [['d', 'M22.2,4c0,0,0.5,0.6,0,1.1l-6.8,6.8l6.9,6.9c0.5,0.5,0,1.1,0,1.1L20,22.3c0,0-0.6,0.5-1.1,0L12,15.4l-6.9,6.9c-0.5,0.5-1.1,0-1.1,0L1.7,20c0,0-0.5-0.6,0-1.1L8.6,12L1.7,5.1C1.2,4.6,1.7,4,1.7,4L4,1.7c0,0,0.6-0.5,1.1,0L12,8.5l6.8-6.8c0.5-0.5,1.1,0,1.1,0L22.2,4z']]), closeButtonSVG);
                 this.closeButton.append(closeButtonSVG);
-            }
-            else{
-                this.closeButton.addClass("jBox-nosvg");
+            } else {
+                this.wrapper.addClass("jBox-nosvg");
             }
 
             // Add close button to jBox container
