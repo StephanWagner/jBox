@@ -7,7 +7,7 @@ authors: Stephan Wagner (http://stephanwagner.me)
 license: MIT (http://www.opensource.org/licenses/mit-license.php)
 
 requires: jQuery 1.11.0 (http://code.jquery.com/jquery-1.11.0.min.js)
-jQuery 2.1.0 (http://code.jquery.com/jquery-2.1.0.min.js)
+          jQuery 2.1.0 (http://code.jquery.com/jquery-2.1.0.min.js)
 
 documentation: http://stephanwagner.me/jBox/documentation
 
