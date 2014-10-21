@@ -129,7 +129,7 @@ function jBox(type, options) {
 		gallery: 'data-jbox-image',	// The attribute where you define the image gallery, e.g. data-jbox-image="gallery1"
 		imageLabel: 'title',		// The attribute where jBox gets the image label from, e.g. title="My label"
 		imageFade: 600,				// The fade duration for images
-		imageSize: 'cover'			// How to display the images: Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
+		imageSize: 'contain'		// How to display the images: Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
 	};
 
 	// Default type options
@@ -259,7 +259,7 @@ function jBox(type, options) {
 				this.imageZIndex = 1;
 				
 				// Loop through images, sort and save in global variable
-				jQuery.each(this.attachedElements, function (index, item) {
+				this.attachedElements && jQuery.each(this.attachedElements, function (index, item) {
 					item = jQuery(item);
 					if (item.data('jBox-image-gallery')) return;
 					var gallery = item.attr(this.options.gallery) || 'default';
@@ -296,7 +296,7 @@ function jBox(type, options) {
 					!open && !preload && image.animate({opacity: 1}, this.options.imageFade);
 				}.bind(this);
 				
-				// Helper to show new Image label
+				// Helper to show new image label
 				var showLabel = function(gallery, id) {
 					jQuery('.jBox-image-label.active').removeClass('active');
 					jQuery('#jBox-image-label-' + gallery + '-' + id).addClass('active');
@@ -347,11 +347,14 @@ function jBox(type, options) {
 				};
 			},
 			_onCreated: function() {
+			
+				// TODO: NO ID!!!
+			
 				this.imageLabel = jQuery('<div/>', {'id': 'jBox-image-label'}).appendTo(this.wrapper);
 				this.wrapper.append(jQuery('<div/>', {'class': 'jBox-image-pointer-prev', click: function() { this.showImage('prev'); }.bind(this)})).append(jQuery('<div/>', {'class': 'jBox-image-pointer-next', click: function() { this.showImage('next'); }.bind(this)}));
 			},
 			_onOpen: function() {
-				// Add a class to body so you can control the appearance of the overlay, fo rimages a darker one is better
+				// Add a class to body so you can control the appearance of the overlay, for images a darker one is better
 				jQuery('body').addClass('jBox-image-open');
 				
 				// Add key events
@@ -455,7 +458,7 @@ function jBox(type, options) {
 			// Save the jBox instance in the wrapper, so you can get access to your jBox when you only have the element
 		}).data('jBox', this);
 		
-		// Add mouseleave event (.parents('*') might be a performance nightmare! Maybe there is a better)
+		// Add mouseleave event (.parents('*') might be a performance nightmare! Maybe there is a better way)
 		this.options.closeOnMouseleave && this.wrapper.mouseleave(function(ev) {
 			// Only close when the new target is not the source element
 			!this.source || !(ev.relatedTarget == this.source[0] || jQuery.inArray(this.source[0], jQuery(ev.relatedTarget).parents('*')) !== -1) && this.close();
@@ -474,7 +477,7 @@ function jBox(type, options) {
 		if (this.options.closeButton) {
 			this.closeButton = jQuery('<div/>', {'class': 'jBox-closeButton jBox-noDrag'}).on('touchend click', function(ev) { this.isOpen && this.close({ignoreDelay: true}); }.bind(this));
 			
-			if (this._supportsSVG()){
+			if (this._supportsSVG()) {
 				var closeButtonSVG = this._createSVG('svg', [['viewBox', '0 0 24 24']]);
 				this._appendSVG(this._createSVG('path', [['d', 'M22.2,4c0,0,0.5,0.6,0,1.1l-6.8,6.8l6.9,6.9c0.5,0.5,0,1.1,0,1.1L20,22.3c0,0-0.6,0.5-1.1,0L12,15.4l-6.9,6.9c-0.5,0.5-1.1,0-1.1,0L1.7,20c0,0-0.5-0.6,0-1.1L8.6,12L1.7,5.1C1.2,4.6,1.7,4,1.7,4L4,1.7c0,0,0.6-0.5,1.1,0L12,8.5l6.8-6.8c0.5-0.5,1.1,0,1.1,0L22.2,4z']]), closeButtonSVG);
 				this.closeButton.append(closeButtonSVG);
@@ -1144,7 +1147,7 @@ jBox.prototype.setDimensions = function(type, val, pos) {
 	// Set CSS of content
 	this.content.css(type, val);
 	
-	// Reposition bu default
+	// Reposition by default
 	(pos == undefined || pos) && this.position();
 };
 
@@ -1186,6 +1189,7 @@ jBox.prototype.position = function(options) {
 		targetOffset.left = targetOffset.left - jQuery(window).scrollLeft();
 	}
 	
+	// Store target dimensions
 	this.targetDimensions = {
 		x: this.target.outerWidth(),
 		y: this.target.outerHeight(),
@@ -1243,12 +1247,16 @@ jBox.prototype.position = function(options) {
 			switch (this.options.position[this._getOpp(this.options.outside)]) {
 				case 'center':
 					adjustWrapper += ((this.dimensions[this._getOpp(this.options.outside)] / 2) - (this.pointer.dimensions[this._getOpp(this.options.outside)] / 2)) * (this.pointer.align == this._getTL(this.pointer.align) ? 1 : -1);
-					break;
+				break;
 				default:
 					adjustWrapper += (this.pointer.align != this.options.position[this._getOpp(this.options.outside)]) ?
-						this.dimensions[this._getOpp(this.options.outside)] - (this.pointer.dimensions[this._getOpp(this.options.outside)] / 2) :
-						(this.pointer.dimensions[this._getOpp(this.options.outside)] / 2);
-					break;
+						
+					// If pointer align is different to position align
+					(this.dimensions[this._getOpp(this.options.outside)] * (jQuery.inArray(this.pointer.align, ['top', 'left']) !== -1 ? 1 : -1)) + ((this.pointer.dimensions[this._getOpp(this.options.outside)] / 2) * (jQuery.inArray(this.pointer.align, ['top', 'left']) !== -1 ? -1 : 1)) :
+						
+					// If pointer align is same as position align
+					(this.pointer.dimensions[this._getOpp(this.options.outside)] / 2) * (jQuery.inArray(this.pointer.align, ['top', 'left']) !== -1 ? 1 : -1);
+				break;
 			}
 			break;
 		}
