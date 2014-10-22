@@ -12,7 +12,7 @@
 		"ui",
 		"images"
 	],
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"homepage": "http://stephanwagner.me/jBox",
 	"docs": "http://stephanwagner.me/jBox/documentation",
 	"bugs": "https://github.com/StephanWagner/jBox/issues",
