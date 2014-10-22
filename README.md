@@ -43,7 +43,7 @@ Confirm windows
 ---------------
 
 Confirm windows are modal windows which requires the user to confirm a click action on an element.
-Give the element the data-confirm attribute to attach it:
+Give an element the attribute data-confirm to attach it:
 
 	new jBox('Confirm', {
 		confirmButton: 'Do it!',
