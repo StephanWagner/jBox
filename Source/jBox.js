@@ -40,6 +40,7 @@ function jBox(type, options) {
 		content: null,				// You can use a string to set text or HTML as content, or an element selector (e.g. jQuery('#jBox-content')) to append one or several elements (elements appended will get style display: 'block', so hide them with CSS style display: 'none' beforehand)
 		getTitle: null,				// Get the title from an attribute when jBox opens
 		getContent: null,			// Get the content from an attribute when jBox opens
+		isolateScroll: true,		// Isolates scrolling to content container
 		
 		// AJAX request
 		ajax: {						// Setting an url will make an AJAX call when jBox opens
@@ -104,12 +105,15 @@ function jBox(type, options) {
 		draggable: null,			// Make your jBox draggable (use 'true', 'title' or provide an element as handle) (inspired from Chris Coyiers CSS-Tricks http://css-tricks.com/snippets/jquery/draggable-without-jquery-ui/)
 		dragOver: true,				// When you have multiple draggable jBoxes, the one you select will always move over the other ones
 		
-		// Events						// Note: You can use 'this' in the event functions, it refers to your jBox object (e.g. onInit: function() { this.open(); })
-		onInit: function() {},			// Triggered when jBox is initialized, just before it's being created
-		onCreated: function() {},		// Triggered when jBox is created and is availible in DOM
-		onOpen: function() {},			// Triggered when jBox is opened
-		onClose: function() {},			// Triggered when jBox is closed
-		onCloseComplete: function() {},	// Triggered when jBox is completely closed (when fading is finished, useful if you want to destroy the jBox when it is closed)
+		// Events					// Note: You can use 'this' in the event functions, it refers to your jBox object (e.g. onInit: function() { this.open(); })
+		onInit: null,				// Triggered when jBox is initialized
+		onBeforeInit: null,			// Triggered when jBox starts initializing, useful to add your own internal functions
+		onAttach: null,				// Triggered when jBox attached itself to elements
+		// TODO onPosition
+		onCreated: null,			// Triggered when jBox is created and is availible in DOM
+		onOpen: null,				// Triggered when jBox opens
+		onClose: null,				// Triggered when jBox closes
+		onCloseComplete: null,		// Triggered when jBox is completely closed (when fading is finished, useful if you want to destroy the jBox when it is closed)
 		
 		// Only for type "Confirm"
 		confirmButton: 'Submit',	// Text for the submit button
@@ -219,7 +223,7 @@ function jBox(type, options) {
 				// Loop through notices at same window corner and either move or destroy them
 				jQuery.each(jQuery('.jBox-Notice'), function(index, el) {
 					el = jQuery(el);
-
+					
 					if (el.attr('id') == this.id || el.data('jBox-Notice-position') != this.options.attributes.x + '-' + this.options.attributes.y) return;
 					if (!this.options.stack) {
 						el.data('jBox').close({ignoreDelay: true});
@@ -227,7 +231,7 @@ function jBox(type, options) {
 					}
 					el.css('margin-' + this.options.attributes.y, parseInt(el.css('margin-' + this.options.attributes.y)) + this.wrapper.outerHeight() + 10);
 				}.bind(this));
-
+				
 				// Play audio file, IE8 doesn't support audio
 				this.options.audio && this.audio({url: this.options.audio, valume: this.options.volume});
 			},
@@ -382,11 +386,20 @@ function jBox(type, options) {
 	// Set default options for jBox types
 	if (jQuery.type(type) == 'string') {
 		this.type = type;
-		type = this.defaultOptions[type];
+		type = this.defaultOptions[type] ? this.defaultOptions[type] : window['jBox' + type + 'Options'];
 	}
 	
 	// Merge options
 	this.options = jQuery.extend(true, this.options, type, options);
+	
+	// Function to fire events
+	this._fireEvent = function(event, pass) {
+		this.options['_' + event] && (this.options['_' + event].bind(this))(pass);
+		this.options[event] && (this.options[event].bind(this))(pass);
+	};
+	
+	// Fire onBeforeInit event
+	this._fireEvent('onBeforeInit');
 	
 	// Get unique ID
 	if (this.options.id === null) {
@@ -441,6 +454,17 @@ function jBox(type, options) {
 		return target.appendChild(source);
 	};
 	
+	// Isolate scrolling in a container
+	this._isolateScroll = function(el) {
+		if(!el || !jQuery(el).length) return;
+		el.on('DOMMouseScroll.jBoxIsolatedScroll mousewheel.jBoxIsolatedScroll', function(ev) {
+			var delta = ev.wheelDelta || (ev.originalEvent && ev.originalEvent.wheelDelta) || -ev.detail,
+				overflowBottom = this.scrollTop + el.outerHeight() - this.scrollHeight >= 0,
+				overflowTop = this.scrollTop <= 0;
+				if ((delta < 0 && overflowBottom) || (delta > 0 && overflowTop)) ev.preventDefault();
+		});
+	};
+	
 	// Create jBox
 	this._create = function() {
 		if (this.wrapper) return;
@@ -472,6 +496,9 @@ function jBox(type, options) {
 		
 		// Create content
 		this.content = jQuery('<div/>', {'class': 'jBox-content'}).css({width: this.options.width, height: this.options.height, minWidth: this.options.minWidth, minHeight: this.options.minHeight, maxWidth: this.options.maxWidth, maxHeight: this.options.maxHeight}).appendTo(this.container);
+		
+		// Isolate scrolling
+		if (this.options.isolateScroll) this._isolateScroll(this.content);
 		
 		// Create close button
 		if (this.options.closeButton) {
@@ -568,8 +595,7 @@ function jBox(type, options) {
 		}
 		
 		// Fire onCreated event
-		(this.options.onCreated.bind(this))();
-		this.options._onCreated && (this.options._onCreated.bind(this))();
+		this._fireEvent('onCreated');
 	};
 	
 	// Create jBox onInit
@@ -994,8 +1020,7 @@ function jBox(type, options) {
 	};
 	
 	// Fire onInit event
-	(this.options.onInit.bind(this))();
-	this.options._onInit && (this.options._onInit.bind(this))();
+	this._fireEvent('onInit');
 	
 	return this;
 };
@@ -1049,9 +1074,8 @@ jBox.prototype.attach = function(elements, trigger) {
 			
 			el.data('jBox-attached-' + this.id, trigger);
 			
-			// TODO // TODO TOO CLOSE
 			// Fire onAttach event
-			this.options._onAttach && (this.options._onAttach.bind(this))(el);
+			this._fireEvent('onAttach', el);
 		}
 	}.bind(this));
 	
@@ -1312,8 +1336,7 @@ jBox.prototype.open = function(options) {
 		this.source && this.options.getContent && (this.source.data('jBox-getContent') ? this.setContent(this.source.data('jBox-getContent'), true) : (this.source.attr(this.options.getContent) ? this.setContent(this.source.attr(this.options.getContent), true) : null));
 		
 		// Fire onOpen event
-		(this.options.onOpen.bind(this))();
-		this.options._onOpen && (this.options._onOpen.bind(this))();
+		this._fireEvent('onOpen');
 		
 		// Get content from ajax
 		((this.options.ajax && this.options.ajax.url && (!this.ajaxLoaded || this.options.ajax.reload)) || (options.ajax && options.ajax.url)) && this.ajax(options.ajax || null);
@@ -1387,8 +1410,7 @@ jBox.prototype.close = function(options) {
 	var close = function() {
 		
 		// Fire onClose event
-		(this.options.onClose.bind(this))();
-		this.options._onClose && (this.options._onClose.bind(this))();
+		this._fireEvent('onClose');
 		
 		// Only close if jBox is open
 		if (this.isOpen) {
