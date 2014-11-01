@@ -122,7 +122,7 @@
 	padding: 10px 15px;
 	background: #f4f5f6;
 	border-bottom: 1px solid #ddd;
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 1px #fff;
 }
 
 .jBox-Modal.jBox-closeButton-title .jBox-title,
@@ -206,7 +206,7 @@
 	border-radius: 3px;
 	box-shadow: 0 0 3px rgba(0, 0, 0, .2);
 	color: #fff;
-	text-shadow: 0 -1px 0 #000;
+	text-shadow: 0 -1px 1px #000;
 	background: #333;
 	background-image: linear-gradient(to bottom, #444, #222);
 }
@@ -226,12 +226,12 @@
 }
 
 .jBox-Notice-color .jBox-container {
-	text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
+	text-shadow: 0 -1px 1px rgba(0, 0, 0, .3);
 }
 
 .jBox-Notice-gray .jBox-container {
 	color: #666;
-	text-shadow: 0 1px 0 #fff;
+	text-shadow: 0 1px 1px #fff;
 	background: #f4f4f4;
 	background-image: linear-gradient(to bottom, #fafafa, #f0f0f0);
 }
@@ -253,7 +253,7 @@
 
 .jBox-Notice-yellow .jBox-container {
 	color: #744700;
-	text-shadow: 0 1px 0 rgba(255, 255, 255, .6);
+	text-shadow: 0 1px 1px rgba(255, 255, 255, .6);
 	background: #ffb11f;
 	background-image: linear-gradient(to bottom, #ffd665, #ffb11f);
 }
