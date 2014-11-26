@@ -4,10 +4,10 @@ description: jBox is a powerful and flexible jQuery plugin, taking care of all y
 
 authors: Stephan Wagner (http://stephanwagner.me)
 
-license: MIT (http://www.opensource.org/licenses/mit-license.php)
+license: MIT (http://opensource.org/licenses/MIT)
 
-requires: jQuery 1.11.0 (http://code.jquery.com/jquery-1.11.0.min.js)
-          jQuery 2.1.0 (http://code.jquery.com/jquery-2.1.0.min.js)
+requires: jQuery 1.11.1 (http://code.jquery.com/jquery-1.11.1.min.js)
+          jQuery 2.1.1 (http://code.jquery.com/jquery-2.1.1.min.js)
 
 documentation: http://stephanwagner.me/jBox/documentation
 
