@@ -498,7 +498,7 @@ function jBox(type, options) {
 		this.content = jQuery('<div/>', {'class': 'jBox-content'}).css({width: this.options.width, height: this.options.height, minWidth: this.options.minWidth, minHeight: this.options.minHeight, maxWidth: this.options.maxWidth, maxHeight: this.options.maxHeight}).appendTo(this.container);
 		
 		// Isolate scrolling
-		if (this.options.isolateScroll) this._isolateScroll(this.content);
+		this.options.isolateScroll && this._isolateScroll(this.content);
 		
 		// Create close button
 		if (this.options.closeButton) {
@@ -1104,9 +1104,11 @@ jBox.prototype.detach = function(elements) {
 
 // Set title
 jBox.prototype.setTitle = function(title, ignore_positioning) {
+	!this.wrapper && this._create();
+	
 	var wrapperHeight = this.wrapper.height(), wrapperWidth = this.wrapper.width();
 	if (title == null || title == undefined) return this;
-	!this.wrapper && this._create();
+	
 	if (!this.title) {
 		this.titleContainer = jQuery('<div/>', {'class': 'jBox-title'});
 		this.title = jQuery('<div/>').appendTo(this.titleContainer);
