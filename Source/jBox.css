@@ -3,10 +3,6 @@
 
 .jBox-wrapper {
 	text-align: left;
-}
-
-.jBox-wrapper,
-.jBox-wrapper * {
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 	-webkit-font-smoothing: antialiased;
