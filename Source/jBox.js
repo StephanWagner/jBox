@@ -1182,11 +1182,14 @@ jBox.prototype.setWidth = function(val, pos) { this.setDimensions('width', val, 
 jBox.prototype.setHeight = function(val, pos) { this.setDimensions('height', val, pos); };
 
 // Position jBox
-jBox.prototype.position = function(options) {
+jBox.prototype.position = function(options, keep_position) {
 	options || (options = {});
 	
 	// Get target
 	this.target = options.target || this.target || this.options.target || jQuery(window);
+	
+	// Move outside of scroll area to make sure dimensions are calculated correctly
+	!keep_position && this.wrapper.css({top: -12000, left: -12000});
 	
 	// Cache total current dimensions of jBox
 	this.dimensions = {
@@ -1302,6 +1305,17 @@ jBox.prototype.position = function(options) {
 	
 	// Set CSS
 	this.wrapper.css(this.pos);
+	
+	/*
+		TODO Better solution
+			 Check this for responsive design
+			 
+	// If by positioning dimensions changed, position again without recalculating
+	if (!keep_position && this.wrapper.outerWidth() != this.dimensions.x || this.wrapper.outerHeight() != this.dimensions.y) {
+		return this.position(options, true);
+	}
+	
+	*/
 	
 	// Adjust position
 	this._adjustPosition();
