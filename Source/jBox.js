@@ -1,37 +1,38 @@
+/*
+---
+description: jBox is a powerful and flexible jQuery plugin, taking care of all your modal windows, tooltips, notices and more.
+
+authors: Stephan Wagner (http://stephanwagner.me)
+
+license: MIT (http://opensource.org/licenses/MIT)
+
+requires: jQuery 1.11.1 (http://code.jquery.com/jquery-1.11.1.min.js)
+          jQuery 2.1.1 (http://code.jquery.com/jquery-2.1.1.min.js)
+
+documentation: http://stephanwagner.me/jBox/documentation
+
+demos: http://stephanwagner.me/jBox/demos
+...
+*/
+
 (function (root, factory) {
+	
+	// AMD. Register as an anonymous module
     if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
         define(['jQuery'], function (jQuery) {
             return (root.jBox = factory(jQuery));
         });
+    
+    // Node. Does not work with strict CommonJS, but only CommonJS-like enviroments that support module.exports, like Node
     } else if (typeof exports === 'object') {
-        // Node. Does not work with strict CommonJS, but
-        // only CommonJS-like enviroments that support module.exports,
-        // like Node.
         module.exports = factory(require('jQuery'));
+    
+    // Browser globals
     } else {
-        // Browser globals
         root.jBox = factory(root.jQuery);
     }
 }(this, function (jQuery) {
-
-	/*
-	---
-	description: jBox is a powerful and flexible jQuery plugin, taking care of all your modal windows, tooltips, notices and more.
-
-	authors: Stephan Wagner (http://stephanwagner.me)
-
-	license: MIT (http://opensource.org/licenses/MIT)
-
-	requires: jQuery 1.11.1 (http://code.jquery.com/jquery-1.11.1.min.js)
-	          jQuery 2.1.1 (http://code.jquery.com/jquery-2.1.1.min.js)
-
-	documentation: http://stephanwagner.me/jBox/documentation
-
-	demos: http://stephanwagner.me/jBox/demos
-	...
-	*/
-
+	
 	var jBox = function (type, options) {
 		
 		this.options = {
