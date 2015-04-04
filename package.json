@@ -33,6 +33,46 @@
     }
   ],
   "dependencies": {
-    "jquery": ">=1.11"
-  }
+    "jquery": ">=1.11 <2.0 || >= 2.1.1"
+  },
+  "autoupdate": {
+    "source": "git",
+    "target": "git://github.com/StephanWagner/jBox.git",
+    "basePath": "/Source/",
+    "files": [
+      "jBox.css",
+      "jBox.min.js",
+      "jBox.js",
+      "themes/ModalBorder.css",
+      "themes/NoticeBorder.css",
+      "themes/TooltipBorder.css",
+      "themes/TooltipDark.css",
+      
+      "audio/beep1.mp3",
+      "audio/beep2.mp3",
+      "audio/beep3.mp3",
+      "audio/bling1.mp3",
+      "audio/bling2.mp3",
+      "audio/bling3.mp3",
+      "audio/bling4.mp3",
+      "audio/bling5.mp3",
+      "audio/blop.mp3",
+      "audio/bloop1.mp3",
+      "audio/bloop2.mp3",
+      "audio/bloop3.mp3",
+      
+      "audio/beep1.ogg",
+      "audio/beep2.ogg",
+      "audio/beep3.ogg",
+      "audio/bling1.ogg",
+      "audio/bling2.ogg",
+      "audio/bling3.ogg",
+      "audio/bling4.ogg",
+      "audio/bling5.ogg",
+      "audio/blop.ogg",
+      "audio/bloop1.ogg",
+      "audio/bloop2.ogg",
+      "audio/bloop3.ogg",
+    ]
+   }
 }
