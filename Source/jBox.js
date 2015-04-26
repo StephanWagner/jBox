@@ -1164,6 +1164,7 @@ demos: http://stephanwagner.me/jBox/demos
 		// Set the new content
 		switch (jQuery.type(content)) {
 			case 'string': this.content.html(content); break;
+			case 'function': this.content.html(content()); break;
 			case 'object': this.content.html(''); content.attr('data-jbox-content-appended', 1).appendTo(this.content).css({display: 'block'}); break;
 	 	}
 	 	
