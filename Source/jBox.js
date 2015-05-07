@@ -471,6 +471,11 @@ demos: http://stephanwagner.me/jBox/demos
 		this._appendSVG = function(source, target) {
 			return target.appendChild(source);
 		};
+
+		//checking if element is inside SVG
+		this._withinSVG = function(element) {
+			return !!element.closest('svg').length;
+		};
 		
 		// Isolate scrolling in a container
 		this._isolateScroll = function(el) {
@@ -1238,8 +1243,8 @@ demos: http://stephanwagner.me/jBox/demos
 		
 		// Store target dimensions
 		this.targetDimensions = {
-			x: this.target.outerWidth(),
-			y: this.target.outerHeight(),
+			x: (this._withinSVG(this.target) ? this.target.get(0).getBoundingClientRect().width : this.target.outerWidth()),
+			y: (this._withinSVG(this.target) ? this.target.get(0).getBoundingClientRect().height : this.target.outerHeight()),
 			top: (targetOffset ? targetOffset.top : 0),
 			left: (targetOffset ? targetOffset.left : 0)
 		};
