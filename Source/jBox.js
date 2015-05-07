@@ -251,7 +251,7 @@ demos: http://stephanwagner.me/jBox/demos
 					}.bind(this));
 					
 					// Play audio file, IE8 doesn't support audio
-					this.options.audio && this.audio({url: this.options.audio, valume: this.options.volume});
+					this.options.audio && this.audio({url: this.options.audio, volume: this.options.volume});
 				},
 				// Remove notice from DOM when closing finishes
 				_onCloseComplete: function() {
@@ -470,6 +470,11 @@ demos: http://stephanwagner.me/jBox/demos
 		// Append a svg element to a svg container
 		this._appendSVG = function(source, target) {
 			return target.appendChild(source);
+		};
+
+		//checking if element is inside SVG
+		this._withinSVG = function(element) {
+			return !!element.closest('svg').length;
 		};
 		
 		// Isolate scrolling in a container
@@ -1238,8 +1243,8 @@ demos: http://stephanwagner.me/jBox/demos
 		
 		// Store target dimensions
 		this.targetDimensions = {
-			x: this.target.outerWidth(),
-			y: this.target.outerHeight(),
+			x: (this._withinSVG(this.target) ? this.target.get(0).getBoundingClientRect().width : this.target.outerWidth()),
+			y: (this._withinSVG(this.target) ? this.target.get(0).getBoundingClientRect().height : this.target.outerHeight()),
 			top: (targetOffset ? targetOffset.top : 0),
 			left: (targetOffset ? targetOffset.left : 0)
 		};
