@@ -251,7 +251,7 @@ demos: http://stephanwagner.me/jBox/demos
 					}.bind(this));
 					
 					// Play audio file, IE8 doesn't support audio
-					this.options.audio && this.audio({url: this.options.audio, valume: this.options.volume});
+					this.options.audio && this.audio({url: this.options.audio, volume: this.options.volume});
 				},
 				// Remove notice from DOM when closing finishes
 				_onCloseComplete: function() {
