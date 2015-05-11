@@ -751,7 +751,7 @@ demos: http://stephanwagner.me/jBox/demos
 				queue: false,
 				duration: this.options.fade,
 				start: function() { this.overlay.css({display: 'block'}); }.bind(this)
-			})) : this.overlay.css({display: 'block', opacity: 1});
+			})) : this.overlay.css({display: 'block', opacity: this.IE8 ? .2 : 1});
 		};
 		
 		// Remove overlay
