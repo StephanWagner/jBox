@@ -19,13 +19,13 @@ demos: http://stephanwagner.me/jBox/demos
 	
 	// AMD. Register as an anonymous module
     if (typeof define === 'function' && define.amd) {
-        define(['jQuery'], function (jQuery) {
+        define(['jquery'], function (jQuery) {
             return (root.jBox = factory(jQuery));
         });
     
     // Node. Does not work with strict CommonJS, but only CommonJS-like enviroments that support module.exports, like Node
     } else if (typeof exports === 'object') {
-        module.exports = factory(require('jQuery'));
+        module.exports = factory(require('jquery'));
     
     // Browser globals
     } else {
