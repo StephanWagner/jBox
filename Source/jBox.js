@@ -143,6 +143,7 @@ demos: http://stephanwagner.me/jBox/demos
 			autoClose: 7000,			// Time when jBox should close automatically
 			color: null,				// Makes your notices colorful, use 'black', 'red', 'green', 'blue', 'yellow'
 			stack: true,				// Set to false to disable notice-stacking
+			stackDirection: 'down',		// if notice-stacking is enabled: the direction for stacking, either 'down' or 'up'
 			audio: false,				// Set the url to an audio file without extention, e.g. '/url/filename'. jBox will look for an .mp3 and an .ogg file
 			volume: 100,				// Percent of volume for audio files
 			
@@ -247,7 +248,8 @@ demos: http://stephanwagner.me/jBox/demos
 							el.data('jBox').close({ignoreDelay: true});
 							return;
 						}
-						el.css('margin-' + this.options.attributes.y, parseInt(el.css('margin-' + this.options.attributes.y)) + this.wrapper.outerHeight() + 10);
+						var dir = this.options.stackDirection === 'up'? -1 : 1;
+						el.css('margin-' + this.options.attributes.y, parseInt(el.css('margin-' + this.options.attributes.y)) + (dir * (this.wrapper.outerHeight() + 10)));
 					}.bind(this));
 					
 					// Play audio file, IE8 doesn't support audio
