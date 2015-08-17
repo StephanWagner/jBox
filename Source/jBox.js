@@ -44,8 +44,8 @@ demos: http://stephanwagner.me/jBox/demos
 			width: 'auto',				// Width of content area (e.g. 'auto', 100)
 			height: 'auto',				// Height of content area
 			minWidth: null,				// Minimum width
-			maxHeight: null,			// Minimum height
-			minWidth: null,				// Maximum width
+			minHeight: null,			// Minimum height
+			maxWidth: null,				// Maximum width
 			maxHeight: null,			// Minimum height
 			
 			// Attach
