@@ -45,9 +45,7 @@ demos: http://stephanwagner.me/jBox/demos
 			height: 'auto',				// Height of content area
 			minWidth: null,				// Minimum width
 			maxHeight: null,			// Minimum height
-			minWidth: null,				// Maximum width
-			maxHeight: null,			// Minimum height
-			
+
 			// Attach
 			attach: null,				// Attach jBox to elements (if no target element is provided, jBox will use the attached element as target)
 			trigger: 'click',			// The event to open or close your jBoxes, use 'click' or 'mouseenter'
