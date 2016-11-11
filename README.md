@@ -50,7 +50,7 @@ Give an element the attribute data-confirm to attach it:
 		cancelButton: 'Nope'
 	});
 	
-	<div onclick="doit()" data-confirm="Do you really want to do this?">Click me!</div>
+	<div onclick="alert('You did it!')" data-confirm="Do you really want to do this?">Click me!</div>
 	<a href="http://stephanwagner.me" data-confirm="Do you really want to leave this page?">Click me!</a>
 
 
@@ -67,7 +67,7 @@ A notice will open automatically and destroy itself after some time:
 Images
 ------
 
-To create image modal windows you only need following few lines:
+To create image windows you only need following few lines:
 
 	new jBox('Image');
 	
