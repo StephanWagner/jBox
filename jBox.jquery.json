@@ -12,7 +12,7 @@
 		"ui",
 		"images"
 	],
-	"version": "0.3.2",
+	"version": "0.4.0",
 	"homepage": "http://stephanwagner.me/jBox",
 	"docs": "http://stephanwagner.me/jBox/documentation",
 	"bugs": "https://github.com/StephanWagner/jBox/issues",
@@ -28,6 +28,7 @@
 	}
 	],
 	"dependencies": {
-		"jquery": ">=1.11"
-	}
+		"jquery": ">=2.1"
+	},
+	
 }
