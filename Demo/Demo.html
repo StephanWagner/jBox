@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>jBox Test</title>
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0">
+
+<link rel="stylesheet" href="../Source/jBox.css">
+<link rel="stylesheet" href="../Source/plugins/Notice/jBox.Notice.css">
+<link rel="stylesheet" href="../Source/plugins/Confirm/jBox.Confirm.css">
+<link rel="stylesheet" href="../Source/plugins/Image/jBox.Image.css">
+<link rel="stylesheet" href="../Source/themes/NoticeFancy.css">
+<link rel="stylesheet" href="../Source/themes/TooltipBorder.css">
+<link rel="stylesheet" href="../Source/themes/TooltipDark.css">
+<link rel="stylesheet" href="./Demo.css">
+
+<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+
+<header>
+<nav class="container">
+<a href="http://stephanwagner.me/jBox/documentation">Documentation</a>
+<a href="http://stephanwagner.me/jBox/demos">More Demos</a>
+<a href="http://stephanwagner.me/Coding" id="stephan"><span>Stephan Wagner</span></a>
+</nav>
+</header>
+
+<main class="container">
+
+<h2>Tooltip</h2>
+
+<div class="targets-wrapper">
+<div id="Tooltip-1" class="target">Hover me</div>
+<div id="Tooltip-2" class="target">Hover me</div>
+<div id="Tooltip-3" class="target">Hover me</div>
+<div id="Tooltip-4" class="target">Hover me</div>
+<div id="Tooltip-5" class="target">Hover me</div>
+<div id="Tooltip-6" class="target">Hover me</div>
+<div id="Tooltip-7" class="target-click">Click me</div>
+<div id="Tooltip-8" class="target-click">Click me</div>
+</div>
+
+<h2>Modal</h2>
+
+<div class="targets-wrapper">
+<div id="Modal-1" class="target-click">Click me</div>
+<div id="Modal-2" class="target-click">Click me</div>
+<div id="Modal-3" class="target-click">Click me</div>
+<div class="target-click" data-confirm onclick="new jBox('Notice', {content: 'Yay! You clicked submit', color: 'green', attributes: {y: 'bottom'}})">Click me</div>
+</div>
+
+<h2>Notice</h2>
+
+<div class="targets-wrapper">
+<div id="Notice-1" class="target-notice">Click me</div>
+<div id="Notice-2" class="target-notice">Click me</div>
+<div id="Notice-3" class="target-notice">Click me</div>
+<div id="Notice-4" class="target-notice">Click me</div>
+</div>
+
+<h2>Image</h2>
+
+<div class="targets-wrapper">
+<a class="demo-img" href="http://stephanwagner.me/img/jBox/demo-img/CIMG4778_large.jpg" data-jbox-image="gallery1" title="Navigate with your keyboard: Press the [right] or [left] key"><img src="http://stephanwagner.me//img/jBox/demo-img/CIMG4778_small.jpg" alt=""></a>
+<a class="demo-img" href="http://stephanwagner.me/img/jBox/demo-img/CIMG4547_large.jpg" data-jbox-image="gallery1" title="jBox is smart, the next image gets preloaded"><img src="http://stephanwagner.me//img/jBox/demo-img/CIMG4547_small.jpg" alt=""></a>
+<a class="demo-img" href="http://stephanwagner.me/img/jBox/demo-img/CIMG6771_large.jpg" data-jbox-image="gallery1" title="You can easily group your images into galleries"><img src="http://stephanwagner.me//img/jBox/demo-img/CIMG6771_small.jpg" alt=""></a>
+<a class="demo-img" href="http://stephanwagner.me/img/jBox/demo-img/CIMG8142_large.jpg" data-jbox-image="gallery1" title="As usual, attaching jBox to images is easy as pie"><img src="http://stephanwagner.me//img/jBox/demo-img/CIMG8142_small.jpg" alt=""></a>
+</div>
+
+</main>
+
+<script src="../Source/jBox.js"></script>
+<script src="../Source/plugins/Notice/jBox.Notice.js"></script>
+<script src="../Source/plugins/Confirm/jBox.Confirm.js"></script>
+<script src="../Source/plugins/Image/jBox.Image.js"></script>
+<script src="./Demo.js"></script>
+
+</body>
+</html>
