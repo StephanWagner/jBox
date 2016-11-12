@@ -850,25 +850,25 @@ jBox.prototype.setContent = function(content, ignore_positioning) {
 };
 
 // Set new dimensions
-jBox.prototype.setDimensions = function(type, val, pos) {
+jBox.prototype.setDimensions = function(type, value, pos) {
 	
 	// Create jBox if no wrapper found
 	!this.wrapper && this._create();
 	
 	// Default value is 'auto'
-	val == undefined && (val == 'auto');
+	value == undefined && (value == 'auto');
 	
 	// Set CSS of content and title
-	this.content.css(type, val);
-	type == 'width' && this.title && this.title.parent().css(type, val);
+	this.content.css(type, value);
+	type == 'width' && this.title && this.title.parent().css(type, value);
 	
 	// Reposition by default
 	(pos == undefined || pos) && this.position();
 };
 
 // Set width or height
-jBox.prototype.setWidth = function(val, pos) { this.setDimensions('width', val, pos); };
-jBox.prototype.setHeight = function(val, pos) { this.setDimensions('height', val, pos); };
+jBox.prototype.setWidth = function(value, pos) { this.setDimensions('width', value, pos); };
+jBox.prototype.setHeight = function(value, pos) { this.setDimensions('height', value, pos); };
 
 // Position jBox
 jBox.prototype.position = function(options) {
