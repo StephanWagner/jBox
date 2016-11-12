@@ -69,7 +69,7 @@ new jBoxPlugin('Image', {
 				id: 'jBox-image-' + gallery + '-' + id,
 				'class': 'jBox-image-container'
 			}).css({
-				backgroundImage: 'url(' + this.images[gallery][id].src + ')',
+				backgroundImage: 'url("' + this.images[gallery][id].src + '")',
 				backgroundSize: this.options.imageSize,
 				opacity: (open ? 1 : 0),
 				zIndex: (preload ? 0 : this.imageZIndex++)
