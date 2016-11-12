@@ -3,7 +3,7 @@
 	"version": "0.4.0",
 	"description": "jBox is a powerful and flexible jQuery plugin, taking care of all your popup windows, tooltips, notices and more.",
 	"keywords": [
-		"tooltip", "modal", "window", "dialog", "confirm", "popup", "notice", "alert", "ui", "images", "lightbox"
+		"jquery-plugin", "ecosystem:jquery", "tooltip", "modal", "window", "dialog", "confirm", "popup", "notice", "alert", "ui", "images", "lightbox"
 	],
 	"homepage": "http://stephanwagner.me/jBox",
 	"repository": {
