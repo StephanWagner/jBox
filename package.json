@@ -1,37 +1,21 @@
 {
-	"name": "jBox",
-	"title": "jBox",
+	"name": "jbox",
+	"version": "0.4.0",
 	"description": "jBox is a powerful and flexible jQuery plugin, taking care of all your popup windows, tooltips, notices and more.",
 	"keywords": [
-		"tooltip",
-		"modal",
-		"window",
-		"dialog",
-		"popup",
-		"notice",
-		"ui",
-		"images"
+		"tooltip", "modal", "window", "dialog", "confirm", "popup", "notice", "alert", "ui", "images", "lightbox"
 	],
-	"version": "0.4.0",
 	"homepage": "http://stephanwagner.me/jBox",
-	"download": "https://github.com/StephanWagner/jBox/archive/master.zip",
-	"docs": "http://stephanwagner.me/jBox/documentation",
+	"repository": {
+		"type" : "git",
+		"url" : "https://github.com/StephanWagner/jBox.git"
+	},
 	"bugs": {
-		"url": "https://github.com/StephanWagner/jBox/issues"
+		"url": "https://github.com/StephanWagner/jBox/issues",
+		"email" : "stephanwagner.me@gmail.com"
 	},
-	"author": {
-		"name": "Stephan Wagner",
-		"url": "http://stephanwagner.me"
-	},
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
-	"licenses": [
-	{
-		"type": "MIT",
-		"url": "http://opensource.org/licenses/mit-license.php"
-	}
-	],
+	"author": "Stephan Wagner <stephanwagner.me@gmail.com> (http://stephanwagner.me)",
+	"license": "MIT",
 	"dependencies": {
 		"jquery": ">=2.1"
 	}
