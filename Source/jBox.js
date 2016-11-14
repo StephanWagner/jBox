@@ -50,13 +50,13 @@ function jBox(type, options) {
 		// AJAX request
 		ajax: {						// Setting an url will make an AJAX call when jBox opens
 			url: null,				// URL to send the AJAX request to
-			data: '',				// Data to send with your AJAX call (e.g. '{id: 82, limit: 10}')
+			data: '',				// Data to send with your AJAX request (e.g. {id: 82, limit: 10})
 									// Optional you can add any jQuery AJAX option (http://api.jquery.com/jquery.ajax/)
-			reload: false,			// Resend the ajax call when jBox opens. Use true to send the ajax call only once for every element or 'strict' to resend every time jBox opens
-			getData: 'data-ajax',	// The attribute in the source element where the AJAX will look for the data to send with, e.g. data-ajax="id=82&limit=10"
-			getURL: 'data-url',		// The attribute in the source element where the AJAX will look for the ajax url
-			setContent: true,		// Automatically set the response as new content when the AJAX call is finished
-			spinner: true,			// Hides the current content and adds a spinner while loading, you can pass html content to add your own spinner, e.g. spinner: '<div class="mySpinner"></div>'
+			reload: false,			// Resend the AJAX request when jBox opens. Use true to send the AJAX request only once for every attached element or 'strict' to resend every time jBox opens
+			getURL: 'data-url',		// The attribute in the source element where the AJAX request will look for the url
+			getData: 'data-ajax',	// The attribute in the source element where the AJAX request will look for the data, e.g. data-ajax="id=82&limit=10"
+			setContent: true,		// Automatically set the response as new content when the AJAX request is finished
+			spinner: true,			// Hides the current content and adds a spinner while loading, you can pass HTML content to add your own spinner, e.g. spinner: '<div class="mySpinner"></div>'
 			spinnerDelay: 300,		// Milliseconds to wait until spinner appears
 			spinnerReposition: true	// Repositions jBox when the spinner is added or removed
 		},
@@ -118,10 +118,10 @@ function jBox(type, options) {
 			y: 20
 		},
 		
-		// Audio					// You use the integrated audio function whenever you'd like to play an audio file, e.g. onInit: function () { this.audio('url_to_file_without_file_extension', 75); }
-		preloadAudio: true,			// Preloads the audio files set in option audio. You also can preload audio files, e.g. ['src_to_file.mp3', 'src_to_file.ogg']
+		// Audio					// You can use the integrated audio function whenever you'd like to play an audio file, e.g. onInit: function () { this.audio('url_to_file_without_file_extension', 75); }
+		preloadAudio: true,			// Preloads the audio files set in option audio. You can also preload other audio files, e.g. ['src_to_file.mp3', 'src_to_file.ogg']
 		audio: null,				// The URL to an audio file to play when jBox opens. Set the URL without file extension, jBox will look for an .mp3 and .ogg file. To play audio when jBox closes, use an object, e.g. audio: {open: 'src_to_audio1', close: 'src_to_audio2'}
-		volume: 75,					// The volume of the audio in percent. To have different volumes for open and close audio, use an object, e.g. volume: {open: 75, close: 100}
+		volume: 75,					// The volume of the audio in percent. To have different volumes for opening and closeing audio, use an object, e.g. volume: {open: 75, close: 100}
 		
 		// Events					// Note that you can use 'this' in the event functions, it refers to your jBox object (e.g. onInit: function() { this.open(); })
 		onInit: null,				// Fired when jBox is initialized
