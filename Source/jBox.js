@@ -879,7 +879,7 @@ jBox.prototype.position = function(options) {
 	
 	// Get target
 	this.target = options.target || this.target || jQuery(window);
-	
+		
 	// Reset contents css to get original dimensions
 	this.content.css({
 		width: options.width,
@@ -891,12 +891,29 @@ jBox.prototype.position = function(options) {
 	});
 	
 	this.titleContainer && this.titleContainer.css({width: options.width});
-	
+
+	// Reset wrapper position to get correct jBox dimensions
+	this.wrapper.css({
+		top: -10000,
+		left: -10000,
+		right: 'auto',
+		bottom: 'auto'
+	});
+
 	// Get jBox dimensions
 	var jBoxDimensions = {
 		x: this.wrapper.outerWidth(),
 		y: this.wrapper.outerHeight()
 	};
+	
+	// Remove wrapper positions to start positioning from scratch
+	this.wrapper.css({
+		top: 'auto',
+		left: 'auto'
+	});
+	
+	// Check if target has fixed position, store in element
+	this.target != 'mouse' && !this.target.data('jBox' + this.id + '-fixed') && this.target.data('jBox' + this.id + '-fixed', (this.target[0] != jQuery(window)[0] && (this.target.css('position') == 'fixed' || this.target.parents().filter(function() { return jQuery(this).css('position') == 'fixed'; }).length > 0)) ? 'fixed' : 'static');
 	
 	// Get window dimensions
 	var windowDimensions = {
@@ -908,11 +925,8 @@ jBox.prototype.position = function(options) {
 	windowDimensions.bottom = windowDimensions.top + windowDimensions.y;
 	windowDimensions.right = windowDimensions.left + windowDimensions.x;
 	
-	// Check if target has fixed position, store in element
-	this.target != 'mouse' && !this.target.data('jBox' + this.id + '-fixed') && this.target.data('jBox' + this.id + '-fixed', (this.target[0] != jQuery(window)[0] && (this.target.css('position') == 'fixed' || this.target.parents().filter(function() { return jQuery(this).css('position') == 'fixed'; }).length > 0)) ? 'fixed' : 'static');
-	
 	// Get target offset
-	try { var targetOffset = this.target.offset(); } catch (e) { var targetOffset = {top: 0, left: 0}; };
+	try { var targetOffset = this.target.offset(); } catch(e) { var targetOffset = {top: 0, left: 0}; };
 	
 	// When the target is fixed and jBox is fixed, remove scroll offset
 	if (this.target != 'mouse' && this.target.data('jBox' + this.id + '-fixed') == 'fixed' && options.fixed) {
@@ -961,7 +975,7 @@ jBox.prototype.position = function(options) {
 		
 		// Adjust width and height accordingly
 		if (this.options.responsiveWidth && jBoxDimensions.x > availableSpace[jBoxOutsidePosition.x || 'x']) {
-			var contentWidth = availableSpace[jBoxOutsidePosition.x || 'x'] - (this.pointer && outside && options.outside == 'x' ? this.pointer.dimensions.x : 0);
+			var contentWidth = availableSpace[jBoxOutsidePosition.x || 'x'] - (this.pointer && outside && options.outside == 'x' ? this.pointer.dimensions.x : 0) - parseInt(this.container.css('border-left-width')) - parseInt(this.container.css('border-right-width'));
 			this.content.css({
 				width: contentWidth > this.options.responsiveMinWidth ? contentWidth : null,
 				minWidth: contentWidth < parseInt(this.content.css('minWidth')) ? 0 : null
@@ -969,7 +983,7 @@ jBox.prototype.position = function(options) {
 			this.titleContainer && (this.titleContainer.css({width: this.content.css('width')}));
 		}
 		if (this.options.responsiveHeight && jBoxDimensions.y > availableSpace[jBoxOutsidePosition.y || 'y']) {
-			var contentHeight = availableSpace[jBoxOutsidePosition.y || 'y'] - (this.pointer && outside && options.outside == 'y' ? this.pointer.dimensions.y : 0) - (this.titleContainer ? this.titleContainer.outerHeight() : 0);
+			var contentHeight = availableSpace[jBoxOutsidePosition.y || 'y'] - (this.pointer && outside && options.outside == 'y' ? this.pointer.dimensions.y : 0) - (this.titleContainer ? this.titleContainer.outerHeight() : 0) - parseInt(this.container.css('border-top-width')) - parseInt(this.container.css('border-bottom-width'));
 			this.content.css({height: contentHeight > this.options.responsiveMinHeight ? contentHeight : null});
 		}
 		
@@ -1084,17 +1098,6 @@ jBox.prototype.position = function(options) {
 		
 		// Only continue if jBox is out of view area
 		if (out) {
-			
-			//console.log(out);
-			
-			// Move a centered jBox
-			/*if (options.position.x == 'center' && options.position.y == 'center') {
-				outYT && this.wrapper.css('marginTop', parseInt(this.wrapper.css('marginTop')) + (options.adjustDistance.top || 0) - pos.top);
-				outYB && this.wrapper.css('marginTop', parseInt(this.wrapper.css('marginTop')) + (windowDimensions.bottom - (pos.top + jBoxDimensions.y + (options.adjustDistance.bottom || 0))));
-				outXR && this.wrapper.css('marginLeft', parseInt(this.wrapper.css('marginLeft')) + (windowDimensions.right - (pos.left + jBoxDimensions.x + (options.adjustDistance.right || 0))));
-				outXL && this.wrapper.css('marginLeft', parseInt(this.wrapper.css('marginLeft')) + (options.adjustDistance.left || 0) - pos.left);
-				return;
-			}*/
 			
 			// Function to flip position
 			var flipJBox = function (xy) {
