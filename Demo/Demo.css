@@ -99,7 +99,7 @@ h2 {
 }
 
 .demo-img > img {
-	border: 5px solid #eee;
+	border: 4px solid #eee;
 	border-radius: 2px;
 	width: 100%;
 	height: auto;
@@ -115,8 +115,13 @@ h2 {
 @media (max-width: 768px) {
 	
 	.target,
-	.target-click {
+	.target-click,
+	.target-notice {
     	width: calc(50% - 10px);
+	}
+
+	.demo-img > img {
+		border-width: 2px;
 	}
 	
 }

@@ -63,19 +63,23 @@ jQuery(document).ready(function () {
 			}.bind(this));
 			
 			// Helper to inject the image into content area
-			var appendImage = function(gallery, id, preload, open) {
+			var appendImage = function(gallery, id, preload, open, error) {
+				
+				// Abort if image was appended already
 				if (jQuery('#jBox-image-' + gallery + '-' + id).length) return;
 				
+				// Create image container
 				var image = jQuery('<div/>', {
 					id: 'jBox-image-' + gallery + '-' + id,
-					'class': 'jBox-image-container'
+					'class': 'jBox-image-container' + (error ? ' jBox-image-not-found' : '')
 				}).css({
-					backgroundImage: 'url("' + this.images[gallery][id].src + '")',
+					backgroundImage: error ? '' : 'url("' + this.images[gallery][id].src + '")',
 					backgroundSize: this.options.imageSize,
 					opacity: (open ? 1 : 0),
 					zIndex: (preload ? 0 : this.imageZIndex++)
 				}).appendTo(this.content);
 				
+				// Create labels
 				var text = jQuery('<div/>', {
 					id: 'jBox-image-label-' + gallery + '-' + id,
 					'class': 'jBox-image-label' + (open ? ' active' : '')
@@ -114,21 +118,24 @@ jQuery(document).ready(function () {
 					jQuery('#jBox-image-' + gallery + '-' + id).css({zIndex: this.imageZIndex++, opacity: 0}).animate({opacity: 1}, (img == 'open') ? 0 : this.options.imageFade);
 					showLabel(gallery, id);
 					
-					// Load image if not found
+				// Load image
 				} else {
 					this.wrapper.addClass('jBox-image-loading');
 					
-					var imageLoaded = function() {
-				        appendImage(gallery, id, false);
-						showLabel(gallery, id);
-						this.wrapper.removeClass('jBox-image-loading');
-				    }.bind(this);
-				    
 				    jQuery('<img src="' + this.images[gallery][id].src + '"/>').each(function() {
-				        var tmpImg = new Image() ;
-				        tmpImg.onload = imageLoaded;
-					    tmpImg.src = $(this).attr('src');
-	    			});
+				        var tmpImg = new Image();
+				        tmpImg.onload = function() {
+					        appendImage(gallery, id, false);
+							showLabel(gallery, id);
+							this.wrapper.removeClass('jBox-image-loading');
+					    }.bind(this);
+				        tmpImg.onerror = function() {
+					        appendImage(gallery, id, false, null, true);
+							showLabel(gallery, id);
+							this.wrapper.removeClass('jBox-image-loading');
+					    }.bind(this);
+					    tmpImg.src = this.images[gallery][id].src;
+	    			}.bind(this));
 				}
 				
 				// Preload next image
@@ -136,8 +143,15 @@ jQuery(document).ready(function () {
 				next_id = next_id > (this.images[gallery].length - 1) ? 0 : (next_id < 0 ? (this.images[gallery].length - 1) : next_id);
 				
 				(!jQuery('#jBox-image-' + gallery + '-' + next_id).length) && jQuery('<img src="' + this.images[gallery][next_id].src + '"/>').each(function() {
-					appendImage(gallery, next_id, true);
-				});
+			        var tmpImg = new Image();
+			        tmpImg.onload = function() {
+				        appendImage(gallery, next_id, true);
+				    }.bind(this);
+			        tmpImg.onerror = function() {
+				        appendImage(gallery, next_id, true, null, true);
+				    }.bind(this);
+					tmpImg.src = this.images[gallery][next_id].src;
+				}.bind(this));
 			};
 		},
 		_onCreated: function() {
@@ -149,7 +163,7 @@ jQuery(document).ready(function () {
 			jQuery('body').addClass('jBox-image-open');
 			
 			// Add key events
-			jQuery(document).on('keyup.jBox-' + this.id, function(ev) {
+			jQuery(document).on('keyup.jBox-Image-' + this.id, function(ev) {
 				(ev.keyCode == 37) && this.showImage('prev');
 				(ev.keyCode == 39) && this.showImage('next');
 			}.bind(this));
@@ -161,7 +175,7 @@ jQuery(document).ready(function () {
 			jQuery('body').removeClass('jBox-image-open');
 			
 			// Remove key events
-			jQuery(document).off('keyup.jBox-' + this.id);
+			jQuery(document).off('keyup.jBox-Image-' + this.id);
 		},
 		_onCloseComplete: function() {
 			// Hide all images
