@@ -42,6 +42,7 @@ jQuery(document).ready(function () {
 		fixed: true,
 		animation: 'zoomIn',
 		closeOnClick: 'box',
+		zIndex: 12000,
 		
 		// Set up system methods
 		_onInit: function () {
