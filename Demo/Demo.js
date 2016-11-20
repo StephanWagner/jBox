@@ -53,8 +53,6 @@ new jBox('Tooltip', {
 new jBox('Mouse', {
 	attach: $('#Tooltip-5'),
 	position: {x: 'right', y: 'bottom'},
-	outside: 'xy',
-	offset: {x: -5, y: 5},
 	content: 'I will follow you!'
 });
 

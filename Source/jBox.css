@@ -43,6 +43,10 @@
 	padding-top: 5px;
 }
 
+.jBox-Mouse {
+	pointer-events: none;
+}
+
 /* Pointer */
 
 .jBox-pointer {

@@ -32,8 +32,8 @@ function jBox(type, options) {
 		// Responsive dimensions
 		responsiveWidth: true,		// Adjusts the width depending on viewport
 		responsiveHeight: true,		// Adjusts the height depending on viewport
-		responsiveMinWidth: 60,		// Minimal width to adjust
-		responsiveMinHeight: 60,	// Minimal height to adjust
+		responsiveMinWidth: 100,	// Minimal width to adjust
+		responsiveMinHeight: 100,	// Minimal height to adjust
 		
 		// Attach
 		attach: null,				// Attach jBox to elements (if no target element is provided, jBox will use the attached element as target)
@@ -150,11 +150,15 @@ function jBox(type, options) {
 		
 		// Default options for mouse tooltips
 		'Mouse': {
+			responsiveWidth: false,
+			responsiveHeight: false,
 			target: 'mouse',
 			trigger: 'mouseenter',
 			position: {x: 'right', y: 'bottom'},
 			outside: 'xy',
-			offset: 5
+			offset: {
+				x: 5, y: 5
+			}
 		},
 		
 		// Default options for modal windows
@@ -166,7 +170,6 @@ function jBox(type, options) {
 			closeOnClick: 'overlay',
 			closeButton: 'overlay',
 			overlay: true,
-			//adjustDistance: {top: 40, right: 5, bottom: 5, left: 5},
 			animation: 'zoomIn'
 		},
 	};
@@ -302,7 +305,7 @@ function jBox(type, options) {
 		
 		// Fix adjustDistance if there is a close button in the box
 		this.wrapper.find('.jBox-closeButton').length &&  jQuery.each(['top', 'right', 'bottom', 'left'], function (index, pos) {
-			this.wrapper.find('.jBox-closeButton').css(pos) && this.wrapper.find('.jBox-closeButton').css(pos) != 'auto' && (this.options.adjustDistance[pos] = Math.max(this.options.adjustDistance[pos], this.options.adjustDistance[pos] + (parseInt(this.wrapper.find('.jBox-closeButton').css(pos)) * -1)));
+			this.wrapper.find('.jBox-closeButton').css(pos) && this.wrapper.find('.jBox-closeButton').css(pos) != 'auto' && (this.options.adjustDistance[pos] = Math.max(this.options.adjustDistance[pos], this.options.adjustDistance[pos] + (((parseInt(this.wrapper.find('.jBox-closeButton').css(pos)) || 0) + (parseInt(this.container.css('border-' + pos + '-width')) || 0)) * -1)));
 		}.bind(this));
 		
 		// Create pointer
@@ -516,6 +519,32 @@ function jBox(type, options) {
 				complete: function() { this.overlay.css({display: 'none'}); }.bind(this)
 			})) : this.overlay.css({display: 'none', opacity: 0});
 		}
+	};
+	
+	// Get the dimensions by moving jBox out of viewport
+	this._exposeDimensions = function() {
+		
+		// Move wrapper out of viewport
+		this.wrapper.css({
+			top: -10000,
+			left: -10000,
+			right: 'auto',
+			bottom: 'auto'
+		});
+	
+		// Get jBox dimensions
+		var jBoxDimensions = {
+			x: this.wrapper.outerWidth(),
+			y: this.wrapper.outerHeight()
+		};
+		
+		// Start at top left
+		this.wrapper.css({
+			top: 'auto',
+			left: 'auto'
+		});
+		
+		return jBoxDimensions;
 	};
 	
 	// Generate CSS for animations and append to header
@@ -891,26 +920,9 @@ jBox.prototype.position = function(options) {
 	});
 	
 	this.titleContainer && this.titleContainer.css({width: options.width});
-
-	// Reset wrapper position to get correct jBox dimensions
-	this.wrapper.css({
-		top: -10000,
-		left: -10000,
-		right: 'auto',
-		bottom: 'auto'
-	});
-
-	// Get jBox dimensions
-	var jBoxDimensions = {
-		x: this.wrapper.outerWidth(),
-		y: this.wrapper.outerHeight()
-	};
 	
-	// Remove wrapper positions to start positioning from scratch
-	this.wrapper.css({
-		top: 'auto',
-		left: 'auto'
-	});
+	// Get jBox dimensions
+	var jBoxDimensions = this._exposeDimensions();
 	
 	// Check if target has fixed position, store in element
 	this.target != 'mouse' && !this.target.data('jBox' + this.id + '-fixed') && this.target.data('jBox' + this.id + '-fixed', (this.target[0] != jQuery(window)[0] && (this.target.css('position') == 'fixed' || this.target.parents().filter(function() { return jQuery(this).css('position') == 'fixed'; }).length > 0)) ? 'fixed' : 'static');
@@ -945,53 +957,65 @@ jBox.prototype.position = function(options) {
 	// Check if jBox is outside
 	var outside = options.outside && !(options.position.x == 'center' && options.position.y == 'center');
 	
-	// Adjust responsive dimensions
-	var flip = {x: false, y: false};
+	// Get the available space on all sides
+	var availableSpace = {
+		x: windowDimensions.x - options.adjustDistance.left - options.adjustDistance.right, // TODO substract position.x when they are numbers
+		y: windowDimensions.y - options.adjustDistance.top - options.adjustDistance.bottom, // TODO substract position.x when they are numbers
+		left: !outside ? 0 : (targetDimensions.left - jQuery(window).scrollLeft() - options.adjustDistance.left),
+		right: !outside ? 0 : (windowDimensions.x - targetDimensions.left + jQuery(window).scrollLeft() - targetDimensions.x - options.adjustDistance.right),
+		top: !outside ? 0 : (targetDimensions.top - jQuery(window).scrollTop() - this.options.adjustDistance.top),
+		bottom: !outside ? 0 : (windowDimensions.y - targetDimensions.top + jQuery(window).scrollTop() - targetDimensions.y - options.adjustDistance.bottom),
+	};
 	
+	// Get the default outside position, check if box will be flipped
+	var jBoxOutsidePosition = {
+		x: (options.outside == 'x' || options.outside == 'xy') && jQuery.type(options.position.x) != 'number' ? options.position.x : null,
+		y: (options.outside == 'y' || options.outside == 'xy') && jQuery.type(options.position.y) != 'number' ? options.position.y : null
+	};
+	var flip = {x: false, y: false};
+	(jBoxOutsidePosition.x && jBoxDimensions.x > availableSpace[jBoxOutsidePosition.x] && availableSpace[this._getOpp(jBoxOutsidePosition.x)] > availableSpace[jBoxOutsidePosition.x]) && (jBoxOutsidePosition.x = this._getOpp(jBoxOutsidePosition.x)) && (flip.x = true);
+	(jBoxOutsidePosition.y && jBoxDimensions.y > availableSpace[jBoxOutsidePosition.y] && availableSpace[this._getOpp(jBoxOutsidePosition.y)] > availableSpace[jBoxOutsidePosition.y]) && (jBoxOutsidePosition.y = this._getOpp(jBoxOutsidePosition.y)) && (flip.y = true);
+	
+	// Adjust responsive dimensions
 	if (options.responsiveWidth || options.responsiveHeight) {
 		
-		// TODO: Check available space when position is number
+		// Adjust width and height according to default outside position
+		var adjustResponsiveWidth = function () {
+			if (options.responsiveWidth && jBoxDimensions.x > availableSpace[jBoxOutsidePosition.x || 'x']) {
+				var contentWidth = availableSpace[jBoxOutsidePosition.x || 'x'] - (this.pointer && outside && options.outside == 'x' ? this.pointer.dimensions.x : 0) - parseInt(this.container.css('border-left-width')) - parseInt(this.container.css('border-right-width'));
+				this.content.css({
+					width: contentWidth > this.options.responsiveMinWidth ? contentWidth : null,
+					minWidth: contentWidth < parseInt(this.content.css('minWidth')) ? 0 : null
+				});
+				this.titleContainer && (this.titleContainer.css({width: this.content.css('width')}));
+			}
+			jBoxDimensions = this._exposeDimensions();
+			
+		}.bind(this);
+		options.responsiveWidth && adjustResponsiveWidth();
 		
-		var availableSpace = {
-			x: windowDimensions.x - options.adjustDistance.left - options.adjustDistance.right, // TODO substract position.x when they are numbers
-			y: windowDimensions.y - options.adjustDistance.top - options.adjustDistance.bottom, // TODO substract position.x when they are numbers
-			left: !outside ? 0 : (targetDimensions.left - jQuery(window).scrollLeft() - options.adjustDistance.left),
-			right: !outside ? 0 : (windowDimensions.x - targetDimensions.left + jQuery(window).scrollLeft() - targetDimensions.x - options.adjustDistance.right),
-			top: !outside ? 0 : (targetDimensions.top - jQuery(window).scrollTop() - this.options.adjustDistance.top),
-			bottom: !outside ? 0 : (windowDimensions.y - targetDimensions.top + jQuery(window).scrollTop() - targetDimensions.y - options.adjustDistance.bottom),
-		};
+		// After adjusting width, check if jBox will be flipped for y
+		options.responsiveWidth && !flip.y && (jBoxOutsidePosition.y && jBoxDimensions.y > availableSpace[jBoxOutsidePosition.y] && availableSpace[this._getOpp(jBoxOutsidePosition.y)] > availableSpace[jBoxOutsidePosition.y]) && (jBoxOutsidePosition.y = this._getOpp(jBoxOutsidePosition.y)) && (flip.y = true);
+			
+		// Adjust width and height according to default outside position
+		var adjustResponsiveHeight = function () {
+			if (options.responsiveHeight && jBoxDimensions.y > availableSpace[jBoxOutsidePosition.y || 'y']) {
+				var contentHeight = availableSpace[jBoxOutsidePosition.y || 'y'] - (this.pointer && outside && options.outside == 'y' ? this.pointer.dimensions.y : 0) - (this.titleContainer ? this.titleContainer.outerHeight() : 0) - parseInt(this.container.css('border-top-width')) - parseInt(this.container.css('border-bottom-width'));
+				this.content.css({height: contentHeight > this.options.responsiveMinHeight ? contentHeight : null});
+			}
+			jBoxDimensions = this._exposeDimensions();
+			
+		}.bind(this);
+		options.responsiveHeight && adjustResponsiveHeight();
 		
-		// Get jBoxes default outside position
-		var jBoxOutsidePosition = {
-			x: (options.outside == 'x' || options.outside == 'xy') && jQuery.type(options.position.x) != 'number' ? options.position.x : null,
-			y: (options.outside == 'y' || options.outside == 'xy') && jQuery.type(options.position.y) != 'number' ? options.position.y : null
-		};
-		
-		// Adjust outside position if jBox will be flipped
+		// After adjusting height, check if jBox will be flipped for x
+		options.responsiveHeight && !flip.x && (jBoxOutsidePosition.x && jBoxDimensions.x > availableSpace[jBoxOutsidePosition.x] && availableSpace[this._getOpp(jBoxOutsidePosition.x)] > availableSpace[jBoxOutsidePosition.x]) && (jBoxOutsidePosition.x = this._getOpp(jBoxOutsidePosition.x)) && (flip.x = true);
+			
+		// Adjust width and height if jBox will be flipped
 		if (options.adjustPosition && options.adjustPosition != 'move') {
-			(jBoxOutsidePosition.x && jBoxDimensions.x > availableSpace[jBoxOutsidePosition.x] && availableSpace[this._getOpp(jBoxOutsidePosition.x)] > availableSpace[jBoxOutsidePosition.x]) && (jBoxOutsidePosition.x = this._getOpp(jBoxOutsidePosition.x)) && (flip.x = true);
-			(jBoxOutsidePosition.y && jBoxDimensions.y > availableSpace[jBoxOutsidePosition.y] && availableSpace[this._getOpp(jBoxOutsidePosition.y)] > availableSpace[jBoxOutsidePosition.y]) && (jBoxOutsidePosition.y = this._getOpp(jBoxOutsidePosition.y)) && (flip.y = true);
+			flip.x && adjustResponsiveWidth();
+			flip.y && adjustResponsiveHeight();
 		}
-		
-		// Adjust width and height accordingly
-		if (this.options.responsiveWidth && jBoxDimensions.x > availableSpace[jBoxOutsidePosition.x || 'x']) {
-			var contentWidth = availableSpace[jBoxOutsidePosition.x || 'x'] - (this.pointer && outside && options.outside == 'x' ? this.pointer.dimensions.x : 0) - parseInt(this.container.css('border-left-width')) - parseInt(this.container.css('border-right-width'));
-			this.content.css({
-				width: contentWidth > this.options.responsiveMinWidth ? contentWidth : null,
-				minWidth: contentWidth < parseInt(this.content.css('minWidth')) ? 0 : null
-			});
-			this.titleContainer && (this.titleContainer.css({width: this.content.css('width')}));
-		}
-		if (this.options.responsiveHeight && jBoxDimensions.y > availableSpace[jBoxOutsidePosition.y || 'y']) {
-			var contentHeight = availableSpace[jBoxOutsidePosition.y || 'y'] - (this.pointer && outside && options.outside == 'y' ? this.pointer.dimensions.y : 0) - (this.titleContainer ? this.titleContainer.outerHeight() : 0) - parseInt(this.container.css('border-top-width')) - parseInt(this.container.css('border-bottom-width'));
-			this.content.css({height: contentHeight > this.options.responsiveMinHeight ? contentHeight : null});
-		}
-		
-		// Update jBox dimensions
-		jBoxDimensions = {
-			x: this.wrapper.outerWidth(),
-			y: this.wrapper.outerHeight()
-		};
 	}
 	
 	// Store new positioning vars in local var
