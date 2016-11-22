@@ -5,7 +5,7 @@
  *
  * License: MIT (http://opensource.org/licenses/MIT)
  *
- * Requires: jBox 0.4.0 (https://code.jboxcdn.com/jBox.min.js)
+ * Requires: jBox 0.4.1 (https://code.jboxcdn.com/jBox.min.js)
  *           jQuery 3.1.1 (https://code.jquery.com/jquery-3.1.1.min.js)
  */
 
@@ -20,6 +20,7 @@ jQuery(document).ready(function () {
     cancelButton: 'Cancel',   // Text for the cancel button
     confirm: null,            // Function to execute when clicking the submit button. By default jBox will use the onclick or the href attribute in that order if found
     cancel: null,             // Function to execute when clicking the cancel button
+    closeOnConfirm: true,     // Close jBox when the user clicks the confirm button
     target: jQuery(window),
     addClass: 'jBox-Modal',
     fixed: true,
@@ -66,7 +67,7 @@ jQuery(document).ready(function () {
     _onOpen: function ()
     {
       // Set the new action for the submit button
-      this.submitButton.off('click.jBox-Confirm' + this.id).on('click.jBox-Confirm' + this.id, function () { this.options.confirm ? this.options.confirm() : eval(this.source.data('jBox-Confirm-submit')); this.close(); }.bind(this));
+      this.submitButton.off('click.jBox-Confirm' + this.id).on('click.jBox-Confirm' + this.id, function () { this.options.confirm ? this.options.confirm() : eval(this.source.data('jBox-Confirm-submit')); this.options.closeOnConfirm && this.close(); }.bind(this));
     }
     
   });
