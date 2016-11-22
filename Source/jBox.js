@@ -1169,7 +1169,7 @@ jBox.prototype.position = function (options)
   setPosition('y');
   
   // Adjust position depending on pointer align
-  if (options.pointer && options.pointer.pointTo == 'target' && jQuery.type(options.position.x) != 'number' && jQuery.type(options.position.y) != 'number') {
+  if (this.pointer && options.pointTo == 'target' && jQuery.type(options.position.x) != 'number' && jQuery.type(options.position.y) != 'number') {
     
     var adjustWrapper = 0;
     
@@ -1181,7 +1181,7 @@ jBox.prototype.position = function (options)
       }
       break;
       default:
-      switch (this.options.position[this._getOpp(options.outside)]) {
+      switch (options.position[this._getOpp(options.outside)]) {
         case 'center':
           adjustWrapper += ((jBoxDimensions[this._getOpp(options.outside)] / 2) - (this.pointer.dimensions[this._getOpp(options.outside)] / 2)) * (this.pointer.align == this._getTL(this.pointer.align) ? 1 : -1);
         break;
