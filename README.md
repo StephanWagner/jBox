@@ -1,11 +1,11 @@
 jBox
 ====
 
-jBox is a powerful and flexible jQuery plugin, taking care of all your modal windows, tooltips, notices and more.
+jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more
 
-Demo: http://stephanwagner.me/jBox
+Demo: https://stephanwagner.me/jBox
 
-Docs: http://stephanwagner.me/jBox/documentation
+Docs: https://stephanwagner.me/jBox/documentation
 
 
 Tooltips
