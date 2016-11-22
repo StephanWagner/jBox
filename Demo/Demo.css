@@ -2,20 +2,20 @@
 /* Global */
 
 html {
-	height: 100%;
-	min-height: 100%;
+  height: 100%;
+  min-height: 100%;
 }
 
 body {
-	position: relative;
-	min-height: 100%;
-	font-family: 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
-	font-size: 17px;
-	line-height: 1.4;
-	color: #202428;
-	background: #fff;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  position: relative;
+  min-height: 100%;
+  font-family: 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.4;
+  color: #202428;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 main {
@@ -23,30 +23,30 @@ main {
 }
 
 .container {
-	position: relative;
-	width: calc(100% - 60px);
-	max-width: 1000px;
-	margin: auto;
+  position: relative;
+  width: calc(100% - 60px);
+  max-width: 1000px;
+  margin: auto;
 }
 
 h2 {
-	font-size: 22px;
-	font-weight: normal;
+  font-size: 22px;
+  font-weight: normal;
 }
 
 @media (max-width: 768px) {
-	
-	.container {
-		width: calc(100% - 30px);
-	}
-	
+  
+  .container {
+    width: calc(100% - 30px);
+  }
+  
 }
 
 /* Target elements */
 
 .targets-wrapper {
-	margin: 0 -5px;
-	padding: 10px 0 20px;
+  margin: 0 -5px;
+  padding: 10px 0 20px;
 }
 
 .targets-wrapper:after,
@@ -62,7 +62,7 @@ h2 {
 .target,
 .target-click,
 .target-notice {
-	cursor: default;
+  cursor: default;
     font-size: 13px;
     line-height: 52px;
     height: 52px;
@@ -75,159 +75,159 @@ h2 {
     float: left;
     width: calc(25% - 10px);
     margin: 5px;
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .target-click,
 .target-notice {
-	cursor: pointer;
+  cursor: pointer;
 }
 
 .target.active,
 .target-click.active,
 .target-notice.active {
-	color: #07d;
+  color: #07d;
 }
 
 .demo-img {
-	float: left;
+  float: left;
     width: calc(25% - 10px);
     margin: 5px;
 }
 
 .demo-img > img {
-	border: 4px solid #eee;
-	border-radius: 2px;
-	width: 100%;
-	height: auto;
-	filter: grayscale(100%);
-	transition: filter .2s, border-color .2s;
+  border: 4px solid #eee;
+  border-radius: 2px;
+  width: 100%;
+  height: auto;
+  filter: grayscale(100%);
+  transition: filter .2s, border-color .2s;
 }
 
 .demo-img:hover > img {
-	filter: none;
-	border-color: #ddd;
+  filter: none;
+  border-color: #ddd;
 }
 
 @media (max-width: 768px) {
-	
-	.target,
-	.target-click,
-	.target-notice {
-    	width: calc(50% - 10px);
-	}
+  
+  .target,
+  .target-click,
+  .target-notice {
+      width: calc(50% - 10px);
+  }
 
-	.demo-img > img {
-		border-width: 2px;
-	}
-	
+  .demo-img > img {
+    border-width: 2px;
+  }
+  
 }
 
 /* jBox styles */
 
 .ajax-sending {
-	color: #07d;
+  color: #07d;
 }
 
 .ajax-complete {
-	color: #6c0;
+  color: #6c0;
 }
 
 .ajax-success tt {
-	color: #666;
-	display: block;
-	padding-top: 10px;
-	font-size: 13px;
+  color: #666;
+  display: block;
+  padding-top: 10px;
+  font-size: 13px;
 }
 
 .ajax-error {
-	color: #d00;
+  color: #d00;
 }
 
 /* Header */
 
 header {
-	height: 50px;
-	line-height: 50px;
-	font-size: 17px;
-	background: #262c33;
-	color: #99a3ad;
-	box-shadow: 0 0 4px rgba(0, 0, 0, .6);
+  height: 50px;
+  line-height: 50px;
+  font-size: 17px;
+  background: #262c33;
+  color: #99a3ad;
+  box-shadow: 0 0 4px rgba(0, 0, 0, .6);
 }
 
 header a {
-	margin-right: 20px;
-	color: #99a3ad;
-	text-decoration: none;
+  margin-right: 20px;
+  color: #99a3ad;
+  text-decoration: none;
 }
 
 header a:last-child,
 header a:nth-child(3) {
-	margin-right: 0;
+  margin-right: 0;
 }
 
 header a.active,
 header a:hover {
-	color: #fff;
-	text-decoration: none;
+  color: #fff;
+  text-decoration: none;
 }
 
 #stephan {
-	display: block;
-	position: absolute;
-	top: 50%;
-	right: 0;
-	width: 40px;
-	height: 40px;
-	margin-top: -20px;
-	border-radius: 3px;
-	background: no-repeat -3px -2px url(http://stephanwagner.me/img/stephan.jpg);
-	background-size: 50px;
-	box-shadow: inset 0 1px 3px rgba(0, 0, 0, .3);
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  border-radius: 3px;
+  background: no-repeat -3px -2px url(https://stephanwagner.me/img/stephan.jpg);
+  background-size: 50px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .3);
 }
 
 #stephan > span {
-	font-size: 0;
-	line-height: 0;
-	white-space: nowrap;
-	position: absolute;
-	top: 50%;
-	right: 50%;
-	pointer-events: none;
-	transition: font-size .2s, margin .2s, opacity .2s, line-height .2s;
-	opacity: 0;
+  font-size: 0;
+  line-height: 0;
+  white-space: nowrap;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  pointer-events: none;
+  transition: font-size .2s, margin .2s, opacity .2s, line-height .2s;
+  opacity: 0;
 }
 
 #stephan:hover > span {
-	opacity: 1;
-	font-size: 17px;
-	margin-right: 40px;
+  opacity: 1;
+  font-size: 17px;
+  margin-right: 40px;
 }
 
 @media (max-width: 500px) {
-	
-	#stephan > span {
-		display: none;
-	}
+  
+  #stephan > span {
+    display: none;
+  }
 
 }
 
 /* Common */
 
 .truncate {
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .noselect {
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .clearfix:after,
@@ -673,52 +673,52 @@ ul, ol, li,
 h1, h2, h3, h4, h5, h6,
 form, table, tr, td,
 div, p, img, pre, iframe {
-	margin: 0;
-	padding: 0;
-	border: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
 }
 
 input, textarea, button, select {
-	margin: 0;
+  margin: 0;
 }
 
 textarea, img {
-	display: block;
+  display: block;
 }
 
 html, body {
-	min-width: 100%;
-	min-height: 100%;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 header, nav, footer, section, img {
-	display: block;
+  display: block;
 }
 
 ul, ol {
-	list-style: none;
+  list-style: none;
 }
 
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 td {
-	vertical-align: top;
+  vertical-align: top;
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-weight: normal;
+  font-weight: normal;
 }
 
 * { 
-	outline: none;
-	box-sizing: border-box;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	-webkit-text-size-adjust: none;
+  outline: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-text-size-adjust: none;
 }
 
 input::-moz-focus-inner,
 button::-moz-focus-inner {
-	border: 0;
+  border: 0;
 }
