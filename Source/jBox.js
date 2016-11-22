@@ -1,5 +1,5 @@
-/*
- * jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more
+/**
+ * jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more.
  *
  * Author: Stephan Wagner (https://stephanwagner.me)
  *

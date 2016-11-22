@@ -1,4 +1,4 @@
-/*
+/**
  * jBox Confirm plugin: Add a confirm dialog to links, buttons, etc.
  *
  * Author: Stephan Wagner (https://stephanwagner.me)

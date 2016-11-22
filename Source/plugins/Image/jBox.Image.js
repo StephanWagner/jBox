@@ -1,4 +1,4 @@
-/*
+/**
  * jBox Image plugin: Adds a lightbox to your images
  *
  * Author: Stephan Wagner (https://stephanwagner.me)

@@ -1,4 +1,4 @@
-/*
+/**
  * jBox Notice plugin: Opens a popup notice
  *
  * Author: Stephan Wagner (https://stephanwagner.me)
