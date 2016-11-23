@@ -5,7 +5,7 @@
  *
  * License: MIT (http://opensource.org/licenses/MIT)
  *
- * Requires: jBox 0.4.1 (https://code.jboxcdn.com/jBox.min.js)
+ * Requires: jBox 0.4.2 (https://code.jboxcdn.com/jBox.min.js)
  *           jQuery 3.1.1 (https://code.jquery.com/jquery-3.1.1.min.js)
  */
 
@@ -18,6 +18,7 @@ jQuery(document).ready(function () {
     
     color: null,      // Add a color to your notices, use 'gray' (default), 'black', 'red', 'green', 'blue' or 'yellow'
     stack: true,      // Set to false to disable notice-stacking
+    stackSpacing: 10, // Spacing between notices when they stack
     autoClose: 6000,  // Time in ms after which the notice will disappear
     attributes: {     // Defines where the notice will pop up
       x: 'right',     // 'left' or 'right'
@@ -79,6 +80,9 @@ jQuery(document).ready(function () {
         };
       };
       
+      // If jBox grabs an element as content, crab a clone instead
+      this.options.content instanceof jQuery && (this.options.content = this.options.content.clone().attr('id', ''));
+      
       // Adjust paddings when window resizes
       jQuery(window).on('resize.responsivejBoxNotice-' + this.id, function (ev) { if (this.isOpen) { this._adjustNoticePositon(); } }.bind(this));
       
@@ -120,7 +124,7 @@ jQuery(document).ready(function () {
         }
         
         // Get the new margin and add to notices
-        var margin = (el.data('jBoxNoticeMargin') ? parseInt(el.data('jBoxNoticeMargin')) : parseInt(el.css('margin-' + this.options.attributes.y))) + this.wrapper.outerHeight() + (jQuery(window).width() > 500 ? 10 : 5);
+        var margin = (el.data('jBoxNoticeMargin') ? parseInt(el.data('jBoxNoticeMargin')) : parseInt(el.css('margin-' + this.options.attributes.y))) + this.wrapper.outerHeight() + this.options.stackSpacing;
         el.data('jBoxNoticeMargin', margin);
         el.css('margin-' + this.options.attributes.y, margin);
         

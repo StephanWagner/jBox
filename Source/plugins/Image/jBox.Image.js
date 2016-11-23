@@ -5,7 +5,7 @@
  *
  * License: MIT (http://opensource.org/licenses/MIT)
  * 
- * Requires: jBox 0.4.1 (https://code.jboxcdn.com/jBox.min.js)
+ * Requires: jBox 0.4.2 (https://code.jboxcdn.com/jBox.min.js)
  *           jQuery 3.1.1 (https://code.jquery.com/jquery-3.1.1.min.js)
  */
  

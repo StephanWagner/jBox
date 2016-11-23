@@ -79,4 +79,4 @@ Learn more
 
 These few examples are very basic.
 The jBox library is quite powerful and offers a vast variety of options to customize appearance and behavior.
-Learn more in the documentation: http://stephanwagner.me/jBox/documentation
+Learn more in the documentation: https://stephanwagner.me/jBox/documentation

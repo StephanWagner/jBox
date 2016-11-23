@@ -192,7 +192,8 @@ new jBox('Confirm', {
 $('#Notice-1').click(function() {
   
   new jBox('Notice', {
-    content: 'Hello, I\'m a notice'
+    content: 'Hello, I\'m a notice',
+    color: 'blue'
   });
   
 });

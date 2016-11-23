@@ -30,7 +30,7 @@
 .jBox-Tooltip .jBox-container,
 .jBox-Mouse .jBox-container {
   border-radius: 3px;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+  box-shadow: 0 0 3px rgba(0, 0, 0, .25);
 }
 
 .jBox-Tooltip .jBox-title,
@@ -84,25 +84,25 @@
 .jBox-pointer-top:after {
   left: 5px;
   top: 6px;
-  box-shadow: -1px -1px 4px rgba(0, 0, 0, .2);
+  box-shadow: -1px -1px 2px rgba(0, 0, 0, .15);
 }
 
 .jBox-pointer-right:after {
   top: 5px;
   right: 6px;
-  box-shadow: 1px -1px 4px rgba(0, 0, 0, .2);
+  box-shadow: 1px -1px 2px rgba(0, 0, 0, .15);
 }
 
 .jBox-pointer-bottom:after {
   left: 5px;
   bottom: 6px;
-  box-shadow: 1px 1px 4px rgba(0, 0, 0, .2);
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
 }
 
 .jBox-pointer-left:after {
   top: 5px;
   left: 6px;
-  box-shadow: -1px 1px 4px rgba(0, 0, 0, .2);
+  box-shadow: -1px 1px 2px rgba(0, 0, 0, .15);
 }
 
 /* jBox Modal */

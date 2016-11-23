@@ -15,12 +15,12 @@
 .jBox-TooltipBorder .jBox-pointer-top,
 .jBox-TooltipBorder .jBox-pointer-bottom {
   width: 34px;
-  height: 12px;
+  height: 13px;
 }
 
 .jBox-TooltipBorder .jBox-pointer-left,
 .jBox-TooltipBorder .jBox-pointer-right {
-  width: 12px;
+  width: 13px;
   height: 34px;
 }
 

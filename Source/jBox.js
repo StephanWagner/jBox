@@ -88,6 +88,7 @@ function jBox(type, options) {
     // Animations
     fade: 180,                   // Fade duration in ms, set to 0 or false to disable
     animation: null,             // Animation when opening or closing, use 'pulse', 'zoomIn', 'zoomOut', 'move', 'slide', 'flip', 'tada' (CSS inspired from Daniel Edens Animate.css: http://daneden.me/animate)
+    transition: false,           // Add transitioning to change position with a tween effect
     
     // Appearance
     theme: 'Default',            // Set a jBox theme class
