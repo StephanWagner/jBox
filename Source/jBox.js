@@ -268,6 +268,27 @@ function jBox(type, options) {
   };
   
   
+  // Set the title width to content width 
+  
+  this._setTitleWidth = function ()
+  {
+    // Abort if there is no title
+    if (!this.titleContainer) return null;
+    
+    // Expose wrapper to get actual width
+    if (this.wrapper.css('display') == 'none') {
+      this.wrapper.css('display', 'block');
+      var contentWidth = this.content.outerWidth();
+      this.wrapper.css('display', 'none');
+    } else {
+      var contentWidth = this.content.outerWidth();
+    }
+    
+    // Set max-width only
+    this.titleContainer.css({maxWidth: (contentWidth || null)});
+  }
+  
+  
   // Create jBox
   
   this._create = function ()
@@ -549,27 +570,6 @@ function jBox(type, options) {
     
     return jBoxDimensions;
   };
-  
-  
-  // Set the title width to content width 
-  
-  this._setTitleWidth = function ()
-  {
-    // Abort if there is no title
-    if (!this.titleContainer) return null;
-    
-    // Expose wrapper to get actual width
-    if (this.wrapper.css('display') == 'none') {
-      this.wrapper.css('display', 'block');
-      var contentWidth = this.content.outerWidth();
-      this.wrapper.css('display', 'none');
-    } else {
-      var contentWidth = this.content.outerWidth();
-    }
-    
-    // Set max-width only
-    this.titleContainer.css({maxWidth: (contentWidth || null)});
-  }
   
   
   // Generate CSS for animations and append to header
