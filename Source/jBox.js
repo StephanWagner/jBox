@@ -396,7 +396,7 @@ function jBox(type, options) {
     if (this.options.draggable) {
       
       // Get the handle where jBox will be dragged with
-      var handle = (this.options.draggable == 'title') && this.titleContainer ? this.titleContainer : (this.options.draggable.length ? this.options.draggable : this.wrapper);
+      var handle = (this.options.draggable == 'title') && this.titleContainer ? this.titleContainer : ($(this.options.draggable).length ? $(this.options.draggable) : this.wrapper);
       
       // Add mouse events
       handle.addClass('jBox-draggable').on('mousedown', function (ev)
