@@ -272,8 +272,8 @@ function jBox(type, options) {
   
   this._setTitleWidth = function ()
   {
-    // Abort if there is no title
-    if (!this.titleContainer) return null;
+    // Abort if there is no title or width of content is auto
+    if (!this.titleContainer || (this.content[0].style.width == 'auto' && !this.content[0].style.maxWidth)) return null;
     
     // Expose wrapper to get actual width
     if (this.wrapper.css('display') == 'none') {
@@ -285,9 +285,56 @@ function jBox(type, options) {
     }
     
     // Set max-width only
-    this.titleContainer.css({maxWidth: (contentWidth || null)});
+    this.titleContainer.css({maxWidth: (Math.max(contentWidth, parseInt(this.content[0].style.maxWidth)) || null)});
   }
   
+  
+  // Make jBox draggable
+  
+  this._draggable = function ()
+  {
+    // Abort if jBox is not draggable
+    if (!this.options.draggable) return false;
+    
+    // Get the handle where jBox will be dragged with
+    var handle = this.options.draggable == 'title' ? this.titleContainer : (this.options.draggable instanceof jQuery ? this.options.draggable : (jQuery.type(this.options.draggable) == 'string' ? jQuery(this.options.draggable) : this.wrapper));
+    
+    // Abort if no handle or if draggable was set already
+    if (!handle || !(handle instanceof jQuery) || !handle.length || handle.data('jBox-draggable')) return false;
+    
+    // Add mouse events
+    handle.addClass('jBox-draggable').data('jBox-draggable', true).on('mousedown', function (ev)
+    {
+      if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) return;
+      
+      // Adjust z-index when dragging jBox over another draggable jBox
+      if (this.options.dragOver && this.wrapper.css('zIndex') <= jBox.zIndexMax) {
+        jBox.zIndexMax += 1;
+        this.wrapper.css('zIndex', jBox.zIndexMax);
+      }
+      
+      var drg_h = this.wrapper.outerHeight();
+      var drg_w = this.wrapper.outerWidth();
+      var pos_y = this.wrapper.offset().top + drg_h - ev.pageY;
+      var pos_x = this.wrapper.offset().left + drg_w - ev.pageX;
+      
+      jQuery(document).on('mousemove.jBox-draggable-' + this.id, function (ev) {
+        this.wrapper.offset({
+          top: ev.pageY + pos_y - drg_h,
+          left: ev.pageX + pos_x - drg_w
+        });
+      }.bind(this));
+      ev.preventDefault();
+      
+    }.bind(this)).on('mouseup', function () { jQuery(document).off('mousemove.jBox-draggable-' + this.id); }.bind(this));
+    
+    // Get highest z-index
+    jBox.zIndexMax = !jBox.zIndexMax ? this.options.zIndex : Math.max(jBox.zIndexMax, this.options.zIndex);
+    
+    
+    
+    return this;
+  };
   
   // Create jBox
   
@@ -392,41 +439,7 @@ function jBox(type, options) {
     this.setContent(this.options.content, true);
     this.setTitle(this.options.title, true);
     
-    // Make jBox draggable
-    if (this.options.draggable) {
-      
-      // Get the handle where jBox will be dragged with
-      var handle = this.options.draggable == 'title' && this.titleContainer ? this.titleContainer : (this.options.draggable instanceof jQuery ? this.options.draggable : (jQuery.type(this.options.draggable) == 'string' ? jQuery(this.options.draggable) : this.wrapper));
-      
-      // Add mouse events
-      handle.addClass('jBox-draggable').on('mousedown', function (ev)
-      {
-        if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) return;
-        
-        // Adjust z-index when dragging jBox over another draggable jBox
-        if (this.options.dragOver && this.wrapper.css('zIndex') <= jBox.zIndexMax) {
-          jBox.zIndexMax += 1;
-          this.wrapper.css('zIndex', jBox.zIndexMax);
-        }
-        
-        var drg_h = this.wrapper.outerHeight();
-        var drg_w = this.wrapper.outerWidth();
-        var pos_y = this.wrapper.offset().top + drg_h - ev.pageY;
-        var pos_x = this.wrapper.offset().left + drg_w - ev.pageX;
-        
-        jQuery(document).on('mousemove.jBox-draggable-' + this.id, function (ev) {
-          this.wrapper.offset({
-            top: ev.pageY + pos_y - drg_h,
-            left: ev.pageX + pos_x - drg_w
-          });
-        }.bind(this));
-        ev.preventDefault();
-        
-      }.bind(this)).on('mouseup', function () { jQuery(document).off('mousemove.jBox-draggable-' + this.id); }.bind(this));
-      
-      // Get highest z-index
-      jBox.zIndexMax = !jBox.zIndexMax ? this.options.zIndex : Math.max(jBox.zIndexMax, this.options.zIndex);
-    }
+    this.options.draggable && this._draggable();
     
     // Fire onCreated event
     this._fireEvent('onCreated');
@@ -802,7 +815,10 @@ function jBox(type, options) {
 jBox.prototype.attach = function (elements, trigger)
 {
   // Get elements from options if none passed
-  !elements && (elements = jQuery(this.options.attach.selector || this.options.attach));
+  !elements && (elements = this.options.attach);
+  
+  // Convert selectors to jQuery objects
+  jQuery.type(elements) == 'string' && (elements = jQuery(elements))
   
   // Get trigger event from options if not passed
   !trigger && (trigger = this.options.trigger);
@@ -923,6 +939,9 @@ jBox.prototype.setTitle = function (title, ignore_positioning)
   // Adjust width of title
   wrapperWidth != this.wrapper.outerWidth() && this._setTitleWidth();
   
+  // Make jBox draggable
+  this.options.draggable && this._draggable();
+  
   // Reposition if dimensions changed
   !ignore_positioning && this.options.repositionOnContent && (wrapperHeight != this.wrapper.outerHeight() || wrapperWidth != this.wrapper.outerWidth()) && this.position();
   
@@ -956,6 +975,9 @@ jBox.prototype.setContent = function (content, ignore_positioning)
   // Adjust title width
   wrapperWidth != this.wrapper.outerWidth() && this._setTitleWidth();
   
+  // Make jBox draggable
+  this.options.draggable && this._draggable();
+    
   // Reposition if dimensions changed
   !ignore_positioning && this.options.repositionOnContent && (wrapperHeight != this.wrapper.outerHeight() || wrapperWidth != this.wrapper.outerWidth()) && this.position();
   
