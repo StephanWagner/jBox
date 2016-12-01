@@ -55,7 +55,7 @@ new jBox('Confirm', {
 });
 ```
 ```html
-<div onclick="alert('You did it!')" data-confirm="Do you really want to do this?">Click me!</div>
+<div onclick="alert('Yay! You did it!')" data-confirm="Do you really want to do this?">Click me!</div>
 <a href="https://stephanwagner.me/jBox" data-confirm="Do you really want to leave this page?">Click me!</a>
 ```
 
