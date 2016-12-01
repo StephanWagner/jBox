@@ -5,13 +5,13 @@ $(document).ready(function() {
 /* Tooltip */
 
 new jBox('Tooltip', {
-  attach: $('#Tooltip-1'),
+  attach: '#Tooltip-1',
   content: 'This is a basic jBox tooltip'
 });
 
 
 new jBox('Tooltip', {
-  attach: $('#Tooltip-2'),
+  attach: '#Tooltip-2',
   theme: 'TooltipBorder',
   width: 200,
   position: {
@@ -26,7 +26,7 @@ new jBox('Tooltip', {
 
 
 new jBox('Tooltip', {
-  attach: $('#Tooltip-3'),
+  attach: '#Tooltip-3',
   theme: 'TooltipDark',
   animation: 'zoomOut',
   content: 'Use themes to change appearance',
@@ -34,7 +34,7 @@ new jBox('Tooltip', {
 
 
 new jBox('Tooltip', {
-  attach: $('#Tooltip-4'),
+  attach: '#Tooltip-4',
   width: 300,
   pointer: 'right:80',
   animation: 'move',
@@ -51,14 +51,14 @@ new jBox('Tooltip', {
 
 
 new jBox('Mouse', {
-  attach: $('#Tooltip-5'),
+  attach: '#Tooltip-5',
   position: {x: 'right', y: 'bottom'},
   content: 'I will follow you!'
 });
 
 
 new jBox('Tooltip', {
-  attach: $('#Tooltip-6'),
+  attach: '#Tooltip-6',
   width: 280,
   closeOnMouseleave: true,
   animation: 'zoomIn',
@@ -67,8 +67,8 @@ new jBox('Tooltip', {
 
 
 new jBox('Tooltip', {
-  attach: $('#Tooltip-7'),
-  target: $('#Tooltip-1'),
+  attach: '#Tooltip-7',
+  target: '#Tooltip-1',
   theme: 'TooltipBorder',
   trigger: 'click',
   adjustTracker: true,
@@ -95,7 +95,7 @@ new jBox('Tooltip', {
 
 
 new jBox('Tooltip', {
-  attach: $('#Tooltip-8'),
+  attach: '#Tooltip-8',
   theme: 'TooltipBorder',
   trigger: 'click',
   width: 200,
@@ -123,7 +123,7 @@ new jBox('Tooltip', {
 
 
 new jBox('Modal', {
-  attach: $('#Modal-1'),
+  attach: '#Modal-1',
   height: 200,
   title: 'I\'m a basic jBox modal window',
   content: '<div style="line-height: 30px;">Try to scroll ...it\'s blocked.<br>Press [ESC] or click anywhere to close.</div>'
@@ -131,7 +131,7 @@ new jBox('Modal', {
 
 
 new jBox('Modal', {
-  attach: $('#Modal-2'),
+  attach: '#Modal-2',
   width: 350,
   height: 200,
   blockScroll: false,
@@ -147,7 +147,7 @@ new jBox('Modal', {
 
 
 new jBox('Modal', {
-  attach: $('#Modal-3'),
+  attach: '#Modal-3',
   width: 450,
   height: 250,
   closeButton: 'title',
@@ -193,7 +193,7 @@ $('#Notice-1').click(function() {
   
   new jBox('Notice', {
     content: 'Hello, I\'m a notice',
-    color: 'blue'
+    color: 'black'
   });
   
 });

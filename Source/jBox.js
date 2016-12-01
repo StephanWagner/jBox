@@ -1025,6 +1025,12 @@ jBox.prototype.position = function (options)
   // Get the target
   this.target = options.target || this.target || jQuery(window);
   
+  // Make sure target is a jQuery element
+  !(this.target instanceof jQuery || this.target == 'mouse') && (this.target = jQuery(this.target));
+  
+  // Abort if target is missing
+  if (!this.target.length) return this;
+  
   // Reset content css to get original dimensions
   this.content.css({
     width: this._getInt(options.width, 'width'),
