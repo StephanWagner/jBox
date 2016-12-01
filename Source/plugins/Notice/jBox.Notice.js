@@ -38,7 +38,7 @@ jQuery(document).ready(function () {
         y: 10
       }
     },
-    target: jQuery(window),
+    target: window,
     fixed: true,
     animation: 'zoomIn',
     closeOnClick: 'box',

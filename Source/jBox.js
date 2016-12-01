@@ -37,7 +37,7 @@ function jBox(type, options) {
     responsiveMinHeight: 100,    // Don't adjust height below this value (in pixel)
     
     // Attach
-    attach: null,                // A set of jQuery elements that will open and close your jBox, e.g. $('.tooltip')
+    attach: null,                // A jQuery selector to elements that will open and close your jBox, e.g. '.tooltip'
     trigger: 'click',            // The event to open or close your jBox, use 'click', 'touchclick' or 'mouseenter'
     preventDefault: false,       // Prevent default event when opening jBox, e.g. don't follow the href in a link when clicking on it
     
@@ -62,7 +62,7 @@ function jBox(type, options) {
     },
     
     // Position
-    target: null,                // The target element where jBox will be opened (if no element is provided, jBox will use the attached element as target)
+    target: null,                // The jQuery selector to the target element where jBox will be opened (if no element is provided, jBox will use the attached element as target)
     position: {
       x: 'center',               // Horizontal position, use a number, 'left', 'right' or 'center'
       y: 'center'                // Vertical position, use a number, 'top', 'bottom' or 'center'

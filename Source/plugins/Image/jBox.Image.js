@@ -21,8 +21,8 @@ jQuery(document).ready(function () {
     imageLabel: 'title',        // The attribute where jBox gets the image label from, e.g. title="My label"
     imageFade: 360,             // The fade duration for images
     imageSize: 'contain',       // How to display the images: Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
-    target: jQuery(window),
-    attach: jQuery('[data-jbox-image]'),
+    target: window,
+    attach: '[data-jbox-image]',
     fixed: true,
     blockScroll: true,
     closeOnEsc: true,

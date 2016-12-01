@@ -21,10 +21,10 @@ jQuery(document).ready(function () {
     confirm: null,            // Function to execute when clicking the submit button. By default jBox will use the onclick or the href attribute in that order if found
     cancel: null,             // Function to execute when clicking the cancel button
     closeOnConfirm: true,     // Close jBox when the user clicks the confirm button
-    target: jQuery(window),
+    target: window,
     addClass: 'jBox-Modal',
     fixed: true,
-    attach: jQuery('[data-confirm]'),
+    attach: '[data-confirm]',
     getContent: 'data-confirm',
     content: 'Do you really want to do this?',
     minWidth: 360,
