@@ -25,10 +25,10 @@ function jBox(type, options) {
     // Dimensions
     width: 'auto',               // The width of the content area, e.g. 'auto', 200, '80%'
     height: 'auto',              // The height of the content area
-    minWidth: null,              // Minimum width
-    minHeight: null,             // Minimum height
-    maxWidth: null,              // Maximum width
-    maxHeight: null,             // Minimum height
+    minWidth: null,              // Minimal width
+    minHeight: null,             // Minimal height
+    maxWidth: null,              // Maximal width
+    maxHeight: null,             // Maximal height
     
     // Responsive dimensions
     responsiveWidth: true,       // Adjusts the width to fit the viewport
@@ -39,30 +39,30 @@ function jBox(type, options) {
     // Attach
     attach: null,                // A jQuery selector to elements that will open and close your jBox, e.g. '.tooltip'
     trigger: 'click',            // The event to open or close your jBox, use 'click', 'touchclick' or 'mouseenter'
-    preventDefault: false,       // Prevent default event when opening jBox, e.g. don't follow the href in a link when clicking on it
+    preventDefault: false,       // Prevent the default event when opening jBox, e.g. don't follow the href in a link
     
     // Content
     title: null,                 // Adds a title to your jBox
-    content: null,               // You can use HTML or an jQuery element, e.g. $('#jBox-content'). The elements will be appended to the content element and then made visible, so hide them with style="display: none" beforehand
+    content: null,               // You can use HTML or a jQuery element, e.g. jQuery('#jBox-content'). The elements will be appended to the content element and then made visible, so hide them with style="display: none" beforehand
     getTitle: null,              // Get the title from an attribute when jBox opens, e.g. getTitle: 'data-title'
     getContent: null,            // Get the content from an attribute when jBox opens, e.g. getContent: 'data-content'. Use 'html' to get the attached elements HTML as content
-    isolateScroll: true,         // Isolates scrolling to content container
+    isolateScroll: true,         // Isolates scrolling to the content container
     
     // AJAX
-    ajax: {                      // Setting an url will make an AJAX request when jBox opens. Optional you can add any jQuery AJAX option (http://api.jquery.com/jquery.ajax/)
-      url: null,                 // URL to send the AJAX request to
+    ajax: {                      // Setting an URL will make an AJAX request when jBox opens. Optional you can add any jQuery AJAX option (http://api.jquery.com/jquery.ajax/)
+      url: null,                 // The URL to send the AJAX request to
       data: '',                  // Data to send with your AJAX request, e.g. {id: 82, limit: 10}
       reload: false,             // Resend the AJAX request when jBox opens. Use true to send the AJAX request only once for every attached element or 'strict' to resend every time jBox opens
-      getURL: 'data-url',        // The attribute in the source element where the AJAX request will look for the url
+      getURL: 'data-url',        // The attribute in the source element where the AJAX request will look for the URL, e.g. data-url="https://ajaxresponse.com"
       getData: 'data-ajax',      // The attribute in the source element where the AJAX request will look for the data, e.g. data-ajax="id=82&limit=10"
       setContent: true,          // Automatically set the response as new content when the AJAX request is finished
-      spinner: true,             // Hides the current content and adds a spinner while loading, you can pass HTML content to add your own spinner, e.g. spinner: '<div class="mySpinner"></div>'
+      spinner: true,             // Hides the current content and adds a spinner while loading. You can pass HTML content to add your own spinner, e.g. spinner: '<div class="mySpinner"></div>'
       spinnerDelay: 300,         // Milliseconds to wait until spinner appears
       spinnerReposition: true    // Repositions jBox when the spinner is added or removed
     },
     
     // Position
-    target: null,                // The jQuery selector to the target element where jBox will be opened (if no element is provided, jBox will use the attached element as target)
+    target: null,                // The jQuery selector to the target element where jBox will be opened. If no element is found, jBox will use the attached element as target
     position: {
       x: 'center',               // Horizontal position, use a number, 'left', 'right' or 'center'
       y: 'center'                // Vertical position, use a number, 'top', 'bottom' or 'center'
@@ -82,42 +82,41 @@ function jBox(type, options) {
     repositionOnContent: true,   // Calculates new position when the content changes with .setContent() or .setTitle()
     
     // Pointer
-    pointer: false,              // Your pointer will always point towards the target element. A pointer will only be added when your jBox has one outside position, so the option outside should be 'x' or 'y' (not 'xy')
+    pointer: false,              // Your pointer will always point towards the target element, so the option outside needs to be 'x' or 'y'. By default the pointer is centered, set a position to move it to any side. You can also add an offset, e.g. 'left:30' or 'center:-20'
     pointTo: 'target',           // Setting something else than 'target' will add a pointer even if there is no target element set or found. Use 'top', 'right', 'bottom' or 'left'
     
     // Animations
     fade: 180,                   // Fade duration in ms, set to 0 or false to disable
     animation: null,             // Animation when opening or closing, use 'pulse', 'zoomIn', 'zoomOut', 'move', 'slide', 'flip', 'tada' (CSS inspired from Daniel Edens Animate.css: http://daneden.me/animate)
-    transition: false,           // Add transitioning to change position with a tween effect
     
     // Appearance
     theme: 'Default',            // Set a jBox theme class
     addClass: null,              // Adds classes to the wrapper
-    overlay: false,              // Adds an overlay to hide page content when jBox opens (set color and opacity with CSS)
-    zIndex: 10000,               // Use a high zIndex
+    overlay: false,              // Adds an overlay to hide page content when jBox opens (adjust color and opacity with CSS)
+    zIndex: 10000,               // Use a high z-index
     
     // Delays
-    delayOpen: 0,                // Delay opening in ms (note that the delay will be ignored if your jBox didn't finish closing)
-    delayClose: 0,               // Delay closing in ms (note that there is always a closing delay of at least 10ms to ensure jBox won't be closed when opening right away)
+    delayOpen: 0,                // Delay opening in ms. Note that the delay will be ignored if your jBox didn't finish closing
+    delayClose: 0,               // Delay closing in ms. Nnote that there is always a closing delay of at least 10ms to ensure jBox won't be closed when opening right away
     
     // Closing
     closeOnEsc: false,           // Close jBox when pressing [esc] key
     closeOnClick: false,         // Close jBox with mouseclick. Use true (click anywhere), 'box' (click on jBox itself), 'overlay' (click on the overlay), 'body' (click anywhere but jBox)
     closeOnMouseleave: false,    // Close jBox when the mouse leaves the jBox area or the area of the attached element
-    closeButton: false,          // Adds a close button to your jBox. Use 'title', 'box', 'overlay' or true (true will add the button to overlay, title or box, in that order if any of those elements can be found)
+    closeButton: false,          // Adds a close button to your jBox. Use 'title', 'box', 'overlay' or true (true will add the button to the overlay, title or the jBox itself, in that order if any of those elements can be found)
     
     // Other options
-    appendTo: jQuery('body'),    // The element your jBox will be appended to. Any other element than the body is only useful for fixed positions or when position values are numbers  
-    createOnInit: false,         // Create jBox when it's being initialized
-    blockScroll: false,          // When jBox is open, block scrolling
+    appendTo: jQuery('body'),    // The element your jBox will be appended to. Any other element than jQuery('body') is only useful for fixed positions or when position values are numbers
+    createOnInit: false,         // Creates jBox and makes it available in DOM when it's being initialized, otherwise it will be created when it opens for the first time
+    blockScroll: false,          // Blocks scrolling when jBox is open
     draggable: false,            // Make your jBox draggable (use 'true', 'title' or provide an element as handle) (inspired from Chris Coyiers CSS-Tricks http://css-tricks.com/snippets/jquery/draggable-without-jquery-ui/)
     dragOver: true,              // When you have multiple draggable jBoxes, the one you select will always move over the other ones
     autoClose: false,            // Time in ms when jBox will close automatically after it was opened
     
     // Audio                     // You can use the integrated audio function whenever you'd like to play an audio file, e.g. onInit: function () { this.audio('url_to_audio_file_without_file_extension', 75); }
     preloadAudio: true,          // Preloads the audio files set in option audio. You can also preload other audio files, e.g. ['src_to_file.mp3', 'src_to_file.ogg']
-    audio: null,                 // The URL to an audio file to play when jBox opens. Set the URL without file extension, jBox will look for an .mp3 and .ogg file. To play audio when jBox closes, use an object, e.g. audio: {open: 'src_to_audio1', close: 'src_to_audio2'}
-    volume: 100,                 // The volume in percent. To have different volumes for opening and closeing audio, use an object, e.g. volume: {open: 75, close: 100}
+    audio: null,                 // The URL to an audio file to play when jBox opens. Set the URL without file extension, jBox will look for an .mp3 and .ogg file. To play audio when jBox closes, use an object, e.g. {open: 'src_to_audio1', close: 'src_to_audio2'}
+    volume: 100,                 // The volume in percent. To have different volumes for opening and closeing, use an object, e.g. {open: 75, close: 100}
     
     // Events                    // Note that you can use 'this' in all event functions, it refers to your jBox object (e.g. onInit: function () { this.open(); })
     onInit: null,                // Fired when jBox is initialized

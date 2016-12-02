@@ -17,10 +17,10 @@ jQuery(document).ready(function () {
     // Options (https://stephanwagner.me/jBox/options#options-confirm)
     
     src: 'href',                // The attribute where jBox gets the image source from, e.g. href="/path_to_image/image.jpg"
-    gallery: 'data-jbox-image', // The attribute where you define the image gallery, e.g. data-jbox-image="gallery1"
+    gallery: 'data-jbox-image', // The attribute to set the galleries, e.g. data-jbox-image="gallery1"
     imageLabel: 'title',        // The attribute where jBox gets the image label from, e.g. title="My label"
-    imageFade: 360,             // The fade duration for images
-    imageSize: 'contain',       // How to display the images: Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
+    imageFade: 360,             // The fade duration for images in ms
+    imageSize: 'contain',       // How to display the images. Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
     target: window,
     attach: '[data-jbox-image]',
     fixed: true,
