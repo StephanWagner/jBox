@@ -1,6 +1,6 @@
 {
 	"name": "jbox",
-	"version": "0.4.4",
+	"version": "0.4.5",
 	"description": "jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more.",
 	"keywords": [
 		"jquery-plugin", "ecosystem:jquery", "tooltip", "modal", "window", "dialog", "confirm", "popup", "notice", "alert", "ui", "images", "lightbox"
@@ -14,7 +14,7 @@
 		"url": "https://github.com/StephanWagner/jBox/issues",
 		"email" : "stephanwagner.me@gmail.com"
 	},
-	"author": "Stephan Wagner <stephanwagner.me@gmail.com> (http://stephanwagner.me)",
+	"author": "Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)",
 	"license": "MIT",
 	"dependencies": {
 		"jquery": ">=2.1"
