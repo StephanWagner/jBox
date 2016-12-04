@@ -1,0 +1,158 @@
+
+.AvatarsModal .jBox-footer button {
+  width: 50%;
+  height: 50px;
+  border: 0;
+  padding: 0;
+  display: block;
+  float: left;
+  background: center center no-repeat;
+  transition: background .2s;
+}
+
+.AvatarsModal .jBox-footer button:active {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .2);
+}
+
+#AvatarsComplete.AvatarsModal .jBox-footer button {
+  width: 100%;
+  float: none;
+}
+
+.AvatarsModal .jBox-footer .button-cross {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj4KPHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTUwNy4zLDQxMS4zQzUwNy4zLDQxMS4zLDUwNy4zLDQxMS4zLDUwNy4zLDQxMS4zTDM1MiwyNTZsMTU1LjMtMTU1LjNjMCwwLDAsMCwwLDBDNTA5LDk5LDUxMC4yLDk3LDUxMSw5NQpjMi4xLTUuNywwLjktMTIuMy0zLjctMTYuOUw0MzQsNC43QzQyOS40LDAuMSw0MjIuNy0xLjEsNDE3LDFjLTIuMSwwLjgtNCwyLTUuNywzLjdjMCwwLDAsMCwwLDBMMjU2LDE2MEwxMDAuNyw0LjdjMCwwLDAsMCwwLDAKQzk5LDMsOTcsMS44LDk1LDFjLTUuNy0yLjEtMTIuMy0wLjktMTYuOSwzLjdMNC43LDc4QzAuMSw4Mi42LTEuMSw4OS4zLDEsOTVjMC44LDIuMSwyLDQsMy43LDUuN2MwLDAsMCwwLDAsMEwxNjAsMjU2TDQuNyw0MTEuMwpjMCwwLDAsMCwwLDBDMyw0MTMsMS44LDQxNSwxLDQxN2MtMi4xLDUuNy0wLjksMTIuMywzLjcsMTYuOWw3My40LDczLjRjNC42LDQuNiwxMS4yLDUuOCwxNi45LDMuN2MyLjEtMC44LDQtMiw1LjctMy43YzAsMCwwLDAsMCwwCkwyNTYsMzUybDE1NS4zLDE1NS4zYzAsMCwwLDAsMCwwYzEuNywxLjcsMy42LDIuOSw1LjcsMy43YzUuNywyLjEsMTIuMywwLjksMTYuOS0zLjdsNzMuNC03My40YzQuNi00LjYsNS44LTExLjIsMy43LTE2LjkKQzUxMC4yLDQxNSw1MDksNDEzLDUwNy4zLDQxMS4zTDUwNy4zLDQxMS4zeiIvPgo8L3N2Zz4K);
+  background-color: #e33;
+  background-size: 24px auto;
+  border-radius: 0 0 0 4px;
+}
+
+.AvatarsModal .jBox-footer .button-cross:hover {
+  background-color: #f33;
+}
+
+.AvatarsModal .jBox-footer .button-cross:active {
+  background-color: #e33;
+}
+
+.AvatarsModal .jBox-footer .button-heart {
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggMzg0Ij4KPHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTIyNCwzODRjLTQsMC04LTEuNS0xMS00LjVMNTcsMjI5Yy0yLTEuOC01Ny01Mi01Ny0xMTJDMCw0My44LDQ0LjgsMCwxMTkuNSwwYzQzLjgsMCw4NC44LDM0LjUsMTA0LjUsNTQKYzE5LjgtMTkuNSw2MC44LTU0LDEwNC41LTU0QzQwMy4yLDAsNDQ4LDQzLjgsNDQ4LDExN2MwLDYwLTU1LDExMC4yLTU3LjIsMTEyLjVMMjM1LDM3OS41QzIzMiwzODIuNSwyMjgsMzg0LDIyNCwzODR6Ii8+Cjwvc3ZnPg==);
+  background-color: #7d0;
+  background-size: 30px auto;
+  border-radius: 0 0 4px 0;
+}
+
+.AvatarsModal .jBox-footer .button-heart:hover {
+  background-color: #8e0;
+}
+
+.AvatarsModal .jBox-footer .button-heart:active {
+  background-color: #7d0;
+}
+
+.AvatarsModal .jBox-footer .button-close {
+  background-color: #ddd;
+  border-radius: 0 0 4px 4px;
+}
+
+.AvatarsModal .jBox-footer .button-close:hover {
+  background-color: #eee;
+}
+
+.AvatarsModal .jBox-footer .button-close:active {
+  background-color: #ddd;
+}
+
+.AvatarsModal .jBox-content {
+  padding: 0;
+  background: center -10px no-repeat;
+}
+
+#AvatarsComplete.AvatarsModal .jBox-content {
+  padding: 90px 30px 0;
+  font-style: italic;
+  text-align: center;
+  color: #999;
+}
+
+.AvatarsModal .jBox-title {
+  font-size: 26px;
+  color: #000;
+  font-weight: 300;
+  text-align: center;
+  padding: 0;
+  line-height: 60px;
+}
+
+.AvatarsModal .jBox-footer {
+  border-top: 0;
+  background: none;
+  padding: 0;
+}
+
+.AvatarsTooltip .jBox-content {
+  color: #fff;
+  text-align: center;
+}
+
+.AvatarsTooltip .jBox-container,
+.AvatarsTooltip .jBox-pointer:after {
+  background: #000;
+  box-shadow: none;
+}
+
+.AvatarsTooltipLike .jBox-container,
+.AvatarsTooltipLike .jBox-pointer:after {
+  border-color: #7d0;
+}
+
+.AvatarsTooltipDislike .jBox-container,
+.AvatarsTooltipDislike .jBox-pointer:after {
+  border-color: #e33;
+}
+
+.AvatarsCollection {
+  width: 50%;
+  position: fixed;
+  bottom: 5px;
+  z-index: 11000;
+}
+
+.AvatarsCollection#DislikedAvatars {
+  left: 5px;
+}
+
+.AvatarsCollection#LikedAvatars {
+  right: 5px;
+}
+
+.AvatarsCollection#DislikedAvatars > div {
+  border-color: #e33;
+  float: left;
+  margin-right: 2px;
+}
+
+.AvatarsCollection#LikedAvatars > div {
+  border-color: #7d0;
+  float: right;
+  margin-left: 2px;
+}
+
+.AvatarsCollection > div {
+  position: relative;
+  overflow: hidden;
+  width: 45px;
+  height: 45px;
+  border: 2px solid red;
+  border-radius: 50%;
+  background: #000;
+}
+
+.AvatarsCollection > div > img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60px;
+  height: 60px;
+  margin-top: -27px;
+  margin-left: -30px;
+}

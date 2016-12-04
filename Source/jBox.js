@@ -3,7 +3,7 @@
  *
  * Author: Stephan Wagner (https://stephanwagner.me)
  *
- * License: MIT (http://opensource.org/licenses/MIT)
+ * License: MIT (https://opensource.org/licenses/MIT)
  *
  * Requires: jQuery 3.1.1 (https://code.jquery.com/jquery-3.1.1.min.js)
  *
@@ -369,6 +369,9 @@ function jBox(type, options) {
     // Create content
     this.content = jQuery('<div class="jBox-content"/>').appendTo(this.container);
     
+    // Create footer
+    this.options.footer && (this.footer = jQuery('<div class="jBox-footer"/>').append(this.options.footer).appendTo(this.container));
+    
     // Isolate scrolling
     this.options.isolateScroll && this._isolateScroll(this.content);
     
@@ -599,11 +602,14 @@ function jBox(type, options) {
       tada: {open: 'tada', close: 'zoomOut'}
     }[this.options.animation]);
     
+    // Abort if animation not found
+    if (!this.options.animation) return null;
+    
     // Get direction var
     this.options.animation.open && (this.options.animation.open = this.options.animation.open.split(':'));
     this.options.animation.close && (this.options.animation.close = this.options.animation.close.split(':'));
-    this.options.animation.openDirection = this.options.animation.open ? this.options.animation.open[1] : null;
-    this.options.animation.closeDirection = this.options.animation.close ? this.options.animation.close[1] : null;
+    this.options.animation.openDirection = this.options.animation.open[1] ? this.options.animation.open[1] : null;
+    this.options.animation.closeDirection = this.options.animation.close[1] ? this.options.animation.close[1] : null;
     this.options.animation.open && (this.options.animation.open = this.options.animation.open[0]);
     this.options.animation.close && (this.options.animation.close = this.options.animation.close[0]);
     
@@ -703,7 +709,7 @@ function jBox(type, options) {
       
       // Generate CSS
       animations[this.options.animation[ev]].positions ?
-        jQuery.each(['top', 'right', 'bottom', 'left'], function (index2, position) { this._animationCSS += generateKeyframeCSS(ev, position); }) :
+        jQuery.each(['top', 'right', 'bottom', 'left'], function (index2, position) { this._animationCSS += generateKeyframeCSS(ev, position); }.bind(this)) :
         this._animationCSS += generateKeyframeCSS(ev);
     }.bind(this));
     
@@ -865,6 +871,9 @@ jBox.prototype.attach = function (elements, trigger)
       // Add close event for trigger event mouseenter
       (this.options.trigger == 'mouseenter') && el.on('mouseleave', function (ev)
       {
+        // Abort if jBox wasn't created yet
+        if (!this.wrapper) return null;
+        
         // If we have set closeOnMouseleave, do not close jBox when leaving attached element and mouse is over jBox
         if (!this.options.closeOnMouseleave || !(ev.relatedTarget == this.wrapper[0] || jQuery(ev.relatedTarget).parents('#' + this.id).length)) this.close();
       }.bind(this));
@@ -992,7 +1001,7 @@ jBox.prototype.setDimensions = function (type, value, pos)
   !this.wrapper && this._create();
   
   // Default value is 'auto'
-  value == undefined && (value == 'auto');
+  value == undefined && (value = 'auto');
   
   // Set CSS of content and title
   this.content.css(type, this._getInt(value));
@@ -1126,19 +1135,19 @@ jBox.prototype.position = function (options)
       if (options.responsiveHeight && jBoxDimensions.y > availableSpace[jBoxOutsidePosition.y || 'y']) {
         
         // Expose wrapper to get correct title height
-        var exposeTitleHeight = function () {
-          if (!this.titleContainer) return 0;
+        var exposeTitleFooterHeight = function () {
+          if (!this.titleContainer && !this.footer) return 0;
           if (this.wrapper.css('display') == 'none') {
             this.wrapper.css('display', 'block');
-            var titleHeight = this.titleContainer.outerHeight();
+            var height = this.titleContainer.outerHeight() + this.footer.outerHeight();
             this.wrapper.css('display', 'none');
           } else {
-            var titleHeight = this.titleContainer.outerHeight();
+            var height = this.titleContainer.outerHeight() + this.footer.outerHeight();
           }
-          return titleHeight || 0;
+          return height || 0;
         }.bind(this);
         
-        var contentHeight = availableSpace[jBoxOutsidePosition.y || 'y'] - (this.pointer && outside && options.outside == 'y' ? this.pointer.dimensions.y : 0) - exposeTitleHeight() - parseInt(this.container.css('border-top-width')) - parseInt(this.container.css('border-bottom-width'));
+        var contentHeight = availableSpace[jBoxOutsidePosition.y || 'y'] - (this.pointer && outside && options.outside == 'y' ? this.pointer.dimensions.y : 0) - exposeTitleFooterHeight() - parseInt(this.container.css('border-top-width')) - parseInt(this.container.css('border-bottom-width'));
         this.content.css({height: contentHeight > this.options.responsiveMinHeight ? contentHeight : null});
         this._setTitleWidth();
       }
@@ -1676,12 +1685,60 @@ jBox.prototype.audio = function (url, volume)
 };
 
 
+// Apply custom animations to jBox
+
+jBox._animationSpeeds = {
+  'tada': 1000,
+  'tadaSmall': 1000,
+  'flash': 500,
+  'shake': 400,
+  'pulseUp': 250,
+  'pulseDown': 250,
+  'popIn': 250,
+  'popOut': 250,
+  'fadeIn': 200,
+  'fadeOut': 200,
+  'slideUp': 400,
+  'slideRight': 400,
+  'slideLeft': 400,
+  'slideDown': 400
+};
+
+jBox.prototype.animate = function (animation, options)
+{
+  // Options are required
+  !options && (options = {});
+  
+  // Timout needs to be an object
+  !this.animationTimeout && (this.animationTimeout = {});
+  
+  // Use jBox wrapper by default
+  !options.element && (options.element = this.wrapper);
+  
+  // Give the element an unique id
+  !options.element.data('jBox-animating-id') && options.element.data('jBox-animating-id', jBox._getUniqueElementID());
+  
+  // Abort if element is animating
+  if (options.element.data('jBox-animating')) {
+    options.element.removeClass(options.element.data('jBox-animating')).data('jBox-animating', null);
+    this.animationTimeout[options.element.data('jBox-animating-id')] && clearTimeout(this.animationTimeout[options.element.data('jBox-animating-id')]);
+  }
+  
+  // Animate the element
+  options.element.addClass('jBox-animated-' + animation).data('jBox-animating', 'jBox-animated-' + animation);
+  this.animationTimeout[options.element.data('jBox-animating-id')] = setTimeout((function() { options.element.removeClass(options.element.data('jBox-animating')).data('jBox-animating', null); options.complete && options.complete(); }), jBox._animationSpeeds[animation]);
+};
+
+
 // Destroy jBox and remove it from DOM
 
 jBox.prototype.destroy = function ()
 {
-  // Detach and close
-  this.detach().close({ignoreDelay: true});
+  // Detach from attached elements
+  this.detach();
+  
+  // If jBox is open, close without delay
+  this.isOpen && this.close({ignoreDelay: true});
   
   // Remove wrapper
   this.wrapper && this.wrapper.remove();
@@ -1702,6 +1759,15 @@ jBox.prototype.destroy = function ()
 // Get a unique ID for jBoxes
 
 jBox._getUniqueID = (function ()
+{
+  var i = 1;
+  return function () { return i++; };
+}());
+
+
+// Get a unique ID for animating elements
+
+jBox._getUniqueElementID = (function ()
 {
   var i = 1;
   return function () { return i++; };

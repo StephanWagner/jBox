@@ -3,10 +3,9 @@
  *
  * Author: Stephan Wagner (https://stephanwagner.me)
  *
- * License: MIT (http://opensource.org/licenses/MIT)
+ * License: MIT (https://opensource.org/licenses/MIT)
  *
- * Requires: jBox 0.4.5 (https://code.jboxcdn.com/jBox.min.js)
- *           jQuery 3.1.1 (https://code.jquery.com/jquery-3.1.1.min.js)
+ * Requires: jBox (https://code.jboxcdn.com/jBox.min.js)
  */
 
 jQuery(document).ready(function () {

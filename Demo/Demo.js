@@ -12,7 +12,7 @@ new jBox('Tooltip', {
 
 new jBox('Tooltip', {
   attach: '#Tooltip-2',
-  theme: 'TooltipBorder',
+  theme: 'TooltipBorderThick',
   width: 200,
   position: {
     x: 'left',
@@ -252,7 +252,6 @@ $('#Notice-4').click(function() {
 
 
 new jBox('Image');
-
 
 
 /* Additional JS for demo purposes  */

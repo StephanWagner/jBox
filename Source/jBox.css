@@ -122,6 +122,10 @@
   border-bottom: 1px solid #eee;
 }
 
+.jBox-Modal .jBox-footer {
+  border-radius: 0 0 4px 4px;
+}
+
 .jBox-Modal.jBox-closeButton-title .jBox-title {
   padding-right: 55px;
 }
@@ -253,6 +257,15 @@
   background-color: rgba(0, 0, 0, .82);
 }
 
+/* Footer */
+
+.jBox-footer {
+  background: #fafafa;
+  border-top: 1px solid #eee;
+  padding: 8px 10px;
+  border-radius: 0 0 3px 3px;
+}
+
 /* Block scrolling */
 
 body[class^="jBox-blockScroll-"],
@@ -303,4 +316,148 @@ body[class*=" jBox-blockScroll-"] {
   border: 2px solid rgba(0, 0, 0, .2);
   border-top-color: rgba(0, 0, 0, .8);
   animation: jBoxLoading .6s linear infinite;
+}
+
+/* Animations */
+
+[class^="jBox-animated-"],
+[class*=" jBox-animated-"] {
+  animation-fill-mode: both;
+}
+
+@keyframes jBox-tada {
+  0% {transform: scale(1);}
+  10%, 20% {transform: scale(0.8) rotate(-4deg);}
+  30%, 50%, 70%, 90% {transform: scale(1.2) rotate(4deg);}
+  40%, 60%, 80% {transform: scale(1.2) rotate(-4deg);}
+  100% {transform: scale(1) rotate(0);}
+}
+
+.jBox-animated-tada {
+  animation: jBox-tada 1s;
+}
+
+@keyframes jBox-tadaSmall {
+  0% {transform: scale(1);}
+  10%, 20% {transform: scale(0.9) rotate(-2deg);}
+  30%, 50%, 70%, 90% {transform: scale(1.1) rotate(2deg);}
+  40%, 60%, 80% {transform: scale(1.1) rotate(-2deg);}
+  100% {transform: scale(1) rotate(0);}
+}
+
+.jBox-animated-tadaSmall {
+  animation: jBox-tadaSmall 1s;
+}
+
+@keyframes jBox-flash {
+  0%, 50%, 100% {opacity: 1;}  
+  25%, 75% {opacity: 0;}
+}
+
+.jBox-animated-flash {
+  animation: jBox-flash .5s;
+}
+
+@keyframes jBox-shake {
+  0%, 100% {transform: translateX(0);}
+  20%, 60% {transform: translateX(-6px);}
+  40%, 80% {transform: translateX(6px);}
+}
+
+.jBox-animated-shake {
+  animation: jBox-shake .4s;
+}
+
+@keyframes jBox-pulseUp {
+  0% {transform: scale(1);}
+  50% {transform: scale(1.15);}
+  100% {transform: scale(1);}
+}
+
+.jBox-animated-pulseUp {
+  animation: jBox-pulseUp .25s;
+}
+
+@keyframes jBox-pulseDown {
+  0% {transform: scale(1);}
+  50% {transform: scale(0.85);}
+  100% {transform: scale(1);}
+}
+
+.jBox-animated-pulseDown {
+  animation: jBox-pulseDown .25s;
+}
+
+@keyframes jBox-popIn {
+  0% {transform: scale(0);}
+  50% {transform: scale(1.1);}
+  100% {transform: scale(1);}
+}
+
+.jBox-animated-popIn {
+  animation: jBox-popIn .25s;
+}
+
+@keyframes jBox-popOut {
+  0% {transform: scale(1);}
+  50% {transform: scale(1.1);}
+  100% {transform: scale(0);}
+}
+
+.jBox-animated-popOut {
+  animation: jBox-popOut .25s;
+}
+
+@keyframes jBox-fadeIn {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+.jBox-animated-fadeIn {
+  animation: jBox-fadeIn .2s;
+}
+
+@keyframes jBox-fadeOut {
+  0% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+.jBox-animated-fadeOut {
+  animation: jBox-fadeOut .2s;
+}
+
+@keyframes jBox-slideUp {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(-300px); opacity: 0;}
+}
+
+.jBox-animated-slideUp {
+  animation: jBox-slideUp .4s;
+}
+
+@keyframes jBox-slideRight {
+  0% {transform: translateX(0);}
+  100% {transform: translateX(300px); opacity: 0;}
+}
+
+.jBox-animated-slideRight {
+  animation: jBox-slideRight .4s;
+}
+
+@keyframes jBox-slideDown {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(300px); opacity: 0;}
+}
+
+.jBox-animated-slideDown {
+  animation: jBox-slideDown .4s;
+}
+
+@keyframes jBox-slideLeft {
+  0% {transform: translateX(0);}
+  100% {transform: translateX(-300px); opacity: 0;}
+}
+
+.jBox-animated-slideLeft {
+  animation: jBox-slideLeft .4s;
 }
