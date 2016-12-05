@@ -1139,10 +1139,10 @@ jBox.prototype.position = function (options)
           if (!this.titleContainer && !this.footer) return 0;
           if (this.wrapper.css('display') == 'none') {
             this.wrapper.css('display', 'block');
-            var height = this.titleContainer.outerHeight() + this.footer.outerHeight();
+            var height = (this.titleContainer ? this.titleContainer.outerHeight() : 0) + (this.footer ? this.footer.outerHeight() : 0);
             this.wrapper.css('display', 'none');
           } else {
-            var height = this.titleContainer.outerHeight() + this.footer.outerHeight();
+            var height = (this.titleContainer ? this.titleContainer.outerHeight() : 0) + (this.footer ? this.footer.outerHeight() : 0);
           }
           return height || 0;
         }.bind(this);

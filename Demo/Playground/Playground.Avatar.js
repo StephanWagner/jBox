@@ -69,7 +69,7 @@ function generateAvatarJBox(initial)
       },
       footer: '<button class="button-close">Close</button>',
       title: 'Whoops',
-      content: 'There are currently no more avatars near you',
+      content: '<div>There are currently no more avatars near you</div>',
       zIndex: 10000,
       
       // Once this jBox is created, we tel the close button to close the initial avatar modal
