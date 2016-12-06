@@ -775,9 +775,7 @@ function jBox(type, options) {
   if (this.options.responsiveWidth || this.options.responsiveHeight)
   {
     // Responsive positioning overrides options adjustPosition and reposition
-    
-    // TODO Only add this resize event when the other one from adjustPosition and reposition was not set
-    
+    // TODO: Only add this resize event when the other one from adjustPosition and reposition was not set
     jQuery(window).on('resize.responsivejBox-' + this.id, function (ev) { if (this.isOpen) { this.position(); } }.bind(this));
   }
   
@@ -1027,6 +1025,16 @@ jBox.prototype.position = function (options)
   // Options are required
   !options && (options = {});
   
+  /*
+  // If positioning is in progress, set timer and abort
+  if (this.isPositioning) {
+    this.positionTimer && clearTimeout(this.positionTimer);
+    this.positionTimer = setTimeout(function () { this.position(options); }.bind(this), 30);
+    return this;
+  }
+  this.isPositioning = true;
+  */
+  
   // Combine passed options with jBox options
   options = jQuery.extend(true, this.options, options);
   
@@ -1090,8 +1098,8 @@ jBox.prototype.position = function (options)
   
   // Get the available space on all sides
   var availableSpace = {
-    x: windowDimensions.x - options.adjustDistance.left - options.adjustDistance.right, // TODO substract position.x when they are numbers
-    y: windowDimensions.y - options.adjustDistance.top - options.adjustDistance.bottom, // TODO substract position.x when they are numbers
+    x: windowDimensions.x - options.adjustDistance.left - options.adjustDistance.right, // TODO: substract position.x when they are numbers
+    y: windowDimensions.y - options.adjustDistance.top - options.adjustDistance.bottom, // TODO: substract position.x when they are numbers
     left: !outside ? 0 : (targetDimensions.left - jQuery(window).scrollLeft() - options.adjustDistance.left),
     right: !outside ? 0 : (windowDimensions.x - targetDimensions.left + jQuery(window).scrollLeft() - targetDimensions.x - options.adjustDistance.right),
     top: !outside ? 0 : (targetDimensions.top - jQuery(window).scrollTop() - this.options.adjustDistance.top),
@@ -1324,6 +1332,11 @@ jBox.prototype.position = function (options)
   // Fire onPosition event
   this._fireEvent('onPosition');
   
+  /*
+  // Positioning is done
+  this.isPositioning = false;
+  */
+  
   return this;
 };
 
@@ -1412,7 +1425,9 @@ jBox.prototype.open = function (options)
           }.bind(this),
           always: function () {
             this.isOpening = false;
-            this.positionOnFadeComplete && this.position() && (this.positionOnFadeComplete = false);
+            
+            // Delay positioning for ajax to prevent positioning during animation
+            setTimeout(function () { this.positionOnFadeComplete && this.position() && (this.positionOnFadeComplete = false); }.bind(this), 10);
           }.bind(this)
         });
       } else {
@@ -1436,8 +1451,8 @@ jBox.prototype.close = function (options)
   // Create blank options if none passed
   options || (options = {});
   
-  // Abort if jBox was destroyed
-  if (this.isDestroyed) return false;
+  // Abort if jBox was destroyed or is currently closing
+  if (this.isDestroyed || this.isClosing) return false;
   
   // Abort opening
   this.timer && clearTimeout(this.timer);
@@ -1485,8 +1500,7 @@ jBox.prototype.close = function (options)
           }.bind(this),
           complete: function () {
             this.wrapper.css({display: 'none'});
-            this.options.onCloseComplete && (this.options.onCloseComplete.bind(this))();
-            this.options._onCloseComplete && (this.options._onCloseComplete.bind(this))();
+            this._fireEvent('onCloseComplete');
           }.bind(this),
           always: function () {
             this.isClosing = false;
@@ -1494,7 +1508,7 @@ jBox.prototype.close = function (options)
         });
       } else {
         this.wrapper.css({display: 'none', opacity: 0});
-        this.options._onCloseComplete && (this.options._onCloseComplete.bind(this))();
+        this._fireEvent('onCloseComplete');
       }
     }
   }.bind(this);
@@ -1592,6 +1606,7 @@ jBox.prototype.ajax = function (options, opening)
       this.wrapper.addClass('jBox-loading-spinner');
       
       // Reposition jBox
+      // TODO: Only reposition if dimensions change
       userOptions.spinnerReposition && (opening ? (this.positionOnFadeComplete = true) : this.position());
       
       // Add spinner to container
