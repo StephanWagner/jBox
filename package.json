@@ -1,22 +1,22 @@
 {
-	"name": "jbox",
-	"version": "0.4.7",
-	"description": "jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more.",
-	"keywords": [
-		"jquery-plugin", "ecosystem:jquery", "tooltip", "modal", "window", "dialog", "confirm", "popup", "notice", "alert", "ui", "images", "lightbox"
-	],
-	"homepage": "https://stephanwagner.me/jBox",
-	"repository": {
-		"type" : "git",
-		"url" : "https://github.com/StephanWagner/jBox.git"
-	},
-	"bugs": {
-		"url": "https://github.com/StephanWagner/jBox/issues",
-		"email" : "stephanwagner.me@gmail.com"
-	},
-	"author": "Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)",
-	"license": "MIT",
-	"dependencies": {
-		"jquery": ">=2.1"
-	}
+  "name": "jbox",
+  "version": "0.4.7",
+  "description": "jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more.",
+  "keywords": [
+    "jquery-plugin", "ecosystem:jquery", "tooltip", "modal", "window", "dialog", "confirm", "popup", "notice", "alert", "ui", "images", "lightbox"
+  ],
+  "homepage": "https://stephanwagner.me/jBox",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/StephanWagner/jBox.git"
+  },
+  "bugs": {
+    "url": "https://github.com/StephanWagner/jBox/issues",
+    "email" : "stephanwagner.me@gmail.com"
+  },
+  "author": "Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)",
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=2.1"
+  }
 }
