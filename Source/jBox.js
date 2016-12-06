@@ -764,7 +764,7 @@ function jBox(type, options) {
     // Remove all animation classes
     var classes = this.wrapper.attr('class').split(' ').filter(function (c) {
       return c.lastIndexOf('jBox-' + this.id + '-animation', 0) !== 0;
-    });
+    }.bind(this));
     this.wrapper.attr('class', classes.join(' '));
   };
   
