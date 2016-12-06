@@ -1025,16 +1025,6 @@ jBox.prototype.position = function (options)
   // Options are required
   !options && (options = {});
   
-  /*
-  // If positioning is in progress, set timer and abort
-  if (this.isPositioning) {
-    this.positionTimer && clearTimeout(this.positionTimer);
-    this.positionTimer = setTimeout(function () { this.position(options); }.bind(this), 30);
-    return this;
-  }
-  this.isPositioning = true;
-  */
-  
   // Combine passed options with jBox options
   options = jQuery.extend(true, this.options, options);
   
@@ -1331,11 +1321,6 @@ jBox.prototype.position = function (options)
   
   // Fire onPosition event
   this._fireEvent('onPosition');
-  
-  /*
-  // Positioning is done
-  this.isPositioning = false;
-  */
   
   return this;
 };
