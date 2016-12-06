@@ -7,7 +7,7 @@
   display: block;
   float: left;
   background: center center no-repeat;
-  transition: background .2s;
+  transition: background-color .2s;
 }
 
 .AvatarsModal .jBox-footer button:active {
@@ -131,19 +131,22 @@
   right: 5px;
 }
 
+.AvatarsCollection > div {
+  width: 47px;
+  height: 45px;
+}
+
 .AvatarsCollection#DislikedAvatars > div {
-  border-color: #e33;
   float: left;
-  margin-right: 2px;
+  padding-right: 2px;
 }
 
 .AvatarsCollection#LikedAvatars > div {
-  border-color: #7d0;
   float: right;
-  margin-left: 2px;
+  padding-left: 2px;
 }
 
-.AvatarsCollection > div {
+.AvatarsCollection > div > div {
   position: relative;
   overflow: hidden;
   width: 45px;
@@ -153,7 +156,17 @@
   background: #000;
 }
 
-.AvatarsCollection > div > img {
+.AvatarsCollection#DislikedAvatars > div > div {
+  border-color: #e33;
+  padding-right: 2px;
+}
+
+.AvatarsCollection#LikedAvatars > div > div {
+  border-color: #7d0;
+  padding-left: 2px;
+}
+
+.AvatarsCollection > div > div > img {
   position: absolute;
   top: 50%;
   left: 50%;

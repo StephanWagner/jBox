@@ -19,7 +19,7 @@ function generateAvatarJBox(initial)
   
   !DemoAvatars.AvatarsTooltip && (DemoAvatars.AvatarsTooltip = new jBox('Tooltip', {
     theme: 'TooltipBorder',             // We are using the border theme...
-    addClass: 'AvatarsTooltip',          // ...and add a class so we can adjust the theme with CSS
+    addClass: 'AvatarsTooltip',         // ...and add a class so we can adjust the theme with CSS
     attach: '[data-avatar-tooltip]',    // We attach the tooltip to the elements with the attribute data-avatar-tooltip...
     getContent: 'data-avatar-tooltip',  // ... and also get the content from the same attribute
     zIndex: 12000,                      // These tooltips have the highest z-index
@@ -158,13 +158,13 @@ function generateAvatarJBox(initial)
               var collectionContainer = liked ? $('#LikedAvatars') : $('#DislikedAvatars');
               
               // If there if not enough space for the avatars to show in one line remove the first one
-              if (collectionContainer.find('div').length && ((collectionContainer.find('div').length + 1) * $(collectionContainer.find('div')[0]).outerWidth(true) > collectionContainer.outerWidth())) {
-                $(collectionContainer.find('div')[0]).remove();
+              if (collectionContainer.find('div[data-avatar-tooltip]').length && ((collectionContainer.find('div[data-avatar-tooltip]').length + 1) * $(collectionContainer.find('div[data-avatar-tooltip]')[0]).outerWidth(true) > collectionContainer.outerWidth())) {
+                $(collectionContainer.find('div[data-avatar-tooltip]')[0]).remove();
               }
               
               // Add the avatar to the collection
               this.animate('popIn', {
-                element: $('<div data-avatar-tooltip="You ' + (liked ? 'liked' : 'disliked') + ' ' + DemoAvatars.Avatars[this.AvatarIndex] + '"/>').append($('<img src="https://stephanwagner.me/img/jBox/avatar/' + DemoAvatars.Avatars[this.AvatarIndex] + '.svg"/>')).appendTo(collectionContainer)
+                element: $('<div data-avatar-tooltip="You ' + (liked ? 'liked' : 'disliked') + ' ' + DemoAvatars.Avatars[this.AvatarIndex] + '"/>').append($('<div/>').html('<img src="https://stephanwagner.me/img/jBox/avatar/' + DemoAvatars.Avatars[this.AvatarIndex] + '.svg"/>')).appendTo(collectionContainer)
               });
               
               // Attach the avatar tooltip

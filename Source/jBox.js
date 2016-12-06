@@ -762,9 +762,8 @@ function jBox(type, options) {
   this._abortAnimation = function ()
   {
     // Remove all animation classes
-    var prefix = 'jBox-' + this.id + '-animation';
     var classes = this.wrapper.attr('class').split(' ').filter(function (c) {
-      return c.lastIndexOf(prefix, 0) !== 0;
+      return c.lastIndexOf('jBox-' + this.id + '-animation', 0) !== 0;
     });
     this.wrapper.attr('class', classes.join(' '));
   };
