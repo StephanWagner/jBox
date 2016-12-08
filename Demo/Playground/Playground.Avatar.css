@@ -124,26 +124,25 @@
 }
 
 .AvatarsCollection#DislikedAvatars {
-  left: 5px;
+  left: 4px;
 }
 
 .AvatarsCollection#LikedAvatars {
-  right: 5px;
+  right: 4px;
 }
 
 .AvatarsCollection > div {
   width: 47px;
   height: 45px;
+  padding: 0 1px;
 }
 
 .AvatarsCollection#DislikedAvatars > div {
   float: left;
-  padding-right: 2px;
 }
 
 .AvatarsCollection#LikedAvatars > div {
   float: right;
-  padding-left: 2px;
 }
 
 .AvatarsCollection > div > div {
@@ -158,12 +157,10 @@
 
 .AvatarsCollection#DislikedAvatars > div > div {
   border-color: #e33;
-  padding-right: 2px;
 }
 
 .AvatarsCollection#LikedAvatars > div > div {
   border-color: #7d0;
-  padding-left: 2px;
 }
 
 .AvatarsCollection > div > div > img {

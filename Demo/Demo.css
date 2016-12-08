@@ -19,7 +19,7 @@ body {
 }
 
 main {
-    padding: 20px 0;
+  padding: 20px 0;
 }
 
 .container {
@@ -51,30 +51,30 @@ h2 {
 
 .targets-wrapper:after,
 .targets-wrapper:before {
-    content: " ";
-    display: table;
+  content: " ";
+  display: table;
 }
 
 .targets-wrapper:after {
-    clear: both;
+  clear: both;
 }
 
 .target,
 .target-click,
 .target-notice {
   cursor: default;
-    font-size: 13px;
-    line-height: 52px;
-    height: 52px;
-    border-radius: 2px;
-    border: 1px solid #e2e2e2;
-    text-align: center;
-    background: #fafafa;
-    position: relative;
-    text-transform: uppercase;
-    float: left;
-    width: calc(25% - 10px);
-    margin: 5px;
+  font-size: 13px;
+  line-height: 52px;
+  height: 52px;
+  border-radius: 2px;
+  border: 1px solid #e2e2e2;
+  text-align: center;
+  background: #fafafa;
+  position: relative;
+  text-transform: uppercase;
+  float: left;
+  width: calc(25% - 10px);
+  margin: 5px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -94,8 +94,8 @@ h2 {
 
 .demo-img {
   float: left;
-    width: calc(25% - 10px);
-    margin: 5px;
+  width: calc(25% - 10px);
+  margin: 5px;
 }
 
 .demo-img > img {
@@ -117,7 +117,7 @@ h2 {
   .target,
   .target-click,
   .target-notice {
-      width: calc(50% - 10px);
+    width: calc(50% - 10px);
   }
 
   .demo-img > img {
@@ -232,12 +232,12 @@ header a:hover {
 
 .clearfix:after,
 .clearfix:before {
-    content: " ";
-    display: table;
+  content: " ";
+  display: table;
 }
 
 .clearfix:after {
-    clear: both;
+  clear: both;
 }
 
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */

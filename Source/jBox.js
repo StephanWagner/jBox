@@ -42,10 +42,11 @@ function jBox(type, options) {
     preventDefault: false,       // Prevent the default event when opening jBox, e.g. don't follow the href in a link
     
     // Content
-    title: null,                 // Adds a title to your jBox
     content: null,               // You can use HTML or a jQuery element, e.g. jQuery('#jBox-content'). The elements will be appended to the content element and then made visible, so hide them with style="display: none" beforehand
-    getTitle: null,              // Get the title from an attribute when jBox opens, e.g. getTitle: 'data-title'
     getContent: null,            // Get the content from an attribute when jBox opens, e.g. getContent: 'data-content'. Use 'html' to get the attached elements HTML as content
+    title: null,                 // Adds a title to your jBox
+    getTitle: null,              // Get the title from an attribute when jBox opens, e.g. getTitle: 'data-title'
+    footer: null,                // Adds a footer to your jBox
     isolateScroll: true,         // Isolates scrolling to the content container
     
     // AJAX
