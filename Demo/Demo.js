@@ -182,7 +182,9 @@ new jBox('Modal', {
 
 
 new jBox('Confirm', {
-  content: 'Do you really want to click the submit button?'
+	content: 'Do you really want to do this?',
+	cancelButton: 'Nope',
+	confirmButton: 'Sure do!'
 });
 
 
