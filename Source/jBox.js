@@ -168,7 +168,7 @@ function jBox(type, options) {
       blockScroll: true,
       closeOnEsc: true,
       closeOnClick: 'overlay',
-      closeButton: 'title',
+      closeButton: true,
       overlay: true,
       animation: 'zoomIn'
     },
@@ -523,7 +523,7 @@ function jBox(type, options) {
       }).appendTo(this.options.appendTo);
       
       // Add close button to overlay
-      (this.options.closeButton == 'overlay' || this.options.closeButton === true) && this.overlay.append(this.closeButton);
+      (this.options.closeButton == 'overlay' || (this.options.closeButton === true && !this.titleContainer)) && this.overlay.append(this.closeButton);
       
       // Add closeOnClick: 'overlay' events
       this.options.closeOnClick == 'overlay' && this.overlay.on('touchend click', function () { this.close({ignoreDelay: true}); }.bind(this));
