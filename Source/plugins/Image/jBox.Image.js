@@ -20,6 +20,8 @@ jQuery(document).ready(function () {
     imageLabel: 'title',        // The attribute where jBox gets the image label from, e.g. title="My label"
     imageFade: 360,             // The fade duration for images in ms
     imageSize: 'contain',       // How to display the images. Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
+    imageCounter: false,        // Set to true to add an image counter, e.g. 4/20
+    imageCounterSeparator: '/', // HTML to separate the current image number from all image numbers, e.g. '/' or ' of '
     target: window,
     attach: '[data-jbox-image]',
     fixed: true,
@@ -79,7 +81,7 @@ jQuery(document).ready(function () {
         // Create image container
         var image = jQuery('<div/>', {
           id: 'jBox-image-' + gallery + '-' + id,
-          'class': 'jBox-image-container' + (error ? ' jBox-image-not-found' : '')
+          'class': 'jBox-image-container' + (error ? ' jBox-image-not-found' : '') + (!open && !preload ? ' jBox-image-' + gallery + '-current' : '')
         }).css({
           backgroundImage: error ? '' : 'url("' + this.images[gallery][id].src + '")',
           backgroundSize: this.options.imageSize,
@@ -123,12 +125,17 @@ jQuery(document).ready(function () {
           jQuery('.jBox-image-pointer-prev, .jBox-image-pointer-next').css({display: (this.images[gallery].length > 1 ? 'block' : 'none')});
         }
         
+        // If there is a current image already shown, hide it
+        if (jQuery('.jBox-image-' + gallery + '-current').length) {
+          jQuery('.jBox-image-' + gallery + '-current').removeClass('jBox-image-' + gallery + '-current').animate({opacity: 0}, (img == 'open') ? 0 : this.options.imageFade);
+        }
+        
         // Set new current image
         this.currentImage = {gallery: gallery, id: id};
         
         // Show image if it already exists
         if (jQuery('#jBox-image-' + gallery + '-' + id).length) {
-          jQuery('#jBox-image-' + gallery + '-' + id).css({zIndex: this.imageZIndex++, opacity: 0}).animate({opacity: 1}, (img == 'open') ? 0 : this.options.imageFade);
+          jQuery('#jBox-image-' + gallery + '-' + id).addClass('jBox-image-' + gallery + '-current').css({zIndex: this.imageZIndex++, opacity: 0}).animate({opacity: 1}, (img == 'open') ? 0 : this.options.imageFade);
           showLabel(gallery, id);
           
         // Load image
@@ -153,6 +160,17 @@ jQuery(document).ready(function () {
             
             tmpImg.src = this.images[gallery][id].src;
           }.bind(this));
+        }
+        
+        // Update the image counter numbers
+        if (this.imageCounter) {
+          if (this.images[gallery].length > 1) {
+            this.wrapper.addClass('jBox-image-has-counter');
+            this.imageCounter.find('.jBox-image-counter-all').html(this.images[gallery].length);
+            this.imageCounter.find('.jBox-image-counter-current').html(id + 1);
+          } else {
+            this.wrapper.removeClass('jBox-image-has-counter');
+          }
         }
         
         // Preload next image
@@ -185,6 +203,12 @@ jQuery(document).ready(function () {
       // Append image label containers
       this.imageLabel = jQuery('<div/>', {'class': 'jBox-image-label-container'}).appendTo(this.wrapper);
       this.imageLabel.append(jQuery('<div/>', {'class': 'jBox-image-pointer-prev', click: function () { this.showImage('prev'); }.bind(this)})).append(jQuery('<div/>', {'class': 'jBox-image-pointer-next', click: function () { this.showImage('next'); }.bind(this)}));
+      
+      // Creating the image counter containers
+      if (this.options.imageCounter) {
+        this.imageCounter = jQuery('<div/>', {'class': 'jBox-image-counter-container'}).appendTo(this.wrapper);
+        this.imageCounter.append(jQuery('<span/>', {'class': 'jBox-image-counter-current'})).append(jQuery('<span/>').html(this.options.imageCounterSeparator)).append(jQuery('<span/>', {'class': 'jBox-image-counter-all'}));
+      }
     },
     
     

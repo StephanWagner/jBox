@@ -86,6 +86,26 @@
   left: 0;
 }
 
+.jBox-image-counter-container {
+  position: absolute;
+  right: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 13px;
+  color: #fff;
+  text-align: right;
+  display: none;
+}
+
+.jBox-image-has-counter .jBox-image-counter-container {
+  display: block;
+}
+
+.jBox-image-has-counter .jBox-image-label:not(.expanded) {
+  padding-right: 80px;
+  text-indent: 40px;
+}
+
 .jBox-overlay.jBox-overlay-Image {
   background: #000;
 }

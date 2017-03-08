@@ -253,7 +253,10 @@ $('#Notice-4').click(function() {
 /* Image */
 
 
-new jBox('Image');
+new jBox('Image', {
+  imageCounter: true,
+  imageCounterSeparator: ' of '
+});
 
 
 /* Additional JS for demo purposes  */
