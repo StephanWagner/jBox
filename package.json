@@ -18,5 +18,6 @@
   "license": "MIT",
   "dependencies": {
     "jquery": ">=2.1"
-  }
+  },
+  "main": "Source/jBox.js"
 }

@@ -1796,3 +1796,7 @@ jQuery.fn.jBox = function (type, options)
     attach: this
   }));
 };
+
+if(typeof module === "object" && module.exports) {
+  module.exports = jBox;
+}
