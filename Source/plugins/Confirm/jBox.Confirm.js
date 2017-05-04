@@ -10,7 +10,7 @@
 
 jQuery(document).ready(function () {
   
-  new jBoxPlugin('Confirm', {
+  new jBox.plugin('Confirm', {
     
     
     // Options (https://stephanwagner.me/jBox/options#options-confirm)

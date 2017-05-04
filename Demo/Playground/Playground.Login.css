@@ -1,0 +1,269 @@
+
+/* Restyle jBoxes */
+
+#jBoxLogin .jBox-content {
+  padding: 0;
+}
+
+#jBoxLogin .jBox-title {
+  text-align: center;
+  line-height: 1.6;
+  padding: 15px 0;
+  font-size: 20px;
+}
+
+.jBox-TooltipSmall.LoginTooltipSmall .jBox-content,
+.jBox-TooltipError.LoginTooltipError .jBox-content {
+  font-size: 13px;
+  padding: 5px 10px;
+  line-height: 18px;
+}
+
+.jBox-TooltipSmall.LoginTooltipSmall .jBox-container,
+.jBox-TooltipError.LoginTooltipError .jBox-container {
+  border-radius: 2px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.jBox-TooltipSmall.LoginTooltipError .jBox-container {
+  background: #d00;
+}
+
+.jBox-TooltipSmall.LoginTooltipSmall .jBox-container {
+  background: #246bb3;
+}
+
+.jBox-TooltipSmall.LoginTooltipSmall .jBox-pointer:after {
+  background: #246bb3;
+}
+
+/* Content */
+
+.login-container {
+  display: none;
+}
+
+.login-container.active {
+  display: block;
+}
+
+.login-body {
+  padding: 0 25px;
+}
+
+.login-container button {
+  margin: 25px 0 0;
+}
+
+.login-textfield-wrapper {
+  position: relative;
+}
+
+.login-remember {
+  margin: 25px 0 0;
+  height: 20px;
+}
+
+#LoginWrapper.request-running .login-footer a,
+#LoginWrapper.request-running .login-footer span {
+  cursor: default !important;
+  text-decoration: none !important;
+}
+
+/* Form elements */
+
+.login-textfield {
+  width: 100%;
+  border: 0;
+  border-bottom: 2px solid #ddd;
+  padding: 6px 2px;
+  font-size: 18px;
+  margin-top: 25px;
+  transition: border-color .2s;
+}
+
+.login-textfield:hover {
+  border-bottom-color: #ccc;
+}
+
+.login-textfield:focus {
+  border-bottom-color: #246bb3;
+}
+
+.login-textfield.textfield-error {
+  border-bottom-color: #d00;
+}
+
+.login-checkbox {
+  float: left;
+  position: relative;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  background: #eee;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, .05);
+  transition: background .2s;
+}
+
+.login-checkbox.login-checkbox-active {
+  box-shadow: none;
+  background: #7d0;
+}
+
+.login-checkbox-check {
+  opacity: 0;
+  background: no-repeat center center;
+  background-size: 14px;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0MjQuNTMgMzE1LjczIj4KPHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTQ2NS4wNywxNTMuNmExMC4zMSwxMC4zMSwwLDAsMCwwLTE0LjkzTDQyOC44LDEwMi40YTEwLjMxLDEwLjMxLDAsMCwwLTE0LjkzLDBMMjAwLjUzLDMxNS43Myw5OC4xMywyMTMuMzNhMTAuMzEsMTAuMzEsMCwwLDAtMTQuOTMsMEw0Ni45MywyNDkuNmExMC4zMSwxMC4zMSwwLDAsMCwwLDE0LjkzbDE0Ny4yLDE0Ny4yYTEwLjMxLDEwLjMxLDAsMCwwLDE0LjkzLDBsMjU2LTI1OC4xM1oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC00My43MyAtOTkuMikiLz4KPC9zdmc+);
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -10px;
+  margin-left: -10px;
+  transition: opacity .2s;
+}
+
+.login-checkbox.login-checkbox-active .login-checkbox-check {
+  opacity: 1;
+}
+
+.login-checkbox-label {
+  float: left;
+  cursor: pointer;
+  width: calc(100% - 20px);
+  line-height: 20px;
+  font-size: 17px;
+  padding: 0 0 0 12px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.login-button {
+  width: 100%;
+  border: 0;
+  color: #fff;
+  background: #246bb3;
+  border-radius: 4px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  padding: 0;
+  transition: background .2s;
+}
+
+.login-button:hover {
+  background: #3878c1;
+}
+
+.login-button:active {
+  background: #246bb3;
+}
+
+.login-button[disabled] {
+  cursor: default !important;
+  color: #ccc !important;
+  background: #eee !important;
+}
+
+.loading-bar,
+.login-button[disabled].loading-bar {
+  background-image: linear-gradient(-45deg, rgba(255, 255, 255, .4) 25%, rgba(255, 255, 255, .0) 25%, rgba(255, 255, 255, .0) 50%, rgba(255, 255, 255, .4) 50%, rgba(255, 255, 255, .4) 75%, rgba(255, 255, 255, .0) 75%, rgba(255, 255, 255, .0)) !important;
+  background-size: 32px 32px !important;
+  background-repeat: repeat !important;
+  transition: background-position 60000s linear !important;
+  background-position: 4000000px !important;
+}
+
+/* Footer */
+
+.login-footer {
+  background: #fafafa;
+  border-top: 1px solid #eee;
+  border-radius: 0 0 4px 4px;
+  font-size: 17px;
+  line-height: 1.6;
+  padding: 15px 0 15px 25px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.login-footer span {
+  cursor: pointer;
+  color: #297acc;
+}
+
+.login-footer span:hover {
+  text-decoration: underline;
+}
+
+/*
+  
+TODO
+
+.password-strength {
+  width: 10px;
+  height: 6px;
+  top: 39px;
+  right: 11px;
+}
+
+.password-strength:before,
+.password-strength:after {
+  content: '';
+  width: 10px;
+  top: 0;
+  bottom: 0;
+}
+
+.password-strength,
+.password-strength:before,
+.password-strength:after {
+  position: absolute;
+  background: #eee;
+  transition: background .15s;
+}
+
+.password-strength:before {
+  right: calc(100% + 1px);
+  border-radius: 2px 0 0 2px;
+}
+
+.password-strength:after {
+  left: calc(100% + 1px);
+  border-radius: 0 2px 2px 0;
+}
+
+.password-strength.level1:before {
+  background: #e00;
+}
+
+.password-strength.level2,
+.password-strength.level2:before {
+  background: #fc0;
+}
+
+.password-strength.level3,
+.password-strength.level3:before,
+.password-strength.level3:after {
+  background: #7d0;
+}
+
+*/
+
+
+/* Common */
+
+.noselect {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

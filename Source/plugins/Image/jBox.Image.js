@@ -10,7 +10,7 @@
  
 jQuery(document).ready(function () {
   
-  new jBoxPlugin('Image', {
+  new jBox.plugin('Image', {
     
     
     // Options (https://stephanwagner.me/jBox/options#options-confirm)

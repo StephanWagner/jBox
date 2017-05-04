@@ -10,7 +10,7 @@
 
 jQuery(document).ready(function () {
   
-  new jBoxPlugin('Notice', {
+  new jBox.plugin('Notice', {
     
     
     // Options (https://stephanwagner.me/jBox/options#options-notice)
