@@ -5,7 +5,7 @@
  *
  * License: MIT (https://opensource.org/licenses/MIT)
  *
- * Requires: jQuery 3.1.1 (https://code.jquery.com/jquery-3.1.1.min.js)
+ * Requires: jQuery 3.2.1 (https://code.jquery.com/jquery-3.2.1.min.js)
  *
  * Documentation: https://stephanwagner.me/jBox/documentation
  *
