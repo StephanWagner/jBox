@@ -461,3 +461,30 @@ body[class*=" jBox-blockScroll-"] {
 .jBox-animated-slideLeft {
   animation: jBox-slideLeft .4s;
 }
+
+
+
+
+.jBox-closeButton {
+    z-index: 1;
+}
+.jBox-countdown {
+    border-radius: 3px 3px 0 0;
+    z-index: 0;
+    background: #000;
+    opacity: .2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+.jBox-countdown_inner {
+    border-radius: 3px 3px 0 0;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    background: #fff;
+}

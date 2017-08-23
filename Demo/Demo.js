@@ -249,6 +249,74 @@ $('#Notice-4').click(function() {
   
 });
 
+$('#Notice-5').click(function() {
+  
+  new jBox('Notice', {
+    content: 'Hover me, I\'ll stick around',
+    color: 'black',
+    delayOnHover: true
+  });
+  
+});
+
+
+$('#Notice-6').click(function() {
+  
+  new jBox('Notice', {
+    animation: 'flip',
+    color: getColor(),
+    content: 'Oooh! They also come in colors',
+    delayOnHover: true,
+    showCountdown: true,
+    closeButton: true
+  });
+  
+});
+
+
+$('#Notice-7').click(function() {
+
+  new jBox('Notice', {
+    theme: 'NoticeFancy',
+    attributes: {
+      x: 'left',
+      y: 'bottom'
+    },
+    color: getColor(),
+    content: 'Hello, I\'m down here',
+    audio: '../Source/audio/bling2',
+    volume: 80,
+    animation: {open: 'slide:bottom', close: 'slide:left'},
+    delayOnHover: true,
+    showCountdown: true,
+    closeButton: true
+  });
+  
+});
+
+
+$('#Notice-8').click(function() {
+  
+  new jBox('Notice', {
+    attributes: {
+      x: 'right',
+      y: 'bottom'
+    },
+    stack: false,
+    animation: {
+      open: 'tada',
+      close: 'zoomIn'
+    },
+    color: getColor(),
+    title: 'Tadaaa! I\'m single',
+    content: 'Open another notice, I won\'t stack',
+    delayOnHover: true,
+    showCountdown: true,
+    closeButton: true
+  });
+  
+});
+
 
 /* Image */
 

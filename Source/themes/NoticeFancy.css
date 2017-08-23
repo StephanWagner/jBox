@@ -50,3 +50,11 @@
 .jBox-NoticeFancy.jBox-Notice-yellow .jBox-container:after {
   background-color: #fb0;
 }
+
+.jBox-NoticeFancy .jBox-countdown {
+    left: 8px;
+}
+.jBox-NoticeFancy .jBox-countdown,
+.jBox-NoticeFancy .jBox-countdown_inner {
+    border-radius: 0 3px 0 0;
+}
