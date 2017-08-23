@@ -860,7 +860,7 @@
     !elements && (elements = this.options.attach);
     
     // Convert selectors to jQuery objects
-    jQuery.type(elements) == 'string' && (elements = jQuery(elements))
+    jQuery.type(elements) == 'string' && (elements = jQuery(elements));
     
     // Get trigger event from options if not passed
     !trigger && (trigger = this.options.trigger);
