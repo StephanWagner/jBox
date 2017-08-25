@@ -105,10 +105,15 @@ jQuery(document).ready(function () {
     
     _onOpen: function ()
     {
+      // Bail if we're stacking
+      if (this.options.stack) {
+          return;
+      }
+      
       // Adjust position when opening
       this._adjustNoticePositon();
       
-      // Loop through notices at same window corner and either move or destroy them
+      // Loop through notices at same window corner destroy them
       jQuery.each(jQuery('.jBox-Notice'), function (index, el)
       {
         el = jQuery(el);
@@ -121,21 +126,42 @@ jQuery(document).ready(function () {
           el.data('jBox').close({ignoreDelay: true});
           return;
         }
-        
-        // Get the new margin and add to notices
-        var margin = (el.data('jBoxNoticeMargin') ? parseInt(el.data('jBoxNoticeMargin')) : parseInt(el.css('margin-' + this.options.attributes.y))) + this.wrapper.outerHeight() + this.options.stackSpacing;
-        el.data('jBoxNoticeMargin', margin);
-        el.css('margin-' + this.options.attributes.y, margin);
-        
       }.bind(this));
     },
+
+    // Triggered when resizing window etc.
     
+    _onPosition: function ()
+    {
+        var stacks = {};
+        jQuery.each(jQuery('.jBox-Notice'), function (index, el)
+        {
+          el = jQuery(el);
+          var pos = el.data('jBox-Notice-position');
+          if (!stacks[pos]) {
+              stacks[pos] = [];
+          }
+          stacks[pos].push(el);
+        });
+        for (var pos in stacks) {
+            var position = pos.split('-');
+            var direction = position[1];
+            stacks[pos].reverse();
+            var margin = 0;
+            for (var i in stacks[pos]) {
+                el = stacks[pos][i];
+                el.css('margin-' + direction, margin);
+                margin += el.outerHeight() + this.options.stackSpacing;
+            }
+        }
+    },
     
-    // Remove notice from DOM when closing finishes
+    // Remove notice from DOM and reposition other notices when closing finishes
     
     _onCloseComplete: function ()
     {
-      this.destroy();
+        this.destroy();
+        this.options._onPosition.bind(this).call();
     }
     
   });
