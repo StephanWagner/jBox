@@ -145,6 +145,8 @@
       draggable: false,            // Make your jBox draggable (use 'true', 'title' or provide an element as handle) (inspired from Chris Coyiers CSS-Tricks http://css-tricks.com/snippets/jquery/draggable-without-jquery-ui/)
       dragOver: true,              // When you have multiple draggable jBoxes, the one you select will always move over the other ones
       autoClose: false,            // Time in ms when jBox will close automatically after it was opened
+      delayOnHover: false,         // Delay auto-closing while mouse is hovered
+      showCountdown: false,        // Display a nice progress-indicator when autoClose is enabled
       
       // Audio                     // You can use the integrated audio function whenever you'd like to play an audio file, e.g. onInit: function () { this.audio('url_to_audio_file_without_file_extension', 75); }
       preloadAudio: true,          // Preloads the audio files set in option audio. You can also preload other audio files, e.g. ['src_to_file.mp3', 'src_to_file.ogg']
@@ -506,6 +508,11 @@
         }.bind(this));
       }
       
+      // Cancel countdown on mouseenter if delayOnHover
+      this.options.delayOnHover && jQuery('#' + this.id).on('mouseenter', function (ev) { this.isHovered = true; }.bind(this));
+      // Resume countdown on mouseleave if delayOnHover
+      this.options.delayOnHover && jQuery('#' + this.id).on('mouseleave', function (ev) { this.isHovered = false; }.bind(this));
+      
       // Positioning events
       if ((this.options.adjustPosition || this.options.reposition) && !this.fixed && this.outside) {
         
@@ -853,7 +860,7 @@
     !elements && (elements = this.options.attach);
     
     // Convert selectors to jQuery objects
-    jQuery.type(elements) == 'string' && (elements = jQuery(elements))
+    jQuery.type(elements) == 'string' && (elements = jQuery(elements));
     
     // Get trigger event from options if not passed
     !trigger && (trigger = this.options.trigger);
@@ -1531,7 +1538,37 @@
     }.bind(this);
     
     // Close jBox
-    options.ignoreDelay ? close() : (this.timer = setTimeout(close, Math.max(this.options.delayClose, 10)));
+    if (options.ignoreDelay) {
+      close();
+    } else if ((this.options.delayOnHover || this.options.showCountdown) && this.options.delayClose > 10) {
+      var self = this;
+      var remaining = this.options.delayClose;
+      var prevFrame = Date.now();
+      if (this.options.showCountdown && !this.inner) {
+        var outer = jQuery('<div class="jBox-countdown"></div>');
+        this.inner = jQuery('<div class="jBox-countdown_inner"></div>');
+        outer.prepend(this.inner);
+        jQuery('#' + this.id).append(outer);
+      }
+      this.countdown = function(){
+        var dateNow = Date.now();
+        if (!self.isHovered) {
+          remaining -= dateNow - prevFrame;
+        }
+        prevFrame = dateNow;
+        if (remaining > 0) {
+          if (self.options.showCountdown) {
+            self.inner.css('width', (remaining * 100 / self.options.delayClose) + '%');
+          }
+          window.requestAnimationFrame(self.countdown);
+        } else {
+          close();
+        }
+      };
+      window.requestAnimationFrame(this.countdown);
+    } else {
+      this.timer = setTimeout(close, Math.max(this.options.delayClose, 10));
+    }
     
     return this;
   };
