@@ -417,7 +417,7 @@
         this.closeButton = jQuery('<div class="jBox-closeButton jBox-noDrag"/>').on('touchend click', function (ev) { this.close({ignoreDelay: true}); }.bind(this)).append(closeButtonSVG);
         
         // Add close button to jBox container
-        if (this.options.closeButton == 'box' || (this.options.closeButton === true && !this.options.overlay && !this.options.title)) {
+        if (this.options.closeButton == 'box' || (this.options.closeButton === true && !this.options.overlay && !this.options.title && !this.options.getTitle)) {
           this.wrapper.addClass('jBox-closeButton-box');
           this.closeButton.appendTo(this.container);
         }
@@ -562,7 +562,7 @@
         }).appendTo(this.options.appendTo);
         
         // Add close button to overlay
-        (this.options.closeButton == 'overlay' || (this.options.closeButton === true && !this.titleContainer)) && this.overlay.append(this.closeButton);
+        (this.options.closeButton == 'overlay' || this.options.closeButton === true) && this.overlay.append(this.closeButton);
         
         // Add closeOnClick: 'overlay' events
         this.options.closeOnClick == 'overlay' && this.overlay.on('touchend click', function () { this.close({ignoreDelay: true}); }.bind(this));
