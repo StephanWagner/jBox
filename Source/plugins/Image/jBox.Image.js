@@ -174,24 +174,26 @@ jQuery(document).ready(function () {
         }
         
         // Preload next image
-        var next_id = id + 1;
-        next_id = next_id > (this.images[gallery].length - 1) ? 0 : (next_id < 0 ? (this.images[gallery].length - 1) : next_id);
-        
-        (!jQuery('#jBox-image-' + gallery + '-' + next_id).length) && jQuery('<img src="' + this.images[gallery][next_id].src + '"/>').each(function ()
-        {
-          var tmpImg = new Image();
-          tmpImg.onload = function ()
-          {
-              appendImage(gallery, next_id, true);
-          }.bind(this);
-          
-          tmpImg.onerror = function ()
-          {
-            appendImage(gallery, next_id, true, null, true);
-          }.bind(this);
-          
-          tmpImg.src = this.images[gallery][next_id].src;
-        }.bind(this));
+        if (this.images[gallery].length - 1) {
+	        var next_id = id + 1;
+	        next_id = next_id > (this.images[gallery].length - 1) ? 0 : (next_id < 0 ? (this.images[gallery].length - 1) : next_id);
+	        
+	        (!jQuery('#jBox-image-' + gallery + '-' + next_id).length) && jQuery('<img src="' + this.images[gallery][next_id].src + '"/>').each(function ()
+	        {
+	          var tmpImg = new Image();
+	          tmpImg.onload = function ()
+	          {
+	              appendImage(gallery, next_id, true);
+	          }.bind(this);
+	          
+	          tmpImg.onerror = function ()
+	          {
+	            appendImage(gallery, next_id, true, null, true);
+	          }.bind(this);
+	          
+	          tmpImg.src = this.images[gallery][next_id].src;
+	        }.bind(this));
+	      }
       };
     },
     
