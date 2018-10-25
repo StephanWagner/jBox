@@ -1,23 +1,48 @@
 {
   "name": "jbox",
-  "version": "0.4.9",
+  "version": "0.5.0",
   "description": "jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more.",
   "keywords": [
-    "jquery-plugin", "ecosystem:jquery", "tooltip", "modal", "window", "dialog", "confirm", "popup", "notice", "alert", "ui", "images", "lightbox"
+    "jquery-plugin",
+    "ecosystem:jquery",
+    "tooltip",
+    "modal",
+    "window",
+    "dialog",
+    "confirm",
+    "popup",
+    "notice",
+    "alert",
+    "ui",
+    "images",
+    "lightbox"
   ],
   "homepage": "https://stephanwagner.me/jBox",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/StephanWagner/jBox.git"
+    "type": "git",
+    "url": "https://github.com/StephanWagner/jBox.git"
   },
   "bugs": {
     "url": "https://github.com/StephanWagner/jBox/issues",
-    "email" : "stephanwagner.me@gmail.com"
+    "email": "stephanwagner.me@gmail.com"
   },
   "author": "Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)",
   "license": "MIT",
+  "main": "dist/jBox.js",
   "dependencies": {
-    "jquery": ">=2.1"
+    "jquery": "^3.3.1"
   },
-  "main": "Source/jBox.js"
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.9.3",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "jest": "^21.2.1"
+  },
+  "scripts": {
+    "test": "jest"
+  }
 }
