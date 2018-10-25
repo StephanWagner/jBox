@@ -119,7 +119,9 @@ jQuery(document).ready(function () {
         el = jQuery(el);
         
         // Abort if the element is this notice or when it's not at the same position
-        if (el.attr('id') == this.id || el.data('jBox-Notice-position') != this.options.attributes.x + '-' + this.options.attributes.y) return;
+        if (el.attr('id') == this.id || el.data('jBox-Notice-position') != this.options.attributes.x + '-' + this.options.attributes.y) {
+          return;
+        }
         
         // Remove notice when we don't wont to stack them
         if (!this.options.stack) {
