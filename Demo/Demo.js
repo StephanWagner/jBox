@@ -222,7 +222,7 @@ $('#Notice-3').click(function() {
     },
     color: getColor(),
     content: 'Hello, I\'m down here',
-    audio: '../Source/audio/bling2',
+    audio: '../assets/audio/bling2',
     volume: 80,
     animation: {open: 'slide:bottom', close: 'slide:left'}
   });
@@ -288,7 +288,7 @@ $('#Notice-7').click(function() {
     content: getString(),
     title: getTitle(),
     maxWidth: 600,
-    audio: '../Source/audio/bling2',
+    audio: '../assets/audio/bling2',
     volume: 80,
     autoClose: Math.random() * 8000 + 2000,
     animation: {open: 'slide:bottom', close: 'slide:left'},

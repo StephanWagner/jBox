@@ -229,7 +229,7 @@ $(document).ready(function() {
             password: $('#loginPassword').val(),
             remember: $('.login-checkbox').hasClass('login-checkbox-active') ? 1 : 0
           },
-          method: 'post',
+          method: 'get',
           beforeSend: function () {
             this.startRequest();
           }.bind(this),
