@@ -10,7 +10,23 @@ var sourcemaps = require('gulp-sourcemaps');
 
 // Plugins
 
-var plugins = ['Confirm', 'Image', 'Notice'];
+var plugins = [
+  'Confirm',
+  'Image',
+  'Notice'
+];
+
+// Themes
+
+var themes = [
+  'NoticeFancy',
+  'TooltipBorder',
+  'TooltipBorderThick', 
+  'TooltipDark', 
+  'TooltipError', 
+  'TooltipSmall', 
+  'TooltipSmallGray'
+];
 
 // CSS
 
@@ -32,6 +48,14 @@ for (let plugin of plugins) {
     name: 'jBox.' + plugin,
     src: ['./src/scss/plugins/jBox.' + plugin + '.scss'],
     dest: './dist/plugins/'
+  });
+}
+
+for (let theme of themes) {
+  styles.push({
+    name: 'jBox.' + theme,
+    src: ['./src/scss/themes/jBox.' + theme + '.scss'],
+    dest: './dist/themes/'
   });
 }
 
