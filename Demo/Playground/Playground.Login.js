@@ -291,7 +291,7 @@ $(document).ready(function() {
             email: $('#registerEmail').val(),
             password: $('#registerPassword').val()
           },
-          method: 'post',
+          method: 'get',
           beforeSend: function () {
             this.startRequest();
           }.bind(this),
