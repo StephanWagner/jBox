@@ -34,6 +34,9 @@ jQuery(document).ready(function () {
     preventDefault: true,
     width: '100%',
     height: '100%',
+    downloadButton: false,
+    downloadButtonText: null,
+    downloadButtonUrl: null,
     adjustDistance: {
       top: 40,
       right: 5,
@@ -61,7 +64,11 @@ jQuery(document).ready(function () {
         // Add item to a gallery
         var gallery = item.attr(this.options.gallery) || 'default';
         !this.images[gallery] && (this.images[gallery] = []);
-        this.images[gallery].push({src: item.attr(this.options.src), label: (item.attr(this.options.imageLabel) || '')});
+        this.images[gallery].push({
+          src: item.attr(this.options.src),
+          label: (item.attr(this.options.imageLabel) || ''),
+          downloadUrl: this.options.downloadButtonUrl && item.attr(this.options.downloadButtonUrl) ? item.attr(this.options.downloadButtonUrl) : null
+        });
         
         // Remove the title attribute so it won't show the browsers tooltip
         this.options.imageLabel == 'title' && item.removeAttr('title');
@@ -99,6 +106,15 @@ jQuery(document).ready(function () {
         !open && !preload && image.animate({opacity: 1}, this.options.imageFade);
         
       }.bind(this);
+
+      // Function to download an image
+      this.downloadImage = function (imageUrl) {
+        var link = document.createElement('a');
+        link.href = imageUrl;
+        link.setAttribute('download', imageUrl.substring(imageUrl.lastIndexOf('/')+1));
+        document.body.appendChild(link);
+        link.click();
+      };
       
       // Helper to show new image label
       var showLabel = function (gallery, id)
@@ -205,6 +221,27 @@ jQuery(document).ready(function () {
       // Append image label containers
       this.imageLabel = jQuery('<div/>', {'class': 'jBox-image-label-container'}).appendTo(this.wrapper);
       this.imageLabel.append(jQuery('<div/>', {'class': 'jBox-image-pointer-prev', click: function () { this.showImage('prev'); }.bind(this)})).append(jQuery('<div/>', {'class': 'jBox-image-pointer-next', click: function () { this.showImage('next'); }.bind(this)}));
+      
+      // Append the download button
+      if (this.options.downloadButton) {
+        this.downloadButton = jQuery('<div/>', {'class': 'jBox-image-download-button-wrapper'})
+          .appendTo(this.wrapper)
+          .append(
+            this.options.downloadButtonText ? jQuery('<div/>', {'class': 'jBox-image-download-button-text'}).html(this.options.downloadButtonText) : null
+          )
+          .append(
+            jQuery('<div/>', {'class': 'jBox-image-download-button-icon'})
+          ).on('click touchdown', function () {
+            if (this.images[this.currentImage.gallery][this.currentImage.id].downloadUrl) {
+              var currentImageUrl = this.images[this.currentImage.gallery][this.currentImage.id].downloadUrl;
+            } else {
+              var currentImage = this.wrapper.find('.jBox-image-default-current');
+              var currentImageStyle = currentImage[0].style.backgroundImage;
+              var currentImageUrl = currentImageStyle.slice(4, -1).replace(/["']/g, '');
+            }
+            this.downloadImage(currentImageUrl);
+          }.bind(this));
+      }
       
       // Creating the image counter containers
       if (this.options.imageCounter) {

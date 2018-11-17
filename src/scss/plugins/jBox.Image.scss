@@ -146,6 +146,38 @@
   transform-origin: 50% 50% 0;
 }
 
+/* Download button */
+
+.jBox-image-download-button-wrapper {
+  position: absolute;
+  top: -40px;
+  right: 35px;
+  height: 40px;
+  display: flex;
+  cursor: pointer;
+  opacity: .8;
+  transition: opacity .2s;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.jBox-image-download-button-icon {
+  width: 40px;
+  height: 40px;
+  background: center center no-repeat url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NDAgNjQwIj48cGF0aCBmaWxsPSIjRkZGRkZGIiBkPSJNNDE2IDI1NnYtMTkyaC0xOTJ2MTkyaC0xNjBsMjU2IDI1NiAyNTYtMjU2aC0xNjB6TTAgNTc2aDY0MHY2NGgtNjQwdi02NHoiPjwvcGF0aD48L3N2Zz4=);
+  background-size: 60%;
+}
+
+.jBox-image-download-button-text {
+  white-space: nowrap;
+  line-height: 40px;
+  padding: 0 10px 0 0;
+  color: #fff;
+  font-size: 14px;
+}
+
 /* Image spinner */
 
 @keyframes jBoxImageLoading {
