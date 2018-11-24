@@ -1,6 +1,8 @@
 
 $(document).ready(function() {
 
+/* Switch on unique zIndex behavior for jBoxes with overlay:true */
+jBox.useTrueModal = true;
 
 /* Tooltip */
 
@@ -175,6 +177,78 @@ new jBox('Modal', {
       this.setContent('<div class="ajax-error">Oops, something went wrong</div>');
     }
   }
+});
+
+
+new jBox('Modal', {
+  id: 'stackedModal-1',
+  attach: '#Modal-5',
+  height: 200,
+  draggable: 'title',
+  createOnInit: true,
+  closeOnEsc: false,
+  closeOnClick: false,
+  closeButton: 'title',
+  title: 'I\'m a jBox true modal window',
+  content: '<div>A true modal window blocks access to<br>'
+    + 'everything on the page, including other<br>'
+    + 'jBoxes, even if they are also true modals.'
+    + '<p><button id="stack-modal">Open Another True Modal</button>'
+    + '<p>(You can drag this window by its title.)'
+});
+
+
+new jBox('Modal', {
+  attach: '#Modal-6',
+  width: 350,
+  height: 200,
+  blockScroll: false,
+  animation: 'zoomIn',
+  draggable: 'title',
+  closeButton: true,
+  closeOnEsc: false,
+  closeOnClick: false,
+  overlay: false,
+  reposition: false,
+  createOnInit: true,
+  repositionOnOpen: false,
+  title: 'I\'m a non-modal window',
+  content: '(You can drag this window by its title.)'
+    + '<p><button id="open-nonmodal">Open/Close Another non-Modal</button>'
+});
+
+
+/* Stacked Modal */
+
+new jBox('Modal', {
+  id: 'stackedModal-2',
+  attach: '#stack-modal',
+  height: 200,
+  offset: {x: 150, y: 70},
+  draggable: 'title',
+  dragOver: true,
+  closeOnClick: false,
+  closeOnEsc: false,
+  closeButton: 'title',
+  title: 'I\'m a second jBox true modal window',
+  content: 'A true modal blocks access to all underlying<br>'
+    + 'elements on the page, even other modals.'
+    + '<p>(You can drag this window by its title.)'
+});
+
+new jBox('Modal', {
+  attach: '#open-nonmodal',
+  height: 200,
+  draggable: 'title',
+  offset: {x: -80, y: 50},
+  overlay: false,
+  dragOver: true,
+  closeOnClick: false,
+  closeOnEsc: false,
+  closeButton: 'title',
+  title: 'I\'m a second jBox non-modal window',
+  content: 'This window comes to the foreground when active.'
+    + '<p>(You can drag this window by its title.)'
 });
 
 
@@ -363,7 +437,6 @@ var titles = ['Congrats', 'Success', 'Thank you', false, false, false];
 var getTitle = function () {
   return titles[Math.floor(Math.random()*strings.length)];
 };
-
 
 });
 

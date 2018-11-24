@@ -329,7 +329,7 @@
     {
       // Abort if jBox is not draggable
       if (!this.options.draggable) return false;
-      
+
       // Get the handle where jBox will be dragged with
       var handle = this.options.draggable == 'title' ? this.titleContainer : (this.options.draggable instanceof jQuery ? this.options.draggable : (jQuery.type(this.options.draggable) == 'string' ? jQuery(this.options.draggable) : this.wrapper));
       
@@ -342,9 +342,11 @@
         if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) return;
         
         // Adjust z-index when dragging jBox over another draggable jBox
-        if (this.options.dragOver && this.wrapper.css('zIndex') <= jBox.zIndexMax) {
-          jBox.zIndexMax += 1;
-          this.wrapper.css('zIndex', jBox.zIndexMax);
+        if (!this.trueModal) {
+          if (this.options.dragOver && this.wrapper.css('zIndex') <= jBox.zIndexMax) {
+            jBox.zIndexMax += 1;
+            this.wrapper.css('zIndex', jBox.zIndexMax);
+          }
         }
         
         var drg_h = this.wrapper.outerHeight();
@@ -363,7 +365,9 @@
       }.bind(this)).on('mouseup', function () { jQuery(document).off('mousemove.jBox-draggable-' + this.id); }.bind(this));
       
       // Get highest z-index
-      jBox.zIndexMax = !jBox.zIndexMax ? this.options.zIndex : Math.max(jBox.zIndexMax, this.options.zIndex);
+      if (!this.trueModal) {
+        jBox.zIndexMax = !jBox.zIndexMax ? this.options.zIndex : Math.max(jBox.zIndexMax, this.options.zIndex);
+      }
       
       
       
@@ -374,8 +378,24 @@
     
     this._create = function ()
     {
+      var zIndex;
       // Abort if jBox was created already
       if (this.wrapper) return;
+
+      this.trueModal = jBox.useTrueModal && this.options.overlay;
+      if (this.trueModal) {
+        jBox.zIndexModalMax = Math.max(jBox.zIndexModalMax, jBox.zIndexMax);
+        if (this.options.zIndex > (jBox.zIndexModalMax + 1)) {
+          // It's already at least 2 greater than zIndexModalMax
+          zIndex = this.options.zIndex;
+        } else {
+          jBox.zIndexModalMax += 2;
+          zIndex = jBox.zIndexModalMax;
+          this.options.zIndex = zIndex;
+        }
+      } else {
+        zIndex = this.options.zIndex;
+      }
       
       // Create wrapper
       this.wrapper = jQuery('<div/>', {
@@ -385,7 +405,7 @@
         position: (this.options.fixed ? 'fixed' : 'absolute'),
         display: 'none',
         opacity: 0,
-        zIndex: this.options.zIndex
+        zIndex: zIndex
         
         // Save the jBox instance in the wrapper, so you can get access to your jBox when you only have the element
       }).data('jBox', this);
@@ -1336,7 +1356,7 @@
           }
           
           // Get the overlapping space
-          spaceDiff = (outMove == this._getTL(outMove)) ?
+          var spaceDiff = (outMove == this._getTL(outMove)) ?
             windowDimensions[this._getTL(outMove)] - pos[this._getTL(outMove)] + options.adjustDistance[outMove] :
             (windowDimensions[this._getOpp(this._getTL(outMove))] - pos[this._getTL(outMove)] - options.adjustDistance[outMove] - jBoxDimensions[this._getXY(outMove)]) * -1;
             
@@ -1464,6 +1484,14 @@
     // Open jBox
     this.options.delayOpen && !this.isOpen && !this.isClosing && !options.ignoreDelay ? (this.timer = setTimeout(open, this.options.delayOpen)) : open();
     
+    // Bring true model to front
+    if (this.trueModal && this.options.zIndex < jBox.zIndexModalMax) {
+      jBox.zIndexModalMax += 2;
+      this.options.zIndex = jBox.zIndexModalMax;
+      this.wrapper.css({zIndex: jBox.zIndexModalMax});
+      this.overlay.css({zIndex: jBox.zIndexModalMax - 1});
+    }
+
     return this;
   };
   
@@ -1851,6 +1879,11 @@
     jBox._pluginOptions[type] = options;
   };
   
+  // Set property to control zIndex assignment behavior
+  jBox.useTrueModal   = false; // if true, jBoxes with overlay:true behave as true modals
+  jBox.zIndexModalMax = 20000; // used only if jBox.useTrueModal is true
+  jBox.zIndexMax      = 10000; // used only by non-modal jBoxes if jBox.useTrueModal is true,
+                               // otherwise, used by all jBoxes.
   
   // Make jBox usable with jQuery selectors
   
@@ -1868,6 +1901,7 @@
   
   return jBox;
 }));
+
 /**
  * jBox Confirm plugin: Add a confirm dialog to links, buttons, etc.
  *

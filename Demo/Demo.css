@@ -35,11 +35,11 @@ h2 {
 }
 
 @media (max-width: 768px) {
-  
+
   .container {
     width: calc(100% - 30px);
   }
-  
+
 }
 
 /* Target elements */
@@ -113,7 +113,7 @@ h2 {
 }
 
 @media (max-width: 768px) {
-  
+
   .target,
   .target-click,
   .target-notice {
@@ -123,7 +123,7 @@ h2 {
   .demo-img > img {
     border-width: 2px;
   }
-  
+
 }
 
 /* jBox styles */
@@ -208,7 +208,7 @@ header a:hover {
 }
 
 @media (max-width: 500px) {
-  
+
   #stephan > span {
     display: none;
   }
@@ -711,7 +711,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-* { 
+* {
   outline: none;
   box-sizing: border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -721,4 +721,12 @@ h1, h2, h3, h4, h5, h6 {
 input::-moz-focus-inner,
 button::-moz-focus-inner {
   border: 0;
+}
+
+#stackedModal-1-overlay, #stackedModal-2-overlay {
+  background-color: rgba(0, 0, 0, .35);
+}
+
+.jBox-content p {
+    margin-top: 0.5em;
 }
