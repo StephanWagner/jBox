@@ -45,6 +45,7 @@
 <div class="target-click" data-confirm onclick="new jBox('Notice', {content: 'Yay! You clicked the confirm button', color: 'green', attributes: {y: 'bottom'}})">Click me</div>
 <div id="Modal-5" class="target-click">Click me</div>
 <div id="Modal-6" class="target-click">Click me</div>
+<div id="Modal-7" class="target-click">Click me</div>
 </div>
 
 <h2>Notice</h2>
@@ -78,6 +79,26 @@
 </div>
 
 </main>
+
+<div id="hold-pos-content">
+  <div class="norm">With <code>holdPosition:true</code>, this window will stay where you put it, as available space allows.
+    <div class="inp"><label><input type="checkbox" value="wider"> Wider</label> &emsp;
+      <label><input type="checkbox" value="taller"> Taller</label></div>
+  </div>
+  <div class="wider">With <code>holdPosition:true</code>, this window will stay where you put it, as available space allows.
+    <div class="inp"><label><input checked type="checkbox" value="wider"> Wider</label> &emsp;
+      <label><input type="checkbox" value="taller"> Taller</label> &mdash; (Wider)</div>
+  </div>
+  <div class="taller">With <code>holdPosition:true</code>, this window will stay where you put it, as available space allows.
+    <div class="inp"><label><input type="checkbox" value="wider"> Wider</label> &emsp;
+      <label><input checked type="checkbox" value="taller"> Taller</label> &mdash; (Taller)</div>
+  </div>
+  <div class="wider-taller">With <code>holdPosition:true</code>, this window will stay where you put it, as available space allows.
+    <div class="inp"><label><input checked type="checkbox" value="wider"> Wider</label> &emsp;
+      <label><input checked type="checkbox" value="taller"> Taller</label> &mdash; (Wider &amp; Taller)</div>
+    </div>
+  </div>
+</div>
 
 <script src="../dist/jBox.all.js"></script>
 <script src="./Demo.js"></script>

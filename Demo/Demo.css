@@ -728,5 +728,31 @@ button::-moz-focus-inner {
 }
 
 .jBox-content p {
-    margin-top: 0.5em;
+  margin-top: 0.5em;
+}
+
+#hold-position .jBox-title {
+  white-space: nowrap;
+}
+#hold-position .jBox-content div.inp {
+  margin-top: 0.5em;;
+}
+#hold-position .jBox-content .norm {
+  width: 270px;
+  height: auto;
+}
+#hold-position .jBox-content .wider {
+  width: 400px;
+  height: auto;
+}
+#hold-position .jBox-content .taller {
+  width: 270px;
+  height: 200px;
+}
+#hold-position .jBox-content .wider-taller {
+  width: 400px;
+  height: 200px;
+}
+#hold-pos-content div {
+  display: none;
 }

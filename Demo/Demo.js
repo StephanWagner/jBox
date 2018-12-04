@@ -179,6 +179,47 @@ new jBox('Modal', {
   }
 });
 
+/* holdPosition option */
+
+var holdPos = new jBox('Modal', {
+  id: 'hold-position',
+  createOnInit: true,
+  attach: '#Modal-7',
+  blockScroll: false,
+  animation: 'zoomIn',
+  closeOnClick: false,
+  closeOnEsc: false,
+  closeButton: true,
+  draggable: 'title',
+  title: 'Click on title to drag it around',
+  content: $('#hold-pos-content > div.norm').clone(),
+  overlay: false,
+  reposition: false,
+  repositionOnOpen: false,
+  holdPosition: true 
+});
+
+// Handle wider/taller selection events
+var ckWider = false, ckTaller = false;
+$('#hold-position').on('click', 'input[type="checkbox"]', function() {
+  var content, src = '#hold-pos-content > div';
+  if ($(this).val() == 'wider') {
+    ckWider = $(this).prop('checked');
+  } else if ($(this).val() == 'taller') {
+    ckTaller = $(this).prop('checked');
+  }
+  if (ckWider && ckTaller) {
+    content = $(src + '.wider-taller');
+  } else if (ckWider) {
+    content = $(src + '.wider');
+  } else if (ckTaller) {
+    content = $(src + '.taller');
+  } else {
+    content = $(src + '.norm');
+  }
+  $('hold-position jBox-content').empty(); // there are event handlers
+  holdPos.setContent(content.clone());
+});
 
 new jBox('Modal', {
   id: 'stackedModal-1',

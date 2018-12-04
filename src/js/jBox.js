@@ -113,6 +113,7 @@
       reposition: true,            // Calculates new position when the window-size changes
       repositionOnOpen: true,      // Calculates new position each time jBox opens (rather than only when it opens the first time)
       repositionOnContent: true,   // Calculates new position when the content changes with .setContent() or .setTitle()
+      holdPosition: false,         // Keeps current position if space permits. Applies only to 'Modal' type.
       
       // Pointer
       pointer: false,              // Your pointer will always point towards the target element, so the option outside needs to be 'x' or 'y'. By default the pointer is centered, set a position to move it to any side. You can also add an offset, e.g. 'left:30' or 'center:-20'
@@ -362,7 +363,18 @@
         }.bind(this));
         ev.preventDefault();
         
-      }.bind(this)).on('mouseup', function () { jQuery(document).off('mousemove.jBox-draggable-' + this.id); }.bind(this));
+      }.bind(this)).on('mouseup', function () {
+        jQuery(document).off('mousemove.jBox-draggable-' + this.id);
+        if ((this.type == 'Modal' || this.type == 'Confirm') && this.options.holdPosition) {
+          // Drag end captures new position
+          var jBoxOffset = jQuery('#' + this.id).offset(),
+            pos = {
+              x: jBoxOffset.left - jQuery(document).scrollLeft(),
+              y: jBoxOffset.top - jQuery(document).scrollTop()
+            };
+          this.position({position: pos, offset: {x: 0, y: 0}});
+        }
+      }.bind(this));
       
       // Get highest z-index
       if (!this.trueModal) {
@@ -1328,6 +1340,40 @@
       // Only continue if jBox is out of view area
       if (out) {
         
+        if ((this.type == 'Modal' || this.type == 'Confirm')
+          && jQuery.type(this.options.position.x) == 'number'
+          && jQuery.type(this.options.position.y) == 'number'
+        ) {
+          var diffX = 0, diffY = 0;
+          if (this.options.holdPosition) {
+
+            // adjust left or right
+            if (outXL) {
+              diffX = windowDimensions.left - (pos.left - (options.adjustDistance.left || 0));
+            } else if (outXR) {
+              diffX = windowDimensions.right - (pos.left + jBoxDimensions.x + (options.adjustDistance.right || 0));
+            }
+
+            // adjust top or bottom
+            if (outYT) {
+              diffY = windowDimensions.top - (pos.top - (options.adjustDistance.top || 0));
+            } else if (outYB) {
+              diffY = windowDimensions.bottom - (pos.top + jBoxDimensions.y + (options.adjustDistance.bottom || 0));
+            }
+
+            this.options.position.x = Math.max(windowDimensions.top, this.options.position.x + diffX);
+            this.options.position.y = Math.max(windowDimensions.left, this.options.position.y + diffY);
+
+            setPosition('x');
+            setPosition('y');
+            this.wrapper.css(pos);
+          }
+          // Fire onPosition event
+          this._fireEvent('onPosition');
+          
+          return this;
+        }
+
         // Function to flip position
         var flipJBox = function (xy) {
           this.wrapper.css(this._getTL(xy), pos[this._getTL(xy)] + ((jBoxDimensions[this._getXY(xy)] + (options.offset[this._getXY(xy)] * (xy == 'top' || xy == 'left' ? -2 : 2)) + targetDimensions[this._getXY(xy)]) * (xy == 'top' || xy == 'left' ? 1 : -1)));
