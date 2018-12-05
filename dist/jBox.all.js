@@ -255,7 +255,16 @@
     // Save where the jBox is aligned to
     
     this.align = this.outside ? this.outside : (this.options.position.y != 'center' && jQuery.type(this.options.position.y) != 'number' ? this.options.position.x : (this.options.position.x != 'center' && jQuery.type(this.options.position.x) != 'number' ? this.options.position.y : this.options.attributes.x));
+
     
+    // Adjust option zIndex
+
+    jBox.zIndexMax = Math.max(jBox.zIndexMax || 0, this.options.zIndex === 'auto' ? 20000 : this.options.zIndex);
+    if (this.options.zIndex === 'auto') {
+      this.adjustZIndexOnOpen = true;
+      jBox.zIndexMax += 10;
+      this.options.zIndex = jBox.zIndexMax;
+    } 
     
     // Internal positioning functions
     
@@ -343,9 +352,9 @@
         if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) return;
         
         // Adjust z-index when dragging jBox over another draggable jBox
-        if (this.options.dragOver && this.wrapper.css('zIndex') <= jBox.zIndexMax) {
-          jBox.zIndexMax += 1;
-          this.wrapper.css('zIndex', jBox.zIndexMax);
+        if (this.options.dragOver && parseInt(this.wrapper.css('zIndex'), 10) <= jBox.zIndexMaxDragover) {
+          jBox.zIndexMaxDragover += 10;
+          this.wrapper.css('zIndex', jBox.zIndexMaxDragover);
         }
         
         var drg_h = this.wrapper.outerHeight();
@@ -375,9 +384,7 @@
       }.bind(this));
       
       // Get highest z-index
-      jBox.zIndexMax = !jBox.zIndexMax ? this.options.zIndex : Math.max(jBox.zIndexMax, this.options.zIndex);
-      
-      
+      jBox.zIndexMaxDragover = !jBox.zIndexMaxDragover ? this.options.zIndex : Math.max(jBox.zIndexMaxDragover, this.options.zIndex);
       
       return this;
     };
@@ -581,6 +588,11 @@
         
         // Adjust option adjustDistance if there is a close button in the overlay
         jQuery('#' + this.id + '-overlay .jBox-closeButton').length && (this.options.adjustDistance.top = Math.max(jQuery('#' + this.id + '-overlay .jBox-closeButton').outerHeight(), this.options.adjustDistance.top));
+      }
+
+      // Adjust zIndex
+      if (this.adjustZIndexOnOpen === true) {
+        this.overlay.css('zIndex', parseInt(this.wrapper.css('zIndex'), 10) - 1);
       }
       
       // Abort if overlay is already visible
@@ -1438,7 +1450,13 @@
     
     // Opening function
     var open = function () {
-      
+
+      // Adjust zIndex
+      if (this.adjustZIndexOnOpen === true && parseInt(this.wrapper.css('zIndex'), 10) <= jBox.zIndexMax) {
+        jBox.zIndexMax += 10;
+        this.wrapper.css('zIndex', jBox.zIndexMax);
+      }
+
       // Set title from source element
       this.source && this.options.getTitle && (this.source.attr(this.options.getTitle) && this.setTitle(this.source.attr(this.options.getTitle), true));
       

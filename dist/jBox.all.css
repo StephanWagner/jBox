@@ -443,6 +443,265 @@ body[class*=" jBox-blockScroll-"] {
   position: absolute;
   background: #fff; }
 
+/* jBox theme: NoticeFancy */
+.jBox-NoticeFancy .jBox-container {
+  border-radius: 5px; }
+
+.jBox-NoticeFancy .jBox-content,
+.jBox-NoticeFancy .jBox-title {
+  padding-left: 25px; }
+
+.jBox-NoticeFancy.jBox-Notice-color .jBox-container {
+  color: #fff;
+  background: #222;
+  text-shadow: 0 -1px 0 #000; }
+
+/* Colored borders */
+.jBox-NoticeFancy.jBox-Notice-color .jBox-container:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 8px;
+  border-radius: 4px 0 0 4px;
+  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 75%, transparent 75%, transparent);
+  background-size: 14px 14px; }
+
+.jBox-NoticeFancy.jBox-Notice-black .jBox-container:after,
+.jBox-NoticeFancy.jBox-Notice-gray .jBox-container:after {
+  background-color: #888; }
+
+.jBox-NoticeFancy.jBox-Notice-red .jBox-container:after {
+  background-color: #e00; }
+
+.jBox-NoticeFancy.jBox-Notice-green .jBox-container:after {
+  background-color: #6c0; }
+
+.jBox-NoticeFancy.jBox-Notice-blue .jBox-container:after {
+  background-color: #07d; }
+
+.jBox-NoticeFancy.jBox-Notice-yellow .jBox-container:after {
+  background-color: #fb0; }
+
+.jBox-NoticeFancy .jBox-countdown {
+  left: 8px; }
+
+.jBox-NoticeFancy .jBox-countdown,
+.jBox-NoticeFancy .jBox-countdown_inner {
+  border-radius: 0 3px 0 0; }
+
+/* jBox theme: TooltipBorder */
+.jBox-TooltipBorder .jBox-container {
+  border-radius: 5px;
+  border: 2px solid #49d; }
+
+/* Pointer */
+.jBox-TooltipBorder .jBox-pointer:after {
+  border: 2px solid #49d; }
+
+.jBox-TooltipBorder .jBox-pointer-top,
+.jBox-TooltipBorder .jBox-pointer-bottom {
+  width: 34px;
+  height: 13px; }
+
+.jBox-TooltipBorder .jBox-pointer-left,
+.jBox-TooltipBorder .jBox-pointer-right {
+  width: 13px;
+  height: 34px; }
+
+/* Close button */
+.jBox-TooltipBorder.jBox-closeButton-box:before {
+  width: 28px;
+  height: 28px;
+  background: #49d; }
+
+/* jBox theme: TooltipBorderThick */
+.jBox-TooltipBorderThick .jBox-container {
+  box-shadow: none;
+  border-radius: 8px;
+  border: 4px solid #ccc; }
+
+/* Pointer */
+.jBox-TooltipBorderThick .jBox-pointer:after {
+  box-shadow: none;
+  border: 4px solid #ccc; }
+
+.jBox-TooltipBorderThick .jBox-pointer-top,
+.jBox-TooltipBorderThick .jBox-pointer-bottom {
+  width: 38px;
+  height: 13px; }
+
+.jBox-TooltipBorderThick .jBox-pointer-left,
+.jBox-TooltipBorderThick .jBox-pointer-right {
+  width: 13px;
+  height: 38px; }
+
+/* Close button */
+.jBox-TooltipBorderThick.jBox-closeButton-box:before {
+  width: 32px;
+  height: 32px;
+  background: #ccc; }
+
+/* jBox theme: TooltipDark */
+.jBox-TooltipDark .jBox-container {
+  border-radius: 3px;
+  background: #000;
+  color: #fff;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
+
+/* Pointer */
+.jBox-TooltipDark .jBox-pointer:after {
+  background: #000; }
+
+/* Close button */
+.jBox-TooltipDark .jBox-closeButton {
+  background: #000; }
+
+.jBox-TooltipDark.jBox-closeButton-box:before {
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
+
+.jBox-TooltipDark.jBox-closeButton-box .jBox-closeButton path {
+  fill: #ddd; }
+
+.jBox-TooltipDark.jBox-closeButton-box .jBox-closeButton:hover path {
+  fill: #fff; }
+
+.jBox-TooltipDark.jBox-closeButton-box .jBox-closeButton:active path {
+  fill: #bbb; }
+
+/* jBox theme: TooltipError */
+.jBox-TooltipError {
+  pointer-events: none; }
+
+.jBox-TooltipError .jBox-content {
+  padding: 0 10px;
+  line-height: 28px; }
+
+.jBox-TooltipError .jBox-container {
+  border-radius: 2px;
+  background: #d00;
+  color: #fff;
+  font-weight: bold;
+  font-size: 13px; }
+
+.jBox-TooltipError .jBox-pointer-top,
+.jBox-TooltipError .jBox-pointer-bottom {
+  width: 22px;
+  height: 8px; }
+
+.jBox-TooltipError .jBox-pointer-right,
+.jBox-TooltipError .jBox-pointer-left {
+  width: 8px;
+  height: 22px; }
+
+.jBox-TooltipError .jBox-pointer:after {
+  background: #d00;
+  width: 20px;
+  height: 20px; }
+
+.jBox-TooltipError .jBox-pointer-top:after {
+  left: 1px;
+  top: 6px; }
+
+.jBox-TooltipError .jBox-pointer-bottom:after {
+  left: 1px;
+  bottom: 6px; }
+
+.jBox-TooltipError .jBox-pointer-right:after {
+  top: 1px;
+  right: 6px; }
+
+.jBox-TooltipError .jBox-pointer-left:after {
+  top: 1px;
+  left: 6px; }
+
+/* jBox theme: TooltipSmall */
+.jBox-TooltipSmall {
+  pointer-events: none; }
+
+.jBox-TooltipSmall .jBox-content {
+  padding: 0 10px;
+  line-height: 28px; }
+
+.jBox-TooltipSmall .jBox-container {
+  border-radius: 2px; }
+
+.jBox-TooltipSmall .jBox-pointer-top,
+.jBox-TooltipSmall .jBox-pointer-bottom {
+  width: 22px;
+  height: 8px; }
+
+.jBox-TooltipSmall .jBox-pointer-right,
+.jBox-TooltipSmall .jBox-pointer-left {
+  width: 8px;
+  height: 22px; }
+
+.jBox-TooltipSmall .jBox-pointer:after {
+  width: 20px;
+  height: 20px; }
+
+.jBox-TooltipSmall .jBox-pointer-top:after {
+  left: 1px;
+  top: 6px; }
+
+.jBox-TooltipSmall .jBox-pointer-bottom:after {
+  left: 1px;
+  bottom: 6px; }
+
+.jBox-TooltipSmall .jBox-pointer-right:after {
+  top: 1px;
+  right: 6px; }
+
+.jBox-TooltipSmall .jBox-pointer-left:after {
+  top: 1px;
+  left: 6px; }
+
+/* jBox theme: TooltipSmall */
+.jBox-TooltipSmallGray {
+  pointer-events: none; }
+
+.jBox-TooltipSmallGray .jBox-content {
+  padding: 0 10px; }
+
+.jBox-TooltipSmallGray .jBox-container {
+  font-size: 13px;
+  line-height: 24px;
+  border-radius: 12px;
+  background-image: linear-gradient(to bottom, #fafafa, #f2f2f2); }
+
+.jBox-TooltipSmallGray .jBox-pointer-top,
+.jBox-TooltipSmallGray .jBox-pointer-bottom {
+  width: 22px;
+  height: 8px; }
+
+.jBox-TooltipSmallGray .jBox-pointer-right,
+.jBox-TooltipSmallGray .jBox-pointer-left {
+  width: 8px;
+  height: 22px; }
+
+.jBox-TooltipSmallGray .jBox-pointer:after {
+  width: 20px;
+  height: 20px; }
+
+.jBox-TooltipSmallGray .jBox-pointer-top:after {
+  background: #fafafa;
+  left: 1px;
+  top: 6px; }
+
+.jBox-TooltipSmallGray .jBox-pointer-bottom:after {
+  background: #f2f2f2;
+  left: 1px;
+  bottom: 6px; }
+
+.jBox-TooltipSmallGray .jBox-pointer-right:after {
+  top: 1px;
+  right: 6px; }
+
+.jBox-TooltipSmallGray .jBox-pointer-left:after {
+  top: 1px;
+  left: 6px; }
+
 .jBox-Confirm .jBox-content {
   text-align: center;
   padding: 46px 35px; }
@@ -717,264 +976,5 @@ body[class*=" jBox-blockScroll-"] {
     padding: 8px 10px 0; }
   .jBox-hasTitle.jBox-Notice .jBox-content {
     padding-top: 0; } }
-
-/* jBox theme: NoticeFancy */
-.jBox-NoticeFancy .jBox-container {
-  border-radius: 5px; }
-
-.jBox-NoticeFancy .jBox-content,
-.jBox-NoticeFancy .jBox-title {
-  padding-left: 25px; }
-
-.jBox-NoticeFancy.jBox-Notice-color .jBox-container {
-  color: #fff;
-  background: #222;
-  text-shadow: 0 -1px 0 #000; }
-
-/* Colored borders */
-.jBox-NoticeFancy.jBox-Notice-color .jBox-container:after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  width: 8px;
-  border-radius: 4px 0 0 4px;
-  background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.4) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.4) 75%, transparent 75%, transparent);
-  background-size: 14px 14px; }
-
-.jBox-NoticeFancy.jBox-Notice-black .jBox-container:after,
-.jBox-NoticeFancy.jBox-Notice-gray .jBox-container:after {
-  background-color: #888; }
-
-.jBox-NoticeFancy.jBox-Notice-red .jBox-container:after {
-  background-color: #e00; }
-
-.jBox-NoticeFancy.jBox-Notice-green .jBox-container:after {
-  background-color: #6c0; }
-
-.jBox-NoticeFancy.jBox-Notice-blue .jBox-container:after {
-  background-color: #07d; }
-
-.jBox-NoticeFancy.jBox-Notice-yellow .jBox-container:after {
-  background-color: #fb0; }
-
-.jBox-NoticeFancy .jBox-countdown {
-  left: 8px; }
-
-.jBox-NoticeFancy .jBox-countdown,
-.jBox-NoticeFancy .jBox-countdown_inner {
-  border-radius: 0 3px 0 0; }
-
-/* jBox theme: TooltipBorder */
-.jBox-TooltipBorder .jBox-container {
-  border-radius: 5px;
-  border: 2px solid #49d; }
-
-/* Pointer */
-.jBox-TooltipBorder .jBox-pointer:after {
-  border: 2px solid #49d; }
-
-.jBox-TooltipBorder .jBox-pointer-top,
-.jBox-TooltipBorder .jBox-pointer-bottom {
-  width: 34px;
-  height: 13px; }
-
-.jBox-TooltipBorder .jBox-pointer-left,
-.jBox-TooltipBorder .jBox-pointer-right {
-  width: 13px;
-  height: 34px; }
-
-/* Close button */
-.jBox-TooltipBorder.jBox-closeButton-box:before {
-  width: 28px;
-  height: 28px;
-  background: #49d; }
-
-/* jBox theme: TooltipBorderThick */
-.jBox-TooltipBorderThick .jBox-container {
-  box-shadow: none;
-  border-radius: 8px;
-  border: 4px solid #ccc; }
-
-/* Pointer */
-.jBox-TooltipBorderThick .jBox-pointer:after {
-  box-shadow: none;
-  border: 4px solid #ccc; }
-
-.jBox-TooltipBorderThick .jBox-pointer-top,
-.jBox-TooltipBorderThick .jBox-pointer-bottom {
-  width: 38px;
-  height: 13px; }
-
-.jBox-TooltipBorderThick .jBox-pointer-left,
-.jBox-TooltipBorderThick .jBox-pointer-right {
-  width: 13px;
-  height: 38px; }
-
-/* Close button */
-.jBox-TooltipBorderThick.jBox-closeButton-box:before {
-  width: 32px;
-  height: 32px;
-  background: #ccc; }
-
-/* jBox theme: TooltipDark */
-.jBox-TooltipDark .jBox-container {
-  border-radius: 3px;
-  background: #000;
-  color: #fff;
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
-
-/* Pointer */
-.jBox-TooltipDark .jBox-pointer:after {
-  background: #000; }
-
-/* Close button */
-.jBox-TooltipDark .jBox-closeButton {
-  background: #000; }
-
-.jBox-TooltipDark.jBox-closeButton-box:before {
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.4); }
-
-.jBox-TooltipDark.jBox-closeButton-box .jBox-closeButton path {
-  fill: #ddd; }
-
-.jBox-TooltipDark.jBox-closeButton-box .jBox-closeButton:hover path {
-  fill: #fff; }
-
-.jBox-TooltipDark.jBox-closeButton-box .jBox-closeButton:active path {
-  fill: #bbb; }
-
-/* jBox theme: TooltipError */
-.jBox-TooltipError {
-  pointer-events: none; }
-
-.jBox-TooltipError .jBox-content {
-  padding: 0 10px;
-  line-height: 28px; }
-
-.jBox-TooltipError .jBox-container {
-  border-radius: 2px;
-  background: #d00;
-  color: #fff;
-  font-weight: bold;
-  font-size: 13px; }
-
-.jBox-TooltipError .jBox-pointer-top,
-.jBox-TooltipError .jBox-pointer-bottom {
-  width: 22px;
-  height: 8px; }
-
-.jBox-TooltipError .jBox-pointer-right,
-.jBox-TooltipError .jBox-pointer-left {
-  width: 8px;
-  height: 22px; }
-
-.jBox-TooltipError .jBox-pointer:after {
-  background: #d00;
-  width: 20px;
-  height: 20px; }
-
-.jBox-TooltipError .jBox-pointer-top:after {
-  left: 1px;
-  top: 6px; }
-
-.jBox-TooltipError .jBox-pointer-bottom:after {
-  left: 1px;
-  bottom: 6px; }
-
-.jBox-TooltipError .jBox-pointer-right:after {
-  top: 1px;
-  right: 6px; }
-
-.jBox-TooltipError .jBox-pointer-left:after {
-  top: 1px;
-  left: 6px; }
-
-/* jBox theme: TooltipSmall */
-.jBox-TooltipSmall {
-  pointer-events: none; }
-
-.jBox-TooltipSmall .jBox-content {
-  padding: 0 10px;
-  line-height: 28px; }
-
-.jBox-TooltipSmall .jBox-container {
-  border-radius: 2px; }
-
-.jBox-TooltipSmall .jBox-pointer-top,
-.jBox-TooltipSmall .jBox-pointer-bottom {
-  width: 22px;
-  height: 8px; }
-
-.jBox-TooltipSmall .jBox-pointer-right,
-.jBox-TooltipSmall .jBox-pointer-left {
-  width: 8px;
-  height: 22px; }
-
-.jBox-TooltipSmall .jBox-pointer:after {
-  width: 20px;
-  height: 20px; }
-
-.jBox-TooltipSmall .jBox-pointer-top:after {
-  left: 1px;
-  top: 6px; }
-
-.jBox-TooltipSmall .jBox-pointer-bottom:after {
-  left: 1px;
-  bottom: 6px; }
-
-.jBox-TooltipSmall .jBox-pointer-right:after {
-  top: 1px;
-  right: 6px; }
-
-.jBox-TooltipSmall .jBox-pointer-left:after {
-  top: 1px;
-  left: 6px; }
-
-/* jBox theme: TooltipSmall */
-.jBox-TooltipSmallGray {
-  pointer-events: none; }
-
-.jBox-TooltipSmallGray .jBox-content {
-  padding: 0 10px; }
-
-.jBox-TooltipSmallGray .jBox-container {
-  font-size: 13px;
-  line-height: 24px;
-  border-radius: 12px;
-  background-image: linear-gradient(to bottom, #fafafa, #f2f2f2); }
-
-.jBox-TooltipSmallGray .jBox-pointer-top,
-.jBox-TooltipSmallGray .jBox-pointer-bottom {
-  width: 22px;
-  height: 8px; }
-
-.jBox-TooltipSmallGray .jBox-pointer-right,
-.jBox-TooltipSmallGray .jBox-pointer-left {
-  width: 8px;
-  height: 22px; }
-
-.jBox-TooltipSmallGray .jBox-pointer:after {
-  width: 20px;
-  height: 20px; }
-
-.jBox-TooltipSmallGray .jBox-pointer-top:after {
-  background: #fafafa;
-  left: 1px;
-  top: 6px; }
-
-.jBox-TooltipSmallGray .jBox-pointer-bottom:after {
-  background: #f2f2f2;
-  left: 1px;
-  bottom: 6px; }
-
-.jBox-TooltipSmallGray .jBox-pointer-right:after {
-  top: 1px;
-  right: 6px; }
-
-.jBox-TooltipSmallGray .jBox-pointer-left:after {
-  top: 1px;
-  left: 6px; }
 
 /*# sourceMappingURL=jBox.all.css.map */
