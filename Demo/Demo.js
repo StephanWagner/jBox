@@ -2,7 +2,6 @@
 $(document).ready(function() {
 
 /* Switch on unique zIndex behavior for jBoxes with overlay:true */
-jBox.useTrueModal = true;
 
 /* Tooltip */
 
@@ -225,6 +224,7 @@ new jBox('Modal', {
   id: 'stackedModal-1',
   attach: '#Modal-5',
   height: 200,
+  zIndex: 'auto',
   draggable: 'title',
   createOnInit: true,
   closeOnEsc: false,
@@ -265,9 +265,9 @@ new jBox('Modal', {
   id: 'stackedModal-2',
   attach: '#stack-modal',
   height: 200,
+  zIndex: 'auto',
   offset: {x: 150, y: 70},
   draggable: 'title',
-  dragOver: true,
   closeOnClick: false,
   closeOnEsc: false,
   closeButton: 'title',
@@ -283,7 +283,6 @@ new jBox('Modal', {
   draggable: 'title',
   offset: {x: -80, y: 50},
   overlay: false,
-  dragOver: true,
   closeOnClick: false,
   closeOnEsc: false,
   closeButton: 'title',
