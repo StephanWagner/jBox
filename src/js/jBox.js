@@ -352,7 +352,7 @@
         if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) return;
         
         // Adjust z-index when dragging jBox over another draggable jBox
-        if (this.options.dragOver && this.adjustZIndexOnOpen !== true && parseInt(this.wrapper.css('zIndex'), 10) <= jBox.zIndexMax) {
+        if (this.options.dragOver && (!this.adjustZIndexOnOpen || !this.options.overlay) && parseInt(this.wrapper.css('zIndex'), 10) <= jBox.zIndexMax) {
           jBox.zIndexMax += 1;
           this.wrapper.css('zIndex', jBox.zIndexMax);
           this.options.zIndex = jBox.zIndexMax;
@@ -386,7 +386,7 @@
       
       // Get highest z-index
       jBox.zIndexMax = !jBox.zIndexMax ? this.options.zIndex : Math.max(jBox.zIndexMax, this.options.zIndex);
-      
+
       return this;
     };
     
