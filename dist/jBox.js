@@ -113,7 +113,7 @@
       reposition: true,            // Calculates new position when the window-size changes
       repositionOnOpen: true,      // Calculates new position each time jBox opens (rather than only when it opens the first time)
       repositionOnContent: true,   // Calculates new position when the content changes with .setContent() or .setTitle()
-      holdPosition: false,         // Keeps current position if space permits. Applies only to 'Modal' type.
+      holdPosition: true,          // Keeps current position if space permits. Applies only to 'Modal' type.
       
       // Pointer
       pointer: false,              // Your pointer will always point towards the target element, so the option outside needs to be 'x' or 'y'. By default the pointer is centered, set a position to move it to any side. You can also add an offset, e.g. 'left:30' or 'center:-20'
