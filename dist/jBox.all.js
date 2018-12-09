@@ -127,7 +127,7 @@
       theme: 'Default',            // Set a jBox theme class
       addClass: null,              // Adds classes to the wrapper
       overlay: false,              // Adds an overlay to hide page content when jBox opens (adjust color and opacity with CSS)
-      zIndex: 10000,               // Use a high z-index
+      zIndex: 10000,               // Use a high z-index, or set to 'auto' to bring to front on open
       
       // Delays
       delayOpen: 0,                // Delay opening in ms. Note that the delay will be ignored if your jBox didn't finish closing
@@ -259,11 +259,12 @@
     
     // Adjust option zIndex
 
-    jBox.zIndexMax = Math.max(jBox.zIndexMax || 0, this.options.zIndex === 'auto' ? 20000 : this.options.zIndex);
+    jBox.zIndexMax = Math.max(jBox.zIndexMax || 0, this.options.zIndex === 'auto' ? 10000 : this.options.zIndex);
     if (this.options.zIndex === 'auto') {
       this.adjustZIndexOnOpen = true;
-      jBox.zIndexMax += 10;
+      jBox.zIndexMax += 2;
       this.options.zIndex = jBox.zIndexMax;
+      this.trueModal = this.options.overlay;
     } 
     
     // Internal positioning functions
@@ -352,8 +353,8 @@
         if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) return;
         
         // Adjust z-index when dragging jBox over another draggable jBox
-        if (this.options.dragOver && parseInt(this.wrapper.css('zIndex'), 10) <= jBox.zIndexMaxDragover) {
-          jBox.zIndexMaxDragover += 10;
+        if (this.options.dragOver && !this.trueModal && parseInt(this.wrapper.css('zIndex'), 10) <= jBox.zIndexMaxDragover) {
+          jBox.zIndexMaxDragover += 1;
           this.wrapper.css('zIndex', jBox.zIndexMaxDragover);
         }
         
@@ -384,7 +385,9 @@
       }.bind(this));
       
       // Get highest z-index
-      jBox.zIndexMaxDragover = !jBox.zIndexMaxDragover ? this.options.zIndex : Math.max(jBox.zIndexMaxDragover, this.options.zIndex);
+      if (!this.trueModal) {
+        jBox.zIndexMaxDragover = !jBox.zIndexMaxDragover ? this.options.zIndex : Math.max(jBox.zIndexMaxDragover, this.options.zIndex);
+      }
       
       return this;
     };
@@ -1452,9 +1455,15 @@
     var open = function () {
 
       // Adjust zIndex
-      if (this.adjustZIndexOnOpen === true && parseInt(this.wrapper.css('zIndex'), 10) <= jBox.zIndexMax) {
-        jBox.zIndexMax += 10;
+      if (this.adjustZIndexOnOpen === true) {
+        jBox.zIndexMax = Math.max(
+          parseInt(this.wrapper.css('zIndex'), 10),
+          this.options.zIndex,
+          jBox.zIndexMax || 0,
+          jBox.zIndexMaxDragover || 0
+        ) + 2;
         this.wrapper.css('zIndex', jBox.zIndexMax);
+        this.options.zIndex = jBox.zIndexMax;
       }
 
       // Set title from source element

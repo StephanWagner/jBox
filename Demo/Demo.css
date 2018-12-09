@@ -723,6 +723,10 @@ button::-moz-focus-inner {
   border: 0;
 }
 
+#stackedModal-1-overlay, #stackedModal-2-overlay {
+  background-color: rgba(0, 0, 0, .35);
+}
+
 .jBox-content p {
   margin-top: 0.5em;
 }
