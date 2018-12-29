@@ -1721,7 +1721,7 @@
     var userOptions = jQuery.extend(true, sysOptions, options);
     
     // Set new beforeSend event
-    userOptions.beforeSend = function ()
+    userOptions.beforeSend = function (xhr)
     {
       // jBox is loading
       this.wrapper.addClass('jBox-loading');
@@ -1745,7 +1745,7 @@
       }.bind(this), (this.content.html() == '' ? 0 : (userOptions.spinnerDelay || 0))));
       
       // Fire users beforeSend event
-      (beforeSend.bind(this))();
+      (beforeSend.bind(this))(xhr);
       
     }.bind(this);
     
