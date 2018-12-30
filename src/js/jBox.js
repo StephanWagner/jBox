@@ -1709,7 +1709,7 @@
     var sysOptions = jQuery.extend(true, {}, this.options.ajax);
     
     // Abort running ajax call
-    this.ajaxRequest && this.ajaxRequest.abort();
+    this.abortAjax();
     
     // Extract events
     var beforeSend = options.beforeSend || sysOptions.beforeSend || function () {};
@@ -1792,6 +1792,11 @@
     return this;
   };
   
+  // Abort an ajax call
+
+  jBox.prototype.abortAjax = function () {
+    this.ajaxRequest && this.ajaxRequest.abort();
+  };
   
   // Play an audio file
   
