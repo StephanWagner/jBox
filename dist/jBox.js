@@ -1709,7 +1709,7 @@
     var sysOptions = jQuery.extend(true, {}, this.options.ajax);
     
     // Abort running ajax call
-    this.ajaxRequest && this.ajaxRequest.abort();
+    this.abortAjax();
     
     // Extract events
     var beforeSend = options.beforeSend || sysOptions.beforeSend || function () {};
@@ -1721,7 +1721,7 @@
     var userOptions = jQuery.extend(true, sysOptions, options);
     
     // Set new beforeSend event
-    userOptions.beforeSend = function ()
+    userOptions.beforeSend = function (xhr)
     {
       // jBox is loading
       this.wrapper.addClass('jBox-loading');
@@ -1745,7 +1745,7 @@
       }.bind(this), (this.content.html() == '' ? 0 : (userOptions.spinnerDelay || 0))));
       
       // Fire users beforeSend event
-      (beforeSend.bind(this))();
+      (beforeSend.bind(this))(xhr);
       
     }.bind(this);
     
@@ -1792,6 +1792,11 @@
     return this;
   };
   
+  // Abort an ajax call
+
+  jBox.prototype.abortAjax = function () {
+    this.ajaxRequest && this.ajaxRequest.abort();
+  };
   
   // Play an audio file
   
