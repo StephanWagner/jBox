@@ -93,6 +93,7 @@
         spinnerDelay: 300,         // Milliseconds to wait until spinner appears
         spinnerReposition: true    // Repositions jBox when the spinner is added or removed
       },
+      cancelAjaxOnClose: true,     // Cancels the ajax call when you close the jBox and it's not finished yet
       
       // Position
       target: null,                // The jQuery selector to the target element where jBox will be opened. If no element is found, jBox will use the attached element as target
@@ -1565,6 +1566,11 @@
       
       // Fire onClose event
       this._fireEvent('onClose');
+
+      // Cancel the ajax call
+      if (this.options.cancelAjaxOnClose) {
+        this.abortAjax();
+      }
       
       // Only close if jBox is open
       if (this.isOpen) {
