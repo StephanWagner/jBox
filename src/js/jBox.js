@@ -1730,7 +1730,7 @@
     userOptions.beforeSend = function (xhr)
     {
       // jBox is loading
-      this.wrapper.addClass('jBox-loading');
+      userOptions.spinner && this.wrapper.addClass('jBox-loading');
       
       // Add loading spinner
       userOptions.spinner && (this.spinnerDelay = setTimeout(function ()
