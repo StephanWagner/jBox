@@ -89,6 +89,7 @@
         getURL: 'data-url',        // The attribute in the source element where the AJAX request will look for the URL, e.g. data-url="https://ajaxresponse.com"
         getData: 'data-ajax',      // The attribute in the source element where the AJAX request will look for the data, e.g. data-ajax="id=82&limit=10"
         setContent: true,          // Automatically set the response as new content when the AJAX request is finished
+        loadingClass: true,        // Add a class to the wrapper when jBox is loading, set to class name or true to use the default class name 'jBox-loading'
         spinner: true,             // Hides the current content and adds a spinner while loading. You can pass HTML content to add your own spinner, e.g. spinner: '<div class="mySpinner"></div>'
         spinnerDelay: 300,         // Milliseconds to wait until spinner appears
         spinnerReposition: true    // Repositions jBox when the spinner is added or removed
@@ -1730,12 +1731,12 @@
     userOptions.beforeSend = function (xhr)
     {
       // jBox is loading
-      userOptions.spinner && this.wrapper.addClass('jBox-loading');
+      userOptions.loadingClass && this.wrapper.addClass(userOptions.loadingClass === true ? 'jBox-loading' : userOptions.loadingClass);
       
       // Add loading spinner
       userOptions.spinner && (this.spinnerDelay = setTimeout(function ()
       {
-        // If there is a dela
+        // Add class for loading spinner
         this.wrapper.addClass('jBox-loading-spinner');
         
         // Reposition jBox
