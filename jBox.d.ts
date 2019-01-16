@@ -63,6 +63,9 @@ declare namespace jBox {
       /** When you set an URL, jBox makes an AJAX request when it opens. You can add any jQuery ajax option, e.g. beforeSend, complete, success, etc. */
       ajax?: jBoxAjaxOptions;
   
+      /** Cancels the ajax call when you close the jBox and it's not finished yet */
+      cancelAjaxOnClose?: boolean,
+
       /** The jQuery selector to the target element where jBox will be opened. If no element is found, jBox will use the attached element as target */
       target?: JQuery<HTMLElement>;
   
@@ -232,6 +235,9 @@ declare namespace jBox {
   
       /** Automatically set the response as new content when the AJAX request is finished  */
       setContent?: boolean;
+  
+      /** Add a class to the wrapper when jBox is loading, set to class name or true to use the default class name 'jBox-loading' */
+      loadingClass?: boolean | string,
   
       /** Hides the current content and adds a spinner while loading. You can pass HTML content to add your own spinner, e.g. spinner: '<div class="mySpinner"></div>'  */
       spinner?: boolean | string;
