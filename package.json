@@ -29,7 +29,7 @@
   "author": "Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)",
   "license": "MIT",
   "main": "dist/jBox.js",
-  "types": "jBox.d.ts",
+  "types": "src/js/jBox.d.ts",
   "dependencies": {
     "jquery": "^3.3.1"
   },
