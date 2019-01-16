@@ -22,6 +22,9 @@ jQuery(document).ready(function () {
     imageSize: 'contain',       // How to display the images. Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
     imageCounter: false,        // Set to true to add an image counter, e.g. 4/20
     imageCounterSeparator: '/', // HTML to separate the current image number from all image numbers, e.g. '/' or ' of '
+    downloadButton: false,      // Adds a download button
+    downloadButtonText: null,   // Text for the download button
+    downloadButtonUrl: null,    // The attribute at the source element where to find the image to download, e.g. data-download="/path_to_image/image.jpg". If none provided, the currently active image will be downloaded
     target: window,
     attach: '[data-jbox-image]',
     fixed: true,
@@ -34,9 +37,6 @@ jQuery(document).ready(function () {
     preventDefault: true,
     width: '100%',
     height: '100%',
-    downloadButton: false,
-    downloadButtonText: null,
-    downloadButtonUrl: null,
     adjustDistance: {
       top: 40,
       right: 5,
