@@ -289,6 +289,15 @@ declare namespace jBox {
   
       /** HTML to separate the current image number from all image numbers, e.g. '/' or ' of ' */
       imageCounterSeparator: string;
+
+      /** Adds a download button */
+      downloadButton?: boolean;
+
+      /** Text for the download button */
+      downloadButtonText?: string | null;
+
+      /** The attribute at the source element where to find the image to download, e.g. data-download="/path_to_image/image.jpg". If none provided, the currently active image will be downloaded */
+      downloadButtonUrl?: string | null;
     }
   
     /** Additional options for the Notice plugin */
@@ -389,6 +398,11 @@ declare class jBox<T extends keyof jBoxOptionsMap> {
      * Reloads the AJAX request. You can pass the options url and data, e.g. {url: '/example.php', data: 'id=82'} or any jQuery ajax Option.
      */
     ajax(options: jBox.jBoxAjaxOptions): void;
+
+    /**
+     * Abort running ajax call
+     */
+    cancelAjax(): void;
 
     /**
      * Plays an audio file. Don't add the file extension, jBox will look for an .mp3 and an .ogg file.
