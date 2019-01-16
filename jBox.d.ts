@@ -321,6 +321,11 @@ declare interface jBoxOptionsMap {
     Image: jBox.jBoxImageOptions;
 }
 
+interface IgnoreDelay {
+  /** Whether to open or close immediately (true) or respect the original delay settings. */
+  ignoreDelay?: boolean;
+}
+
 /** The core jBox class. Create instances using 'new' e.g. new jBox('Tooltip', { attach: '.tooltip'. }) */
 declare class jBox<T extends keyof jBoxOptionsMap> {
     constructor(type: T, options: jBoxOptionsMap[T]);
@@ -331,18 +336,18 @@ declare class jBox<T extends keyof jBoxOptionsMap> {
      * e.g. {ignoreDelay: true}. To set new AJAX content when opening the jBox, you can pass an AJAX object,
      * e.g. {ajax: {url: 'http://ajaxresponse.com'}}
      */
-    open(options?: jBoxOptionsMap[T]): void;
+    open(options?: jBoxOptionsMap[T] & IgnoreDelay): void;
 
     /**
      * Closes the jBox. If your jBox has a closing delay, you can force it to close immediately with the option
      * ignoreDelay, e.g. {ignoreDelay: true}
      */
-    close(options: jBoxOptionsMap[T]): void;
+    close(options?: jBoxOptionsMap[T] & IgnoreDelay): void;
 
     /**
      * Calls the method open when jBox is closed and close when it is open
      */
-    toggle(options: jBoxOptionsMap[T]): void;
+    toggle(options?: jBoxOptionsMap[T] & IgnoreDelay): void;
 
     /** Sets the CSS width of the content container.
      * Optional you can set a second argument to disable the automatic repositioning of jBox, e.g. .setWidth(200, true)
