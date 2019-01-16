@@ -94,7 +94,7 @@
         spinnerDelay: 300,         // Milliseconds to wait until spinner appears
         spinnerReposition: true    // Repositions jBox when the spinner is added or removed
       },
-      cancelAjaxOnClose: true,     // Cancels the ajax call when you close the jBox and it's not finished yet
+      cancelAjaxOnClose: true,     // Cancels the ajax call when jBox closes and it hasn't finished loading yet
       
       // Position
       target: null,                // The jQuery selector to the target element where jBox will be opened. If no element is found, jBox will use the attached element as target
@@ -1436,7 +1436,7 @@
     !options && (options = {});
     
     // Abort if jBox was destroyed
-    if (this.isDestroyed) return false;
+    if (this.isDestroyed) return this;
     
     // Construct jBox if not already constructed
     !this.wrapper && this._create();
@@ -1551,7 +1551,7 @@
     options || (options = {});
     
     // Abort if jBox was destroyed or is currently closing
-    if (this.isDestroyed || this.isClosing) return false;
+    if (this.isDestroyed || this.isClosing) return this;
     
     // Abort opening
     this.timer && clearTimeout(this.timer);
@@ -1570,7 +1570,7 @@
 
       // Cancel the ajax call
       if (this.options.cancelAjaxOnClose) {
-        this.abortAjax();
+        this.cancelAjax();
       }
       
       // Only close if jBox is open
@@ -1716,7 +1716,7 @@
     var sysOptions = jQuery.extend(true, {}, this.options.ajax);
     
     // Abort running ajax call
-    this.abortAjax();
+    this.cancelAjax();
     
     // Extract events
     var beforeSend = options.beforeSend || sysOptions.beforeSend || function () {};
@@ -1799,11 +1799,13 @@
     return this;
   };
   
+
   // Abort an ajax call
 
-  jBox.prototype.abortAjax = function () {
+  jBox.prototype.cancelAjax = function () {
     this.ajaxRequest && this.ajaxRequest.abort();
   };
+  
   
   // Play an audio file
   
@@ -2052,6 +2054,9 @@ jQuery(document).ready(function () {
     imageSize: 'contain',       // How to display the images. Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
     imageCounter: false,        // Set to true to add an image counter, e.g. 4/20
     imageCounterSeparator: '/', // HTML to separate the current image number from all image numbers, e.g. '/' or ' of '
+    downloadButton: false,      // Adds a download button
+    downloadButtonText: null,   // Text for the download button
+    downloadButtonUrl: null,    // The attribute at the source element where to find the image to download, e.g. data-download="/path_to_image/image.jpg". If none provided, the currently active image will be downloaded
     target: window,
     attach: '[data-jbox-image]',
     fixed: true,
@@ -2064,9 +2069,6 @@ jQuery(document).ready(function () {
     preventDefault: true,
     width: '100%',
     height: '100%',
-    downloadButton: false,
-    downloadButtonText: null,
-    downloadButtonUrl: null,
     adjustDistance: {
       top: 40,
       right: 5,
