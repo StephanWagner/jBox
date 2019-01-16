@@ -1570,7 +1570,7 @@
 
       // Cancel the ajax call
       if (this.options.cancelAjaxOnClose) {
-        this.abortAjax();
+        this.cancelAjax();
       }
       
       // Only close if jBox is open
@@ -1716,7 +1716,7 @@
     var sysOptions = jQuery.extend(true, {}, this.options.ajax);
     
     // Abort running ajax call
-    this.abortAjax();
+    this.cancelAjax();
     
     // Extract events
     var beforeSend = options.beforeSend || sysOptions.beforeSend || function () {};
@@ -1799,11 +1799,13 @@
     return this;
   };
   
+
   // Abort an ajax call
 
-  jBox.prototype.abortAjax = function () {
+  jBox.prototype.cancelAjax = function () {
     this.ajaxRequest && this.ajaxRequest.abort();
   };
+  
   
   // Play an audio file
   
