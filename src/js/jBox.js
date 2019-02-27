@@ -1505,7 +1505,12 @@
         this.options.blockScroll && jQuery('body').addClass('jBox-blockScroll-' + this.id);
         
         // Show overlay
-        this.options.overlay && this._showOverlay();
+        if (this.options.overlay) {
+          this._showOverlay();
+ 
+          // TODO Optimize: We have to position here again, because if the overlay has a close button, the upper adjustDistance will be wrong
+          this.position();
+        }
         
         // Only animate if jBox is completely closed
         this.options.animation && !this.isClosing && this._animate('open');
