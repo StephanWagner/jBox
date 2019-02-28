@@ -9,7 +9,6 @@ var uglify = require('gulp-uglify');
 var sourcemaps = require('gulp-sourcemaps');
 
 // Plugins
-
 var plugins = [
   'Confirm',
   'Image',
@@ -17,7 +16,6 @@ var plugins = [
 ];
 
 // Themes
-
 var themes = [
   'NoticeFancy',
   'TooltipBorder',
@@ -29,7 +27,6 @@ var themes = [
 ];
 
 // CSS
-
 var styles = [
   {
     name: 'jBox',
@@ -60,7 +57,6 @@ for (let theme of themes) {
 }
 
 // JavaScript
-
 var scripts = [
   {
     name: 'jBox',
@@ -87,15 +83,16 @@ for (let plugin of plugins) {
   });
 }
 
-var defaultTasks = [];
-var buildTasks = [];
-var watchTasks = [];
+// Config tasks
+let defaultTasks = [];
+let buildTasks = [];
+let watchTasks = [];
 
-// CSS tasks
+// Config CSS tasks
+for (const item of styles) {
 
-for (let item of styles) {
-
-  gulp.task('styles-dev-' + item.name, function() {
+  // Concat CSS
+  const cssConcat = function() {
     return gulp
       .src(item.src)
       .pipe(sourcemaps.init())
@@ -103,62 +100,84 @@ for (let item of styles) {
       .pipe(concat(item.name + '.css'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(item.dest));
-  });
+  };
 
-  defaultTasks.push('styles-dev-' + item.name);
+  // Store as a task
+  gulp.task('cssConcat-' + item.name, cssConcat);
 
+  // Add to default tasks
+  defaultTasks.push('cssConcat-' + item.name);
+
+  // Add to watch tasks
   watchTasks.push({
     src: item.src,
-    task: 'styles-dev-' + item.name
+    task: cssConcat
   });
-  
-  gulp.task('styles-prod-' + item.name, ['styles-dev-' + item.name], function() {
+
+  // Build CSS
+  const cssBuild = function() {
     return gulp
       .src(item.dest + item.name + '.css')
       .pipe(rename(item.name + '.min.css'))
       .pipe(cleanCSS())
       .pipe(gulp.dest(item.dest));
-  });
+  };
 
-  buildTasks.push('styles-prod-' + item.name);
+  // Store as a task
+  gulp.task('cssBuild-' + item.name, cssBuild);
+  
+  // Add to build tasks
+  buildTasks.push('cssBuild-' + item.name);
 }
 
-// JavaScript tasks
-
+// Config JavaScript tasks
 for (let item of scripts) {
 
-  gulp.task('scripts-dev-' + item.name, function() {
+  // Concat JavaScript
+  const jsConcat = function() {
     return gulp
       .src(item.src)
       .pipe(sourcemaps.init())
       .pipe(concat(item.name + '.js'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(item.dest));
-  });
+  };
 
-  defaultTasks.push('scripts-dev-' + item.name);
+  // Store as a task
+  gulp.task('jsConcat-' + item.name, jsConcat);
 
+  // Add to default tasks
+  defaultTasks.push('jsConcat-' + item.name);
+
+  // Add to watch tasks
   watchTasks.push({
     src: item.src,
-    task: 'scripts-dev-' + item.name
+    task: jsConcat
   });
-  
-  gulp.task('scripts-prod-' + item.name, ['scripts-dev-' + item.name], function() {
+
+  // Build JavaScript
+  const jsBuild = function() {
     return gulp
       .src(item.dest + item.name + '.js')
       .pipe(rename(item.name + '.min.js'))
       .pipe(uglify())
       .pipe(gulp.dest(item.dest));
-  });
+  };
 
-  buildTasks.push('scripts-prod-' + item.name);
+  // Store as a task
+  gulp.task('jsBuild-' + item.name, jsBuild);
+  
+  // Add to build tasks
+  buildTasks.push('jsBuild-' + item.name);
 }
 
-gulp.task('build', buildTasks);
-gulp.task('default', defaultTasks);
-
-gulp.task('watch', defaultTasks, function() {
-  for (let item of watchTasks) {
-    gulp.watch(item.src, [item.task]);
+// Watch tasks
+function watch() {
+  for (const watchTask of watchTasks) {
+    gulp.watch(watchTask.src, watchTask.task);
   }
-});
+}
+
+exports.default = gulp.series(defaultTasks);
+exports.watch = gulp.series(defaultTasks, watch);
+exports.build = gulp.series(defaultTasks, buildTasks);
