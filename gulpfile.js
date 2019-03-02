@@ -96,7 +96,7 @@ for (const item of styles) {
     return gulp
       .src(item.src)
       .pipe(sourcemaps.init())
-      .pipe(sass().on('error', sass.logError))
+      .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
       .pipe(concat(item.name + '.css'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(item.dest));
