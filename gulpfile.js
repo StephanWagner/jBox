@@ -61,6 +61,7 @@ var scripts = [
   {
     name: 'jBox',
     src: [
+      './node_modules/unscroll/unscroll.js',
       './src/js/jBox.js'
     ],
     dest: './dist/'
@@ -68,6 +69,7 @@ var scripts = [
   {
     name: 'jBox.all',
     src: [
+      './node_modules/unscroll/unscroll.js',
       './src/js/jBox.js',
       './src/js/plugins/*.js',
     ],
