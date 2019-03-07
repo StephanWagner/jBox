@@ -2246,10 +2246,8 @@ jQuery(document).ready(function () {
       // Initial images and z-index
       this.images = this.currentImage = {};
       this.imageZIndex = 1;
-      
-      // Loop through images, sort and save in global variable
-      this.attachedElements && jQuery.each(this.attachedElements, function (index, item)
-      {
+
+      this.initImage = function (item) {
         item = jQuery(item);
         
         // Abort if the item was added to a gallery already
@@ -2270,7 +2268,12 @@ jQuery(document).ready(function () {
         // Store data in source element for easy access
         item.data('jBox-image-gallery', gallery);
         item.data('jBox-image-id', (this.images[gallery].length - 1));
-        
+      }.bind(this);
+      
+      // Loop through images, sort and save in global variable
+      this.attachedElements && jQuery.each(this.attachedElements, function (index, item)
+      {
+        this.initImage(item);
       }.bind(this));
       
       // Helper to inject the image into content area
@@ -2405,6 +2408,13 @@ jQuery(document).ready(function () {
 	        }.bind(this));
 	      }
       };
+    },
+
+
+    // Triggered when jBox attaches a new element
+    
+    _onAttach: function (item) {
+      this.initImage && this.initImage(item);
     },
     
     
