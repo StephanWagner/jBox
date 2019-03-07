@@ -157,7 +157,10 @@ declare namespace jBox {
   
       /** Blocks scrolling when jBox is open */
       blockScroll?: boolean;
-  
+      
+      /** Adjust page elements to avoid content jumps when scrolling is blocked. See more here: https://github.com/StephanWagner/unscroll */
+      blockScrollAdjust?: boolean | string | Array<string | Array<string>>;
+ 
       /** Makes your jBox draggable. Use title or provide the selector of any child element of jBox to use as the handle */
       draggable?: boolean | 'title' | JQuery<HTMLElement>;
   

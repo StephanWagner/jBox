@@ -145,6 +145,7 @@
       appendTo: jQuery('body'),    // The element your jBox will be appended to. Any other element than jQuery('body') is only useful for fixed positions or when position values are numbers
       createOnInit: false,         // Creates jBox and makes it available in DOM when it's being initialized, otherwise it will be created when it opens for the first time
       blockScroll: false,          // Blocks scrolling when jBox is open
+      blockScrollAdjust: true,     // Adjust page elements to avoid content jumps when scrolling is blocked. See more here: https://github.com/StephanWagner/unscroll
       draggable: false,            // Make your jBox draggable (use 'true', 'title' or provide an element as handle) (inspired from Chris Coyiers CSS-Tricks http://css-tricks.com/snippets/jquery/draggable-without-jquery-ui/)
       dragOver: true,              // When you have multiple draggable jBoxes, the one you select will always move over the other ones
       autoClose: false,            // Time in ms when jBox will close automatically after it was opened
@@ -944,7 +945,7 @@
           if (!this.options.closeOnMouseleave || !(ev.relatedTarget == this.wrapper[0] || jQuery(ev.relatedTarget).parents('#' + this.id).length)) this.close();
         }.bind(this));
         
-        // Store 
+        // Store
         el.data('jBox-attached-' + this.id, trigger);
         
         // Fire onAttach event
@@ -1502,7 +1503,18 @@
         this._attachEvents();
         
         // Block scrolling
-        this.options.blockScroll && jQuery('body').addClass('jBox-blockScroll-' + this.id);
+        if (this.options.blockScroll) {
+          if (this.options.blockScrollAdjust) {
+            if (jBox.blockScrollScopes) {
+              jBox.blockScrollScopes++;
+            } else {
+              jBox.blockScrollScopes = 1;
+              unscroll(Array.isArray(this.options.blockScrollAdjust) || typeof this.options.blockScrollAdjust === 'string' ? this.options.blockScrollAdjust : null);
+            }
+          } else {
+            jQuery('body').addClass('jBox-blockScroll-' + this.id);
+          }
+        }
         
         // Show overlay
         if (this.options.overlay) {
@@ -1588,7 +1600,14 @@
         this._detachEvents();
         
         // Unblock scrolling
-        this.options.blockScroll && jQuery('body').removeClass('jBox-blockScroll-' + this.id);
+        if (this.options.blockScroll) {
+          if (this.options.blockScrollAdjust) {
+            jBox.blockScrollScopes = jBox.blockScrollScopes ? --jBox.blockScrollScopes : 0;
+            !jBox.blockScrollScopes && unscroll.reset();
+          } else {
+            jQuery('body').removeClass('jBox-blockScroll-' + this.id);
+          }
+        }
         
         // Hide overlay
         this.options.overlay && this._hideOverlay();
