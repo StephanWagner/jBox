@@ -2209,16 +2209,18 @@ jQuery(document).ready(function () {
     
     // Options (https://stephanwagner.me/jBox/options#options-confirm)
     
-    src: 'href',                // The attribute where jBox gets the image source from, e.g. href="/path_to_image/image.jpg"
-    gallery: 'data-jbox-image', // The attribute to set the galleries, e.g. data-jbox-image="gallery1"
-    imageLabel: 'title',        // The attribute where jBox gets the image label from, e.g. title="My label"
-    imageFade: 360,             // The fade duration for images in ms
-    imageSize: 'contain',       // How to display the images. Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
-    imageCounter: false,        // Set to true to add an image counter, e.g. 4/20
-    imageCounterSeparator: '/', // HTML to separate the current image number from all image numbers, e.g. '/' or ' of '
-    downloadButton: false,      // Adds a download button
-    downloadButtonText: null,   // Text for the download button
-    downloadButtonUrl: null,    // The attribute at the source element where to find the image to download, e.g. data-download="/path_to_image/image.jpg". If none provided, the currently active image will be downloaded
+    src: 'href',                 // The attribute where jBox gets the image source from, e.g. href="/path_to_image/image.jpg"
+    gallery: 'data-jbox-image',  // The attribute to set the galleries, e.g. data-jbox-image="gallery1"
+    imageLabel: 'title',         // The attribute where jBox gets the image label from, e.g. title="My label"
+    imageFade: 360,              // The fade duration for images in ms
+    imageSize: 'contain',        // How to display the images. Use CSS background-position values, e.g. 'cover', 'contain', 'auto', 'initial', '50% 50%'
+    imageCounter: false,         // Set to true to add an image counter, e.g. 4/20
+    imageCounterSeparator: '/',  // HTML to separate the current image number from all image numbers, e.g. '/' or ' of '
+    downloadButton: false,       // Adds a download button
+    downloadButtonText: null,    // Text for the download button
+    downloadButtonUrl: null,     // The attribute at the source element where to find the image to download, e.g. data-download="/path_to_image/image.jpg". If none provided, the currently active image will be downloaded
+    mobileImageAttr: null,       // The attribute to look for an mobile version of the image
+    mobileImageBreakpoint: null, // The upper breakpoint to load the mobile image
     target: window,
     attach: '[data-jbox-image]',
     fixed: true,
@@ -2252,6 +2254,13 @@ jQuery(document).ready(function () {
         
         // Abort if the item was added to a gallery already
         if (item.data('jBox-image-gallery')) return;
+        
+        // Update responsive image src
+        if (this.options.mobileImageAttr && this.options.mobileImageBreakpoint) {
+          if (jQuery(window).width() <= this.options.mobileImageBreakpoint) {
+            this.options.src = this.options.mobileImageAttr;
+          }
+        }
         
         // Add item to a gallery
         var gallery = item.attr(this.options.gallery) || 'default';

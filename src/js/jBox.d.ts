@@ -301,6 +301,12 @@ declare namespace jBox {
 
       /** The attribute at the source element where to find the image to download, e.g. data-download="/path_to_image/image.jpg". If none provided, the currently active image will be downloaded */
       downloadButtonUrl?: string | null;
+
+      /** The attribute to look for an mobile version of the image */
+      mobileImageAttr?: string | null;
+
+      /** The upper breakpoint to load the mobile image */
+      mobileImageBreakpoint?: number | null;
     }
   
     /** Additional options for the Notice plugin */
