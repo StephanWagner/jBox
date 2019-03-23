@@ -1345,14 +1345,14 @@
           var diffX = 0, diffY = 0;
           if (this.options.holdPosition) {
 
-            // adjust left or right
+            // Adjust left or right
             if (outXL) {
               diffX = windowDimensions.left - (pos.left - (options.adjustDistance.left || 0));
             } else if (outXR) {
               diffX = windowDimensions.right - (pos.left + jBoxDimensions.x + (options.adjustDistance.right || 0));
             }
 
-            // adjust top or bottom
+            // Adjust top or bottom
             if (outYT) {
               diffY = windowDimensions.top - (pos.top - (options.adjustDistance.top || 0));
             } else if (outYB) {
@@ -1373,17 +1373,19 @@
         }
 
         // Function to flip position
-        var flipJBox = function (xy) {
-          this.wrapper.css(this._getTL(xy), pos[this._getTL(xy)] + ((jBoxDimensions[this._getXY(xy)] + (options.offset[this._getXY(xy)] * (xy == 'top' || xy == 'left' ? -2 : 2)) + targetDimensions[this._getXY(xy)]) * (xy == 'top' || xy == 'left' ? 1 : -1)));
-          this.pointer && this.wrapper.removeClass('jBox-pointerPosition-' + this.pointer.position).addClass('jBox-pointerPosition-' + this._getOpp(this.pointer.position)).css('padding', 0).css('padding-' + xy, this.pointer.dimensions[this._getXY(xy)]);
-          this.pointer && this.pointer.element.attr('class', 'jBox-pointer jBox-pointer-' + xy);
-          this.positionAdjusted = true;
-          this.flipped = true;
-        }.bind(this);
-        
-        // Flip jBox
-        flip.x && flipJBox(this.options.position.x);
-        flip.y && flipJBox(this.options.position.y);
+        if (options.adjustPosition === true || options.adjustPosition === 'flip') {
+          var flipJBox = function (xy) {
+            this.wrapper.css(this._getTL(xy), pos[this._getTL(xy)] + ((jBoxDimensions[this._getXY(xy)] + (options.offset[this._getXY(xy)] * (xy == 'top' || xy == 'left' ? -2 : 2)) + targetDimensions[this._getXY(xy)]) * (xy == 'top' || xy == 'left' ? 1 : -1)));
+            this.pointer && this.wrapper.removeClass('jBox-pointerPosition-' + this.pointer.position).addClass('jBox-pointerPosition-' + this._getOpp(this.pointer.position)).css('padding', 0).css('padding-' + xy, this.pointer.dimensions[this._getXY(xy)]);
+            this.pointer && this.pointer.element.attr('class', 'jBox-pointer jBox-pointer-' + xy);
+            this.positionAdjusted = true;
+            this.flipped = true;
+          }.bind(this);
+          
+          // Flip jBox
+          flip.x && flipJBox(this.options.position.x);
+          flip.y && flipJBox(this.options.position.y);
+        }
         
         // Move jBox (only possible with pointer)
         var outMove = (this._getXY(this.outside) == 'x') ? outY : outX;
