@@ -61,10 +61,13 @@ jQuery(document).ready(function () {
         // Abort if the item was added to a gallery already
         if (item.data('jBox-image-gallery')) return;
         
+        // Get the image src
+        var src = item.attr(this.options.src);
+
         // Update responsive image src
-        if (this.options.mobileImageAttr && this.options.mobileImageBreakpoint) {
+        if (this.options.mobileImageAttr && this.options.mobileImageBreakpoint && item.attr(this.options.mobileImageAttr)) {
           if (jQuery(window).width() <= this.options.mobileImageBreakpoint) {
-            this.options.src = this.options.mobileImageAttr;
+            src = item.attr(this.options.mobileImageAttr);
           }
         }
         
@@ -72,7 +75,7 @@ jQuery(document).ready(function () {
         var gallery = item.attr(this.options.gallery) || 'default';
         !this.images[gallery] && (this.images[gallery] = []);
         this.images[gallery].push({
-          src: item.attr(this.options.src),
+          src: src,
           label: (item.attr(this.options.imageLabel) || ''),
           downloadUrl: this.options.downloadButtonUrl && item.attr(this.options.downloadButtonUrl) ? item.attr(this.options.downloadButtonUrl) : null
         });
@@ -211,7 +214,7 @@ jQuery(document).ready(function () {
 	          var tmpImg = new Image();
 	          tmpImg.onload = function ()
 	          {
-	              appendImage(gallery, next_id, true);
+	            appendImage(gallery, next_id, true);
 	          }.bind(this);
 	          
 	          tmpImg.onerror = function ()
