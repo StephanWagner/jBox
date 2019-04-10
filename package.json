@@ -42,7 +42,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "jest": "^24.7.1",
-    "unscroll": "^1.0.4"
+    "unscroll": "^1.0.5"
   },
   "scripts": {
     "test": "jest"
