@@ -12,7 +12,7 @@ body {
   font-family: 'Helvetica Neue', 'Segoe UI', Arial, sans-serif;
   font-size: 17px;
   line-height: 1.4;
-  color: #202428;
+  color: #222;
   background: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -63,11 +63,11 @@ h2 {
 .target-click,
 .target-notice {
   cursor: default;
-  font-size: 13px;
-  line-height: 52px;
+  font-size: 14px;
+  line-height: 48px;
   height: 52px;
-  border-radius: 2px;
-  border: 1px solid #e2e2e2;
+  border-radius: 4px;
+  border: 2px solid #e2e2e2;
   text-align: center;
   background: #fafafa;
   position: relative;
@@ -133,7 +133,7 @@ h2 {
 }
 
 .ajax-complete {
-  color: #6c0;
+  color: #390;
 }
 
 .ajax-success tt {
@@ -153,14 +153,14 @@ header {
   height: 50px;
   line-height: 50px;
   font-size: 17px;
-  background: #262c33;
-  color: #99a3ad;
+  background: #222;
+  color: #aaa;
   box-shadow: 0 0 4px rgba(0, 0, 0, .6);
 }
 
 header a {
   margin-right: 20px;
-  color: #99a3ad;
+  color: #aaa;
   text-decoration: none;
 }
 
