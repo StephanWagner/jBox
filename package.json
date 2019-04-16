@@ -31,7 +31,7 @@
   "main": "dist/jBox.js",
   "types": "src/js/jBox.d.ts",
   "dependencies": {
-    "jquery": "^3.3.1"
+    "jquery": "^3.4.0"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
