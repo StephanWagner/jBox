@@ -13,7 +13,7 @@ jQuery(document).ready(function () {
   new jBox.plugin('Image', {
     
     
-    // Options (https://stephanwagner.me/jBox/options#options-confirm)
+    // Options (https://stephanwagner.me/jBox/options#options-image)
     
     src: 'href',                 // The attribute where jBox gets the image source from, e.g. href="/path_to_image/image.jpg"
     gallery: 'data-jbox-image',  // The attribute to set the galleries, e.g. data-jbox-image="gallery1"
