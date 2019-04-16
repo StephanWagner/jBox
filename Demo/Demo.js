@@ -155,22 +155,23 @@ new jBox('Modal', {
   animation: false,
   title: 'AJAX request',
   ajax: {
-    url: 'https://ajaxresponse.com/2',
+    url: 'https://reqres.in/api/users?delay=2',
     data: {
       id: '1982',
       name: 'Stephan Wagner'
     },
+    method: 'post',
     reload: 'strict',
     setContent: false,
     beforeSend: function() {
       this.setContent('');
       this.setTitle('<div class="ajax-sending">Sending AJAX request...</div>');
     },
-    complete: function(response) {
+    complete: function() {
       this.setTitle('<div class="ajax-complete">AJAX request complete</div>');
     },
     success: function(response) {
-      this.setContent('<div class="ajax-success">Response:<tt>' + response + '</tt></div>');
+      this.setContent('<div class="ajax-success">Response:<tt>' + JSON.stringify(response) + '</tt></div>');
     },
     error: function() {
       this.setContent('<div class="ajax-error">Oops, something went wrong</div>');

@@ -352,7 +352,7 @@ declare class jBox<T extends keyof jBoxOptionsMap> {
      * Opens the jBox. You can set a new target with the option target, e.g. {target: $('#newTarget')}.
      * If your jBox has an opening delay, you can force it to open immediately with the option ignoreDelay,
      * e.g. {ignoreDelay: true}. To set new AJAX content when opening the jBox, you can pass an AJAX object,
-     * e.g. {ajax: {url: 'http://ajaxresponse.com'}}
+     * e.g. {ajax: {url: 'https://reqres.in/api/users'}}
      */
     open(options?: jBoxOptionsMap[T] & IgnoreDelay): void;
 
