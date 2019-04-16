@@ -224,7 +224,7 @@
         url: null,                 // The URL to send the AJAX request to
         data: '',                  // Data to send with your AJAX request, e.g. {id: 82, limit: 10}
         reload: false,             // Resend the AJAX request when jBox opens. Use true to send the AJAX request only once for every attached element or 'strict' to resend every time jBox opens
-        getURL: 'data-url',        // The attribute in the source element where the AJAX request will look for the URL, e.g. data-url="https://ajaxresponse.com"
+        getURL: 'data-url',        // The attribute in the source element where the AJAX request will look for the URL, e.g. data-url="https://reqres.in/api/users"
         getData: 'data-ajax',      // The attribute in the source element where the AJAX request will look for the data, e.g. data-ajax="id=82&limit=10"
         setContent: true,          // Automatically set the response as new content when the AJAX request is finished
         loadingClass: true,        // Add a class to the wrapper when jBox is loading, set to class name or true to use the default class name 'jBox-loading'
