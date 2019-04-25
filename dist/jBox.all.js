@@ -2285,37 +2285,37 @@ jQuery(document).ready(function () {
       }.bind(this);
       
       // Loop through images, sort and save in global variable
-      this.attachedElements && jQuery.each(this.attachedElements, function (index, item)
-      {
+      this.attachedElements && jQuery.each(this.attachedElements, function (index, item) {
         this.initImage(item);
       }.bind(this));
       
       // Helper to inject the image into content area
-      var appendImage = function (gallery, id, preload, open, error)
-      {
+      var appendImage = function (gallery, id, show, instant) {
         // Abort if image was appended already
-        if (jQuery('#jBox-image-' + gallery + '-' + id).length) return;
-        
+        if (jQuery('#jBox-image-' + gallery + '-' + id).length) {
+          return;
+        }
+
         // Create image container
         var image = jQuery('<div/>', {
           id: 'jBox-image-' + gallery + '-' + id,
-          'class': 'jBox-image-container' + (error ? ' jBox-image-not-found' : '') + (!open && !preload ? ' jBox-image-' + gallery + '-current' : '')
+          'class': 'jBox-image-container' + (show ? ' jBox-image-' + gallery + '-current' : '')
         }).css({
-          backgroundImage: error ? '' : 'url("' + this.images[gallery][id].src + '")',
           backgroundSize: this.options.imageSize,
-          opacity: (open ? 1 : 0),
-          zIndex: (preload ? 0 : this.imageZIndex++)
+          opacity: (instant ? 1 : 0),
+          zIndex: (show ? this.imageZIndex++ : 0)
         }).appendTo(this.content);
         
         // Create labels
         jQuery('<div/>', {
           id: 'jBox-image-label-' + gallery + '-' + id,
-          'class': 'jBox-image-label' + (open ? ' active' : '')
+          'class': 'jBox-image-label' + (show ? ' active' : '')
         }).html(this.images[gallery][id].label).click(function () { $(this).toggleClass('expanded'); }).appendTo(this.imageLabel);
         
         // Show image
-        !open && !preload && image.animate({opacity: 1}, this.options.imageFade);
-        
+        show && image.animate({opacity: 1}, instant ? 0 : this.options.imageFade);
+
+        return image;
       }.bind(this);
 
       // Function to download an image
@@ -2328,15 +2328,34 @@ jQuery(document).ready(function () {
       };
       
       // Helper to show new image label
-      var showLabel = function (gallery, id)
-      {
+      var showLabel = function (gallery, id) {
         jQuery('.jBox-image-label.active').removeClass('active expanded');
         jQuery('#jBox-image-label-' + gallery + '-' + id).addClass('active');
       };
+
+      // Helper to load image
+      var loadImage = function (gallery, id, show, instant) {
+        var imageContainer = appendImage(gallery, id, show, instant);
+        imageContainer.addClass('jBox-image-loading');
+
+        jQuery('<img src="' + this.images[gallery][id].src + '" />').each(function () {
+          var tmpImg = new Image();
+          tmpImg.onload = function () {
+            imageContainer.removeClass('jBox-image-loading');
+            imageContainer.css({backgroundImage: 'url("' + this.images[gallery][id].src + '")'});
+          }.bind(this);
+          
+          tmpImg.onerror = function () {
+            imageContainer.removeClass('jBox-image-loading');
+            imageContainer.addClass('jBox-image-not-found');
+          }.bind(this);
+          
+          tmpImg.src = this.images[gallery][id].src;
+        }.bind(this));
+      }.bind(this);
       
       // Show images when they are loaded or load them if not
-      this.showImage = function (img)
-      {
+      this.showImage = function (img) {
         // Get the gallery and the image id from the next or the previous image
         if (img != 'open') {
           var gallery = this.currentImage.gallery;
@@ -2363,31 +2382,14 @@ jQuery(document).ready(function () {
         // Show image if it already exists
         if (jQuery('#jBox-image-' + gallery + '-' + id).length) {
           jQuery('#jBox-image-' + gallery + '-' + id).addClass('jBox-image-' + gallery + '-current').css({zIndex: this.imageZIndex++, opacity: 0}).animate({opacity: 1}, (img == 'open') ? 0 : this.options.imageFade);
-          showLabel(gallery, id);
-          
+
         // Load image
         } else {
-          this.wrapper.addClass('jBox-image-loading');
-          
-          jQuery('<img src="' + this.images[gallery][id].src + '"/>').each(function ()
-          {
-            var tmpImg = new Image();
-            tmpImg.onload = function ()
-            {
-              appendImage(gallery, id, false);
-              showLabel(gallery, id);
-              this.wrapper.removeClass('jBox-image-loading');
-            }.bind(this);
-            
-            tmpImg.onerror = function () {
-              appendImage(gallery, id, false, null, true);
-              showLabel(gallery, id);
-              this.wrapper.removeClass('jBox-image-loading');
-            }.bind(this);
-            
-            tmpImg.src = this.images[gallery][id].src;
-          }.bind(this));
+          loadImage(gallery, id, true, (img === 'open'));
         }
+
+        // Show label
+        showLabel(gallery, id);
         
         // Update the image counter numbers
         if (this.imageCounter) {
@@ -2405,21 +2407,9 @@ jQuery(document).ready(function () {
 	        var next_id = id + 1;
 	        next_id = next_id > (this.images[gallery].length - 1) ? 0 : (next_id < 0 ? (this.images[gallery].length - 1) : next_id);
 	        
-	        (!jQuery('#jBox-image-' + gallery + '-' + next_id).length) && jQuery('<img src="' + this.images[gallery][next_id].src + '"/>').each(function ()
-	        {
-	          var tmpImg = new Image();
-	          tmpImg.onload = function ()
-	          {
-	            appendImage(gallery, next_id, true);
-	          }.bind(this);
-	          
-	          tmpImg.onerror = function ()
-	          {
-	            appendImage(gallery, next_id, true, null, true);
-	          }.bind(this);
-	          
-	          tmpImg.src = this.images[gallery][next_id].src;
-	        }.bind(this));
+	        if (!jQuery('#jBox-image-' + gallery + '-' + next_id).length) {
+            loadImage(gallery, next_id, false, false);
+          }
 	      }
       };
     },

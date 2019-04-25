@@ -1,4 +1,3 @@
-/* jBox theme: NoticeFancy */
 .jBox-NoticeFancy .jBox-container {
   border-radius: 5px;
 }
@@ -14,7 +13,6 @@
   text-shadow: 0 -1px 0 #000;
 }
 
-/* Colored borders */
 .jBox-NoticeFancy.jBox-Notice-color .jBox-container:after {
   content: '';
   position: absolute;

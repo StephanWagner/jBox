@@ -1,11 +1,9 @@
-/* jBox theme: TooltipBorderThick */
 .jBox-TooltipBorderThick .jBox-container {
   box-shadow: none;
   border-radius: 8px;
   border: 4px solid #ccc;
 }
 
-/* Pointer */
 .jBox-TooltipBorderThick .jBox-pointer:after {
   box-shadow: none;
   border: 4px solid #ccc;
@@ -23,7 +21,6 @@
   height: 38px;
 }
 
-/* Close button */
 .jBox-TooltipBorderThick.jBox-closeButton-box:before {
   width: 32px;
   height: 32px;

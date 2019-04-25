@@ -1,4 +1,3 @@
-/* jBox theme: TooltipDark */
 .jBox-TooltipDark .jBox-container {
   border-radius: 3px;
   background: #000;
@@ -6,12 +5,10 @@
   box-shadow: 0 0 6px rgba(0, 0, 0, 0.4);
 }
 
-/* Pointer */
 .jBox-TooltipDark .jBox-pointer:after {
   background: #000;
 }
 
-/* Close button */
 .jBox-TooltipDark .jBox-closeButton {
   background: #000;
 }

@@ -183,7 +183,7 @@
   }
 }
 
-.jBox-image-loading .jBox-container:before {
+.jBox-image-loading:before {
   content: '';
   position: absolute;
   top: 50%;
