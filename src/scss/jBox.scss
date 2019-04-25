@@ -1,5 +1,4 @@
-
-/* Global */
+// Global
 
 .jBox-wrapper {
   text-align: left;
@@ -25,7 +24,7 @@
   transition: opacity .2s;
 }
 
-/* jBox Tooltip */
+// jBox Tooltip
 
 .jBox-Tooltip .jBox-container,
 .jBox-Mouse .jBox-container {
@@ -48,17 +47,28 @@
   pointer-events: none;
 }
 
-/* Pointer */
+// Pointer
 
 .jBox-pointer {
   position: absolute;
   overflow: hidden;
 }
 
-.jBox-pointer-top { top: 0; }
-.jBox-pointer-bottom { bottom: 0; }
-.jBox-pointer-left { left: 0; }
-.jBox-pointer-right { right: 0; }
+.jBox-pointer-top {
+  top: 0;
+}
+
+.jBox-pointer-bottom {
+  bottom: 0;
+}
+
+.jBox-pointer-left {
+  left: 0;
+}
+
+.jBox-pointer-right {
+  right: 0;
+}
 
 .jBox-pointer-top,
 .jBox-pointer-bottom {
@@ -105,7 +115,7 @@
   box-shadow: -1px 1px 2px rgba(0, 0, 0, .15);
 }
 
-/* jBox Modal */
+// jBox Modal
 
 .jBox-Modal .jBox-container {
   border-radius: 4px;
@@ -135,9 +145,10 @@
   box-shadow: 0 3px 15px rgba(0, 0, 0, .4), 0 0 5px rgba(0, 0, 0, .4);
 }
 
-/* Close button */
+// Close button
 
 .jBox-closeButton {
+  z-index: 1;
   cursor: pointer;
   position: absolute;
 }
@@ -164,7 +175,7 @@
   fill: #666;
 }
 
-/* Close button in overlay */
+// Close button in overlay
 
 .jBox-overlay .jBox-closeButton {
   top: 0;
@@ -189,7 +200,7 @@
   fill: #fff;
 }
 
-/* Close button in title */
+// Close button in title
 
 .jBox-closeButton-title .jBox-closeButton {
   top: 0;
@@ -205,7 +216,7 @@
   margin-right: -6px;
 }
 
-/* Close button in box */
+// Close button in box
 
 .jBox-closeButton-box .jBox-closeButton {
   top: -8px;
@@ -246,7 +257,7 @@
   right: 2px;
 }
 
-/* Overlay */
+// Overlay
 
 .jBox-overlay {
   position: fixed;
@@ -257,7 +268,7 @@
   background-color: rgba(0, 0, 0, .82);
 }
 
-/* Footer */
+// Footer
 
 .jBox-footer {
   background: #fafafa;
@@ -266,23 +277,25 @@
   border-radius: 0 0 3px 3px;
 }
 
-/* Block scrolling */
+// Block scrolling
 
 body[class^="jBox-blockScroll-"],
 body[class*=" jBox-blockScroll-"] {
   overflow: hidden;
 }
 
-/* Draggable */
+// Draggable
 
 .jBox-draggable {
   cursor: move;
 }
 
-/* Spinner */
+// Spinner
 
 @keyframes jBoxLoading {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .jBox-loading .jBox-content {
@@ -318,7 +331,7 @@ body[class*=" jBox-blockScroll-"] {
   animation: jBoxLoading .6s linear infinite;
 }
 
-/* Animations */
+// Animations
 
 [class^="jBox-animated-"],
 [class*=" jBox-animated-"] {
@@ -326,11 +339,31 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-tada {
-  0% {transform: scale(1);}
-  10%, 20% {transform: scale(0.8) rotate(-4deg);}
-  30%, 50%, 70%, 90% {transform: scale(1.2) rotate(4deg);}
-  40%, 60%, 80% {transform: scale(1.2) rotate(-4deg);}
-  100% {transform: scale(1) rotate(0);}
+  0% {
+    transform: scale(1);
+  }
+
+  10%,
+  20% {
+    transform: scale(0.8) rotate(-4deg);
+  }
+
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale(1.2) rotate(4deg);
+  }
+
+  40%,
+  60%,
+  80% {
+    transform: scale(1.2) rotate(-4deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0);
+  }
 }
 
 .jBox-animated-tada {
@@ -338,11 +371,31 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-tadaSmall {
-  0% {transform: scale(1);}
-  10%, 20% {transform: scale(0.9) rotate(-2deg);}
-  30%, 50%, 70%, 90% {transform: scale(1.1) rotate(2deg);}
-  40%, 60%, 80% {transform: scale(1.1) rotate(-2deg);}
-  100% {transform: scale(1) rotate(0);}
+  0% {
+    transform: scale(1);
+  }
+
+  10%,
+  20% {
+    transform: scale(0.9) rotate(-2deg);
+  }
+
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: scale(1.1) rotate(2deg);
+  }
+
+  40%,
+  60%,
+  80% {
+    transform: scale(1.1) rotate(-2deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0);
+  }
 }
 
 .jBox-animated-tadaSmall {
@@ -350,8 +403,17 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-flash {
-  0%, 50%, 100% {opacity: 1;}  
-  25%, 75% {opacity: 0;}
+
+  0%,
+  50%,
+  100% {
+    opacity: 1;
+  }
+
+  25%,
+  75% {
+    opacity: 0;
+  }
 }
 
 .jBox-animated-flash {
@@ -359,9 +421,21 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-shake {
-  0%, 100% {transform: translateX(0);}
-  20%, 60% {transform: translateX(-6px);}
-  40%, 80% {transform: translateX(6px);}
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
 }
 
 .jBox-animated-shake {
@@ -369,9 +443,17 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-pulseUp {
-  0% {transform: scale(1);}
-  50% {transform: scale(1.15);}
-  100% {transform: scale(1);}
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .jBox-animated-pulseUp {
@@ -379,9 +461,17 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-pulseDown {
-  0% {transform: scale(1);}
-  50% {transform: scale(0.85);}
-  100% {transform: scale(1);}
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(0.85);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .jBox-animated-pulseDown {
@@ -389,9 +479,17 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-popIn {
-  0% {transform: scale(0);}
-  50% {transform: scale(1.1);}
-  100% {transform: scale(1);}
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 
 .jBox-animated-popIn {
@@ -399,9 +497,17 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-popOut {
-  0% {transform: scale(1);}
-  50% {transform: scale(1.1);}
-  100% {transform: scale(0);}
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
 }
 
 .jBox-animated-popOut {
@@ -409,8 +515,13 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-fadeIn {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .jBox-animated-fadeIn {
@@ -418,8 +529,13 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-fadeOut {
-  0% {opacity: 1;}
-  100% {opacity: 0;}
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 .jBox-animated-fadeOut {
@@ -427,8 +543,14 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-slideUp {
-  0% {transform: translateY(0);}
-  100% {transform: translateY(-300px); opacity: 0;}
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(-300px);
+    opacity: 0;
+  }
 }
 
 .jBox-animated-slideUp {
@@ -436,8 +558,14 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-slideRight {
-  0% {transform: translateX(0);}
-  100% {transform: translateX(300px); opacity: 0;}
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(300px);
+    opacity: 0;
+  }
 }
 
 .jBox-animated-slideRight {
@@ -445,8 +573,14 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-slideDown {
-  0% {transform: translateY(0);}
-  100% {transform: translateY(300px); opacity: 0;}
+  0% {
+    transform: translateY(0);
+  }
+
+  100% {
+    transform: translateY(300px);
+    opacity: 0;
+  }
 }
 
 .jBox-animated-slideDown {
@@ -454,37 +588,44 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 @keyframes jBox-slideLeft {
-  0% {transform: translateX(0);}
-  100% {transform: translateX(-300px); opacity: 0;}
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-300px);
+    opacity: 0;
+  }
 }
 
 .jBox-animated-slideLeft {
   animation: jBox-slideLeft .4s;
 }
 
-
-
-
 .jBox-closeButton {
-    z-index: 1;
+  z-index: 1;
 }
+
+// Countdown
+
 .jBox-countdown {
-    border-radius: 3px 3px 0 0;
-    z-index: 0;
-    background: #000;
-    opacity: .2;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
+  border-radius: 3px 3px 0 0;
+  z-index: 0;
+  background: #000;
+  opacity: .2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
 }
+
 .jBox-countdown_inner {
-    border-radius: 3px 3px 0 0;
-    top: 0;
-    right: 0;
-    width: 100%;
-    height: 3px;
-    position: absolute;
-    background: #fff;
+  border-radius: 3px 3px 0 0;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 3px;
+  position: absolute;
+  background: #fff;
 }

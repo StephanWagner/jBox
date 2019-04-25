@@ -1,12 +1,11 @@
-
-/* jBox theme: TooltipBorder */
+// jBox theme: TooltipBorder
 
 .jBox-TooltipBorder .jBox-container {
   border-radius: 5px;
   border: 2px solid #49d;
 }
 
-/* Pointer */
+// Pointer
 
 .jBox-TooltipBorder .jBox-pointer:after {
   border: 2px solid #49d;
@@ -24,7 +23,7 @@
   height: 34px;
 }
 
-/* Close button */
+// Close button
 
 .jBox-TooltipBorder.jBox-closeButton-box:before {
   width: 28px;

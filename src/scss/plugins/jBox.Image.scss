@@ -1,4 +1,3 @@
-
 .jBox-Image .jBox-container {
   background-color: transparent;
 }
@@ -181,7 +180,9 @@
 /* Image spinner */
 
 @keyframes jBoxImageLoading {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .jBox-image-loading:before {

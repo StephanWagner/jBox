@@ -1,5 +1,4 @@
-
-/* jBox theme: NoticeFancy */
+// jBox theme: NoticeFancy
 
 .jBox-NoticeFancy .jBox-container {
   border-radius: 5px;
@@ -16,7 +15,7 @@
   text-shadow: 0 -1px 0 #000;
 }
 
-/* Colored borders */
+// Colored borders
 
 .jBox-NoticeFancy.jBox-Notice-color .jBox-container:after {
   content: '';
@@ -52,9 +51,10 @@
 }
 
 .jBox-NoticeFancy .jBox-countdown {
-    left: 8px;
+  left: 8px;
 }
+
 .jBox-NoticeFancy .jBox-countdown,
 .jBox-NoticeFancy .jBox-countdown_inner {
-    border-radius: 0 3px 0 0;
+  border-radius: 0 3px 0 0;
 }
