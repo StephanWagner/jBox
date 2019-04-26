@@ -27,6 +27,7 @@ jQuery(document).ready(function () {
     downloadButtonUrl: null,     // The attribute at the source element where to find the image to download, e.g. data-download="/path_to_image/image.jpg". If none provided, the currently active image will be downloaded
     mobileImageAttr: null,       // The attribute to look for an mobile version of the image
     mobileImageBreakpoint: null, // The upper breakpoint to load the mobile image
+    preloadFirstImage: false,    // Preload the first image when page is loaded
     target: window,
     attach: '[data-jbox-image]',
     fixed: true,
@@ -89,7 +90,7 @@ jQuery(document).ready(function () {
       }.bind(this);
       
       // Loop through images, sort and save in global variable
-      this.attachedElements && jQuery.each(this.attachedElements, function (index, item) {
+      this.attachedElements && this.attachedElements.length && jQuery.each(this.attachedElements, function (index, item) {
         this.initImage(item);
       }.bind(this));
       
@@ -114,7 +115,7 @@ jQuery(document).ready(function () {
         jQuery('<div/>', {
           id: 'jBox-image-label-' + gallery + '-' + id,
           'class': 'jBox-image-label' + (show ? ' active' : '')
-        }).html(this.images[gallery][id].label).click(function () { $(this).toggleClass('expanded'); }).appendTo(this.imageLabel);
+        }).html(this.images[gallery][id].label).click(function () { jQuery(this).toggleClass('expanded'); }).appendTo(this.imageLabel);
         
         // Show image
         show && image.animate({opacity: 1}, instant ? 0 : this.options.imageFade);
@@ -168,8 +169,18 @@ jQuery(document).ready(function () {
         
         // Or get image data from source element
         } else {
-          var gallery = this.source.data('jBox-image-gallery');
-          var id = this.source.data('jBox-image-id');
+          // Get gallery and image id from source element
+          if (this.source) {
+            var gallery = this.source.data('jBox-image-gallery');
+            var id = this.source.data('jBox-image-id');
+
+          // Get gallery and image id attached elements
+          } else if (this.attachedElements && this.attachedElements.length) {
+            var gallery = jQuery(this.attachedElements[0]).data('jBox-image-gallery');
+            var id = jQuery(this.attachedElements[0]).data('jBox-image-id');
+          } else {
+            return;
+          }
           
           // Remove or show the next and prev buttons
           jQuery('.jBox-image-pointer-prev, .jBox-image-pointer-next').css({display: (this.images[gallery].length > 1 ? 'block' : 'none')});
@@ -216,6 +227,13 @@ jQuery(document).ready(function () {
           }
 	      }
       };
+
+      // Preload image
+      if (this.options.preloadFirstImage) {
+        jQuery(window).on('load', function() {
+          this.showImage('open');
+        }.bind(this));
+      }
     },
 
 
