@@ -21,7 +21,6 @@ jQuery(document).ready(function () {
     cancel: null,             // Function to execute when clicking the cancel button
     closeOnConfirm: true,     // Close jBox when the user clicks the confirm button
     target: window,
-    addClass: 'jBox-Modal',
     fixed: true,
     attach: '[data-confirm]',
     getContent: 'data-confirm',
@@ -53,6 +52,9 @@ jQuery(document).ready(function () {
     
     _onCreated: function ()
     {
+      // Add modal class to mimic jBox modal
+      this.wrapper.addClass('jBox-Modal');
+      
       // Add a footer to the jBox container
       this.footer = jQuery('<div class="jBox-Confirm-footer"/>');
       jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-cancel"/>').html(this.options.cancelButton).click(function () { this.options.cancel && this.options.cancel(); this.close(); }.bind(this)).appendTo(this.footer);
