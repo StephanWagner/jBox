@@ -360,7 +360,30 @@
     
     jQuery.type(type) == 'string' && (this.type = type);
     
-    
+
+    // Checks if the user is on a touch device, borrowed from https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
+
+    this.isTouchDevice = (function () {
+      var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+      var mq = function (query) {
+        return window.matchMedia(query).matches;
+      }
+
+      if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+        return true;
+      }
+
+      var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
+      return mq(query);
+    })();
+
+    // Fix trigger when we are on touch device
+
+    if (this.isTouchDevice && this.options.trigger == 'mouseenter') {
+      // this.options.trigger = 'click';
+    }
+  
+
     // Local function to fire events
     
     this._fireEvent = function (event, pass)
@@ -559,7 +582,7 @@
       }.bind(this));
       
       // Add closeOnClick: 'box' events
-      (this.options.closeOnClick == 'box') && this.wrapper.on('touchend click', function () { this.close({ignoreDelay: true}); }.bind(this));
+      (this.options.closeOnClick == 'box') && this.wrapper.on('click', function () { this.close({ignoreDelay: true}); }.bind(this));
       
       // Create container
       this.container = jQuery('<div class="jBox-container"/>').appendTo(this.wrapper);
@@ -577,7 +600,7 @@
       if (this.options.closeButton) {
         var closeButtonSVG = this._createSVG('svg', [['viewBox', '0 0 24 24']]);
         closeButtonSVG.appendChild(this._createSVG('path', [['d', 'M22.2,4c0,0,0.5,0.6,0,1.1l-6.8,6.8l6.9,6.9c0.5,0.5,0,1.1,0,1.1L20,22.3c0,0-0.6,0.5-1.1,0L12,15.4l-6.9,6.9c-0.5,0.5-1.1,0-1.1,0L1.7,20c0,0-0.5-0.6,0-1.1L8.6,12L1.7,5.1C1.2,4.6,1.7,4,1.7,4L4,1.7c0,0,0.6-0.5,1.1,0L12,8.5l6.8-6.8c0.5-0.5,1.1,0,1.1,0L22.2,4z']]));
-        this.closeButton = jQuery('<div class="jBox-closeButton jBox-noDrag"/>').on('touchend click', function (ev) { this.close({ignoreDelay: true}); }.bind(this)).append(closeButtonSVG);
+        this.closeButton = jQuery('<div class="jBox-closeButton jBox-noDrag"/>').on('click', function (ev) { this.close({ignoreDelay: true}); }.bind(this)).append(closeButtonSVG);
         
         // Add close button to jBox container
         if (this.options.closeButton == 'box' || (this.options.closeButton === true && !this.options.overlay && !this.options.title && !this.options.getTitle)) {
@@ -665,7 +688,7 @@
       
       // Closing event: closeOnClick
       if (this.options.closeOnClick === true || this.options.closeOnClick == 'body') {
-        jQuery(document).on('touchend.jBox-' + this.id + ' click.jBox-' + this.id, function (ev) {
+        jQuery(document).on('click.jBox-' + this.id, function (ev) {
           if (this.blockBodyClick || (this.options.closeOnClick == 'body' && (ev.target == this.wrapper[0] || this.wrapper.has(ev.target).length))) return;
           this.close({ignoreDelay: true});
         }.bind(this));
@@ -673,6 +696,7 @@
       
       // Cancel countdown on mouseenter if delayOnHover
       this.options.delayOnHover && jQuery('#' + this.id).on('mouseenter', function (ev) { this.isHovered = true; }.bind(this));
+
       // Resume countdown on mouseleave if delayOnHover
       this.options.delayOnHover && jQuery('#' + this.id).on('mouseleave', function (ev) { this.isHovered = false; }.bind(this));
       
@@ -699,7 +723,7 @@
       this.options.closeOnEsc && jQuery(document).off('keyup.jBox-' + this.id);
       
       // Closing event: closeOnClick
-      (this.options.closeOnClick === true || this.options.closeOnClick == 'body') && jQuery(document).off('touchend.jBox-' + this.id + ' click.jBox-' + this.id);
+      (this.options.closeOnClick === true || this.options.closeOnClick == 'body') && jQuery(document).off('click.jBox-' + this.id);
       
       // Positioning events
       this.options.adjustTracker && jQuery(window).off('scroll.jBox-' + this.id);
@@ -728,7 +752,7 @@
         (this.options.closeButton == 'overlay' || this.options.closeButton === true) && this.overlay.append(this.closeButton);
         
         // Add closeOnClick: 'overlay' events
-        this.options.closeOnClick == 'overlay' && this.overlay.on('touchend click', function () { this.close({ignoreDelay: true}); }.bind(this));
+        this.options.closeOnClick == 'overlay' && this.overlay.on('click', function () { this.close({ignoreDelay: true}); }.bind(this));
         
         // Adjust option adjustDistance if there is a close button in the overlay
         jQuery('#' + this.id + '-overlay .jBox-closeButton').length && (this.options.adjustDistance.top = Math.max(jQuery('#' + this.id + '-overlay .jBox-closeButton').outerHeight(), this.options.adjustDistance.top));
@@ -1758,11 +1782,14 @@
         // Play audio file
         this.options.audio && this.options.audio.close && this.audio(this.options.audio.close, this.options.volume.close);
         
+        // Get fade duration
+        var fadeDuration = this.isTouchDevice && this.options.target == 'mouse' ? 0 : this.options.fade;
+
         // Fading animation or show immediately
-        if (this.options.fade) {
+        if (fadeDuration) {
           this.wrapper.stop().animate({opacity: 0}, {
             queue: false,
-            duration: this.options.fade,
+            duration: fadeDuration,
             start: function () {
               this.isClosing = true;
             }.bind(this),
@@ -1782,7 +1809,7 @@
     }.bind(this);
     
     // Close jBox
-    if (options.ignoreDelay) {
+    if (options.ignoreDelay || (this.isTouchDevice && this.options.target == 'mouse')) {
       close();
     } else if ((this.options.delayOnHover || this.options.showCountdown) && this.options.delayClose > 10) {
       var self = this;

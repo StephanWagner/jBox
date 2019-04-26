@@ -222,7 +222,30 @@
     
     jQuery.type(type) == 'string' && (this.type = type);
     
-    
+
+    // Checks if the user is on a touch device, borrowed from https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
+
+    this.isTouchDevice = (function () {
+      var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+      var mq = function (query) {
+        return window.matchMedia(query).matches;
+      }
+
+      if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+        return true;
+      }
+
+      var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
+      return mq(query);
+    })();
+
+    // Fix trigger when we are on touch device
+
+    if (this.isTouchDevice && this.options.trigger == 'mouseenter') {
+      // this.options.trigger = 'click';
+    }
+  
+
     // Local function to fire events
     
     this._fireEvent = function (event, pass)
@@ -535,6 +558,7 @@
       
       // Cancel countdown on mouseenter if delayOnHover
       this.options.delayOnHover && jQuery('#' + this.id).on('mouseenter', function (ev) { this.isHovered = true; }.bind(this));
+
       // Resume countdown on mouseleave if delayOnHover
       this.options.delayOnHover && jQuery('#' + this.id).on('mouseleave', function (ev) { this.isHovered = false; }.bind(this));
       
@@ -1620,11 +1644,14 @@
         // Play audio file
         this.options.audio && this.options.audio.close && this.audio(this.options.audio.close, this.options.volume.close);
         
+        // Get fade duration
+        var fadeDuration = this.isTouchDevice && this.options.target == 'mouse' ? 0 : this.options.fade;
+
         // Fading animation or show immediately
-        if (this.options.fade) {
+        if (fadeDuration) {
           this.wrapper.stop().animate({opacity: 0}, {
             queue: false,
-            duration: this.options.fade,
+            duration: fadeDuration,
             start: function () {
               this.isClosing = true;
             }.bind(this),
@@ -1644,7 +1671,7 @@
     }.bind(this);
     
     // Close jBox
-    if (options.ignoreDelay) {
+    if (options.ignoreDelay || (this.isTouchDevice && this.options.target == 'mouse')) {
       close();
     } else if ((this.options.delayOnHover || this.options.showCountdown) && this.options.delayClose > 10) {
       var self = this;
