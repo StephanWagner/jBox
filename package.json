@@ -31,7 +31,7 @@
   "main": "dist/jBox.js",
   "types": "src/js/jBox.d.ts",
   "dependencies": {
-    "jquery": "^3.4.0"
+    "jquery": "^3.4.1"
   },
   "devDependencies": {
     "gulp": "^4.0.1",
@@ -42,7 +42,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "jest": "^24.7.1",
-    "unscroll": "^1.0.5"
+    "unscroll": "^1.0.6"
   },
   "scripts": {
     "test": "jest"
