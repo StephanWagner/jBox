@@ -239,10 +239,11 @@
       return mq(query);
     })();
 
-    // Fix trigger when we are on touch device
 
-    if (this.isTouchDevice && this.options.trigger == 'mouseenter') {
-      // this.options.trigger = 'click';
+    // Add close event for body click when we are on touch device and jBox triggers on mouseenter
+
+    if (this.isTouchDevice && this.options.trigger === 'mouseenter' && this.options.closeOnClick === false) {
+      this.options.closeOnClick = 'body';
     }
   
 
@@ -544,18 +545,7 @@
     // Attach document and window events
     
     this._attachEvents = function ()
-    {
-      // Closing event: closeOnEsc
-      this.options.closeOnEsc && jQuery(document).on('keyup.jBox-' + this.id, function (ev) { if (ev.keyCode == 27) { this.close({ignoreDelay: true}); }}.bind(this));
-      
-      // Closing event: closeOnClick
-      if (this.options.closeOnClick === true || this.options.closeOnClick == 'body') {
-        jQuery(document).on('click.jBox-' + this.id, function (ev) {
-          if (this.blockBodyClick || (this.options.closeOnClick == 'body' && (ev.target == this.wrapper[0] || this.wrapper.has(ev.target).length))) return;
-          this.close({ignoreDelay: true});
-        }.bind(this));
-      }
-      
+    { 
       // Cancel countdown on mouseenter if delayOnHover
       this.options.delayOnHover && jQuery('#' + this.id).on('mouseenter', function (ev) { this.isHovered = true; }.bind(this));
 
@@ -1476,10 +1466,27 @@
     
     // Block body click for 10ms, so jBox can open on attached elements while closeOnClick = 'body'
     this._blockBodyClick();
-    
+  
     // Block opening
     if (this.isDisabled) return this;
     
+    // Closing event: closeOnEsc
+    this.options.closeOnEsc && jQuery(document).on('keyup.jBox-' + this.id, function (ev) { if (ev.keyCode == 27) { this.close({ignoreDelay: true}); }}.bind(this));
+    
+    // Closing event: closeOnClick
+    if (this.options.closeOnClick === true || this.options.closeOnClick === 'body') {
+      jQuery('body').on('click.jBox-' + this.id, function (ev) {
+        if (this.blockBodyClick || (this.options.closeOnClick == 'body' && (ev.target == this.wrapper[0] || this.wrapper.has(ev.target).length))) return;
+        this.close({ignoreDelay: true});
+      }.bind(this));
+
+      // Fix for iOS event bubbling issue
+      // https://www.quirksmode.org/blog/archives/2014/02/mouse_event_bub.html
+      this.isTouchDevice && jQuery('body > *').on('click.jBox-' + this.id, function () {
+        return true;
+      });
+    }
+
     // Opening function
     var open = function () {
 
@@ -1592,14 +1599,18 @@
   {
     // Create blank options if none passed
     options || (options = {});
-    
+
+    // Remove close events
+    jQuery('body').off('click.jBox-' + this.id);
+    this.isTouchDevice && jQuery('body > *').off('click.jBox-' + this.id);
+
     // Abort if jBox was destroyed or is currently closing
     if (this.isDestroyed || this.isClosing) return this;
     
     // Abort opening
     this.timer && clearTimeout(this.timer);
     
-    // Block body click for 10ms, so jBox can open on attached elements while closeOnClock = 'body' is true
+    // Block body click for 10ms, so jBox can open on attached elements while closeOnClick = 'body' is true
     this._blockBodyClick();
     
     // Block closing
