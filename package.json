@@ -41,7 +41,7 @@
     "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
-    "jest": "^24.7.1",
+    "jest": "^24.8.0",
     "unscroll": "^1.0.6"
   },
   "scripts": {
