@@ -199,6 +199,12 @@ declare namespace jBox {
 
     /** Fired when jBox is completely closed (when fading finished) */
     onCloseComplete?: () => void;
+
+    /** Fired when dragging starts */
+    onDragStart?: () => void;
+
+    /** Fired when dragging finished */
+    onDragEnd?: () => void;
   }
 
   /** Possible values for the 'animation' option */

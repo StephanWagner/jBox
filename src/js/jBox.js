@@ -164,7 +164,9 @@
       onCreated: null,             // Fired when jBox is created and availible in DOM
       onOpen: null,                // Fired when jBox opens
       onClose: null,               // Fired when jBox closes
-      onCloseComplete: null        // Fired when jBox is completely closed (when fading is finished)
+      onCloseComplete: null,       // Fired when jBox is completely closed (when fading is finished)
+      onDragStart: null,           // Fired when dragging starts
+      onDragEnd: null              // Fired when dragging finished
     };
 
 
@@ -375,9 +377,13 @@
       if (!handle || !(handle instanceof jQuery) || !handle.length || handle.data('jBox-draggable')) return false;
 
       // Add mouse events
-      handle.addClass('jBox-draggable').data('jBox-draggable', true).on('mousedown', function (ev)
+      handle.addClass('jBox-draggable').data('jBox-draggable', true).on('touchstart mousedown', function (ev)
       {
         if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) return;
+
+        // Store current mouse position
+        this.draggingStartX = ev.pageX;
+        this.draggingStartY = ev.pageY;
 
         // Adjust z-index when dragging jBox over another draggable jBox
         if (this.options.dragOver && !this.trueModal && parseInt(this.wrapper.css('zIndex'), 10) <= jBox.zIndexMaxDragover) {
@@ -390,7 +396,14 @@
         var pos_y = this.wrapper.offset().top + drg_h - ev.pageY;
         var pos_x = this.wrapper.offset().left + drg_w - ev.pageX;
 
-        jQuery(document).on('mousemove.jBox-draggable-' + this.id, function (ev) {
+        jQuery(document).on('touchmove.jBox-draggable-' + this.id + ' mousemove.jBox-draggable-' + this.id, function (ev) {
+          // Fire onDragStart event when jBox moves
+          if (!this.dragging && this.draggingStartX != ev.pageX && this.draggingStartY != ev.pageY) {
+            this._fireEvent('onDragStart');
+            this.dragging = true;
+          }
+
+          // Adjust position
           this.wrapper.offset({
             top: ev.pageY + pos_y - drg_h,
             left: ev.pageX + pos_x - drg_w
@@ -398,8 +411,16 @@
         }.bind(this));
         ev.preventDefault();
 
-      }.bind(this)).on('mouseup', function () {
-        jQuery(document).off('mousemove.jBox-draggable-' + this.id);
+      }.bind(this)).on('touchend mouseup', function () {
+        // Remove drag event
+        jQuery(document).off('touchmove.jBox-draggable-' + this.id + ' mousemove.jBox-draggable-' + this.id);
+
+        // Fire onDragEnd event
+        this.dragging && this._fireEvent('onDragEnd');
+
+        // Reset dragging reference
+        this.dragging = false;
+
         if ((this.type == 'Modal' || this.type == 'Confirm') && this.options.holdPosition) {
           // Drag end captures new position
           var jBoxOffset = jQuery('#' + this.id).offset(),
