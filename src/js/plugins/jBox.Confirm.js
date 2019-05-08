@@ -9,12 +9,12 @@
  */
 
 jQuery(document).ready(function () {
-  
+
   new jBox.plugin('Confirm', {
-    
-    
+
+
     // Options (https://stephanwagner.me/jBox/options#options-confirm)
-    
+
     confirmButton: 'Submit',  // Text for the submit button
     cancelButton: 'Cancel',   // Text for the cancel button
     confirm: null,            // Function to execute when clicking the submit button. By default jBox will use the onclick or href attribute in that order if found
@@ -34,10 +34,10 @@ jQuery(document).ready(function () {
     overlay: true,
     animation: 'zoomIn',
     preventDefault: true,
-    
-    
+
+
     // Triggered when jBox is attached to the element
-    
+
     _onAttach: function (el)
     {
       // Extract the href or the onclick event if no submit event is passed
@@ -46,31 +46,31 @@ jQuery(document).ready(function () {
         el.prop('onclick', null).data('jBox-Confirm-submit', submit);
       }
     },
-    
-    
+
+
     // Triggered when jBox was created
-    
+
     _onCreated: function ()
     {
       // Add modal class to mimic jBox modal
       this.wrapper.addClass('jBox-Modal');
-      
+
       // Add a footer to the jBox container
       this.footer = jQuery('<div class="jBox-Confirm-footer"/>');
       jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-cancel"/>').html(this.options.cancelButton).click(function () { this.options.cancel && this.options.cancel(); this.close(); }.bind(this)).appendTo(this.footer);
       this.submitButton = jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-submit"/>').html(this.options.confirmButton).appendTo(this.footer);
       this.footer.appendTo(this.container);
     },
-    
-    
+
+
     // Triggered when jBox is opened
-    
+
     _onOpen: function ()
     {
       // Set the new action for the submit button
       this.submitButton.off('click.jBox-Confirm' + this.id).on('click.jBox-Confirm' + this.id, function () { this.options.confirm ? this.options.confirm() : eval(this.source.data('jBox-Confirm-submit')); this.options.closeOnConfirm && this.close(); }.bind(this));
     }
-    
+
   });
-  
+
 });

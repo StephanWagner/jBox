@@ -157,7 +157,7 @@ declare namespace jBox {
 
     /** Blocks scrolling when jBox is open */
     blockScroll?: boolean;
-    
+
     /** Adjust page elements to avoid content jumps when scrolling is blocked. See more here: https://github.com/StephanWagner/unscroll */
     blockScrollAdjust?: boolean | string | Array<string | Array<string>>;
 
@@ -316,21 +316,21 @@ declare namespace jBox {
   interface jBoxNoticeOptions extends jBoxOptions {
     /** Add a color to your notices */
     color?: 'black' | 'red' | 'green' | 'blue' | 'yellow';
-  
+
     /** Set to false to disable notice-stacking */
     stack?: boolean;
-  
+
     /** Spacing between notices when they stack */
     stackSpacing?: number;
-  
+
     /** When hovering the notice it won't close */
     delayOnHover?: boolean;
-  
+
     /** Adds a progress bar showing the time it will take until the notice closes */
     showCountdown?: boolean;
   }
 
-  
+
 }
 
 /** Connects the name of the plugin with the type of its options */
