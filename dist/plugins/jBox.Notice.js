@@ -9,12 +9,12 @@
  */
 
 jQuery(document).ready(function () {
-  
+
   new jBox.plugin('Notice', {
-    
-    
+
+
     // Options (https://stephanwagner.me/jBox/options#options-notice)
-    
+
     color: null,      // Add a color to your notices, use 'gray' (default), 'black', 'red', 'green', 'blue' or 'yellow'
     stack: true,      // Set to false to disable notice-stacking
     stackSpacing: 10, // Spacing between notices when they stack
@@ -42,15 +42,15 @@ jQuery(document).ready(function () {
     animation: 'zoomIn',
     closeOnClick: 'box',
     zIndex: 12000,
-    
-    
+
+
     // Triggered when notice is initialized
-    
+
     _onInit: function ()
     {
       // Cache position values
       this.defaultNoticePosition = jQuery.extend({}, this.options.position);
-      
+
       // Type Notice has its own adjust position function
       this._adjustNoticePositon = function () {
         var win = jQuery(window);
@@ -58,10 +58,10 @@ jQuery(document).ready(function () {
           x: win.width(),
           y: win.height()
         };
-        
+
         // Reset default position
         this.options.position = jQuery.extend({}, this.defaultNoticePosition);
-        
+
         // Adjust depending on viewport
         jQuery.each(this.options.responsivePositions, function (viewport, position) {
           if (windowDimensions.x <= viewport) {
@@ -69,7 +69,7 @@ jQuery(document).ready(function () {
             return false;
           }
         }.bind(this));
-        
+
         // Set new padding options
         this.options.adjustDistance = {
           top: this.options.position.y,
@@ -78,51 +78,51 @@ jQuery(document).ready(function () {
           left: this.options.position.x
         };
       };
-      
+
       // If jBox grabs an element as content, crab a clone instead
       this.options.content instanceof jQuery && (this.options.content = this.options.content.clone().attr('id', ''));
-      
+
       // Adjust paddings when window resizes
       jQuery(window).on('resize.responsivejBoxNotice-' + this.id, function (ev) { if (this.isOpen) { this._adjustNoticePositon(); } }.bind(this));
-      
+
       this.open();
     },
-    
-    
+
+
     // Triggered when notice was created
-    
+
     _onCreated: function ()
     {
       // Add color class
       this.wrapper.addClass('jBox-Notice-color jBox-Notice-' + (this.options.color || 'gray'));
-      
+
       // Store position in jBox wrapper
       this.wrapper.data('jBox-Notice-position', this.options.attributes.x + '-' + this.options.attributes.y);
     },
-    
-    
+
+
     // Triggered when notice opens
-    
+
     _onOpen: function ()
     {
       // Bail if we're stacking
       if (this.options.stack) {
           return;
       }
-      
+
       // Adjust position when opening
       this._adjustNoticePositon();
-      
+
       // Loop through notices at same window corner destroy them
       jQuery.each(jQuery('.jBox-Notice'), function (index, el)
       {
         el = jQuery(el);
-        
+
         // Abort if the element is this notice or when it's not at the same position
         if (el.attr('id') == this.id || el.data('jBox-Notice-position') != this.options.attributes.x + '-' + this.options.attributes.y) {
           return;
         }
-        
+
         // Remove notice when we don't wont to stack them
         if (!this.options.stack) {
           el.data('jBox').close({ignoreDelay: true});
@@ -132,7 +132,7 @@ jQuery(document).ready(function () {
     },
 
     // Triggered when resizing window etc.
-    
+
     _onPosition: function ()
     {
         var stacks = {};
@@ -157,16 +157,17 @@ jQuery(document).ready(function () {
             }
         }
     },
-    
+
     // Remove notice from DOM and reposition other notices when closing finishes
-    
+
     _onCloseComplete: function ()
     {
         this.destroy();
         this.options._onPosition.bind(this).call();
     }
-    
+
   });
-  
+
 });
+
 //# sourceMappingURL=jBox.Notice.js.map
