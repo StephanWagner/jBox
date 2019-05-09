@@ -128,6 +128,9 @@ declare namespace jBox {
     /** Adds an overlay to hide page content when jBox opens (adjust color and opacity with CSS) */
     overlay?: boolean;
 
+    /** Add a class name to the overlay */
+    overlayClass?: null | string;
+
     /** Use a high z-index, or set to 'auto' to move the jBox to the very top when it opens */
     zIndex?: number | 'auto';
 

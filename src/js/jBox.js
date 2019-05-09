@@ -129,6 +129,7 @@
       theme: 'Default',            // Set a jBox theme class
       addClass: null,              // Adds classes to the wrapper
       overlay: false,              // Adds an overlay to hide page content when jBox opens (adjust color and opacity with CSS)
+      overlayClass: null,          // Add a class name to the overlay
       zIndex: 10000,               // Use a high z-index, or set to 'auto' to bring to front on open
 
       // Delays
@@ -620,6 +621,9 @@
           opacity: 0,
           zIndex: this.options.zIndex - 1
         }).appendTo(this.options.appendTo);
+
+        // Add a class name to the overlay
+        this.options.overlayClass && this.overlay.addClass(this.options.overlayClass);
 
         // Add close button to overlay
         (this.options.closeButton == 'overlay' || this.options.closeButton === true) && this.overlay.append(this.closeButton);
