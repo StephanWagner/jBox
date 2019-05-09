@@ -22,6 +22,14 @@ body {
   box-sizing: border-box;
 }
 
+p {
+  margin: 0 0 15px;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
 h2 {
   margin: 0;
   font-size: 22px;
@@ -93,10 +101,11 @@ main {
 .target.active,
 .target-click.active,
 .target-notice.active {
-  color: #07d;
+  color: #49d;
 }
 
 @media (max-width: 768px) {
+
   .target,
   .target-click,
   .target-notice {
@@ -205,7 +214,7 @@ header a:hover {
 /* jBox styles */
 
 .ajax-sending {
-  color: #07d;
+  color: #49d;
 }
 
 .ajax-complete {
@@ -221,45 +230,4 @@ header a:hover {
 
 .ajax-error {
   color: #d00;
-}
-
-#stackedModal-1-overlay,
-#stackedModal-2-overlay {
-  background-color: rgba(0, 0, 0, .35);
-}
-
-.jBox-content p {
-  margin-top: 0.5em;
-}
-
-#hold-position .jBox-title {
-  white-space: nowrap;
-}
-
-#hold-position .jBox-content div.inp {
-  margin-top: 0.5em;
-}
-
-#hold-position .jBox-content .norm {
-  width: 270px;
-  height: auto;
-}
-
-#hold-position .jBox-content .wider {
-  width: 400px;
-  height: auto;
-}
-
-#hold-position .jBox-content .taller {
-  width: 270px;
-  height: 200px;
-}
-
-#hold-position .jBox-content .wider-taller {
-  width: 400px;
-  height: 200px;
-}
-
-#hold-pos-content div {
-  display: none;
 }

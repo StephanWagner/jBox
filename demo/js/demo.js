@@ -168,123 +168,6 @@ $(document).ready(function () {
     }
   });
 
-  // holdPosition option
-  var holdPos = new jBox('Modal', {
-    id: 'hold-position',
-    createOnInit: true,
-    attach: '#Modal-7',
-    blockScroll: false,
-    animation: 'zoomIn',
-    closeOnClick: false,
-    closeOnEsc: false,
-    closeButton: true,
-    draggable: 'title',
-    title: 'Click on title to drag it around',
-    content: $('#hold-pos-content > div.norm').clone(),
-    overlay: false,
-    reposition: false,
-    repositionOnOpen: false,
-    holdPosition: true
-  });
-
-  // Handle wider/taller selection events
-  var ckWider = false,
-    ckTaller = false;
-  $('#hold-position').on('click', 'input[type="checkbox"]', function () {
-    var content, src = '#hold-pos-content > div';
-    if ($(this).val() == 'wider') {
-      ckWider = $(this).prop('checked');
-    } else if ($(this).val() == 'taller') {
-      ckTaller = $(this).prop('checked');
-    }
-    if (ckWider && ckTaller) {
-      content = $(src + '.wider-taller');
-    } else if (ckWider) {
-      content = $(src + '.wider');
-    } else if (ckTaller) {
-      content = $(src + '.taller');
-    } else {
-      content = $(src + '.norm');
-    }
-    $('hold-position jBox-content').empty(); // there are event handlers
-    holdPos.setContent(content.clone());
-  });
-
-  new jBox('Modal', {
-    id: 'stackedModal-1',
-    attach: '#Modal-5',
-    height: 200,
-    zIndex: 'auto',
-    draggable: 'title',
-    createOnInit: true,
-    closeOnEsc: false,
-    closeOnClick: false,
-    closeButton: 'title',
-    title: 'I\'m a jBox true modal window',
-    content: '<div>A true modal window blocks access to<br>' +
-      'everything on the page, including other<br>' +
-      'jBoxes, even if they are also true modals.' +
-      '<p><button id="stack-modal">Open Another True Modal</button>' +
-      '<p>(You can drag this window by its title.)'
-  });
-
-  new jBox('Modal', {
-    attach: '#Modal-6',
-    width: 350,
-    height: 200,
-    blockScroll: false,
-    animation: 'zoomIn',
-    draggable: 'title',
-    closeButton: true,
-    closeOnEsc: false,
-    closeOnClick: false,
-    overlay: false,
-    reposition: false,
-    createOnInit: true,
-    repositionOnOpen: false,
-    title: 'I\'m a non-modal window',
-    content: '(You can drag this window by its title.)' +
-      '<p><button id="open-nonmodal">Open/Close Another non-Modal</button>'
-  });
-
-  // Stacked Modal
-
-  new jBox('Modal', {
-    id: 'stackedModal-2',
-    attach: '#stack-modal',
-    height: 200,
-    zIndex: 'auto',
-    offset: {
-      x: 150,
-      y: 70
-    },
-    draggable: 'title',
-    closeOnClick: false,
-    closeOnEsc: false,
-    closeButton: 'title',
-    title: 'I\'m a second jBox true modal window',
-    content: 'A true modal blocks access to all underlying<br>' +
-      'elements on the page, even other modals.' +
-      '<p>(You can drag this window by its title.)'
-  });
-
-  new jBox('Modal', {
-    attach: '#open-nonmodal',
-    height: 200,
-    draggable: 'title',
-    offset: {
-      x: -80,
-      y: 50
-    },
-    overlay: false,
-    closeOnClick: false,
-    closeOnEsc: false,
-    closeButton: 'title',
-    title: 'I\'m a second jBox non-modal window',
-    content: 'This window comes to the foreground when active.' +
-      '<p>(You can drag this window by its title.)'
-  });
-
   // Confirm
 
   new jBox('Confirm', {
@@ -306,7 +189,9 @@ $(document).ready(function () {
     new jBox('Notice', {
       animation: 'flip',
       color: getColor(),
-      content: 'Oooh! They also come in colors'
+      content: 'Oooh! They also come in colors',
+      delayOnHover: true,
+      showCountdown: true,
     });
   });
 
@@ -345,72 +230,6 @@ $(document).ready(function () {
     });
   });
 
-  $('#Notice-5').click(function () {
-    new jBox('Notice', {
-      content: 'Hover me, I\'ll stick around',
-      color: 'black',
-      autoClose: Math.random() * 8000 + 2000,
-      delayOnHover: true
-    });
-  });
-
-  $('#Notice-6').click(function () {
-    new jBox('Notice', {
-      animation: 'flip',
-      color: getColor(),
-      autoClose: Math.random() * 8000 + 2000,
-      content: 'Oooh! They also come in colors',
-      delayOnHover: true,
-      showCountdown: true,
-      closeButton: true
-    });
-  });
-
-  $('#Notice-7').click(function () {
-    new jBox('Notice', {
-      theme: 'NoticeFancy',
-      attributes: {
-        x: 'left',
-        y: 'bottom'
-      },
-      color: getColor(),
-      content: getString(),
-      title: getTitle(),
-      maxWidth: 600,
-      audio: '../assets/audio/bling2',
-      volume: 80,
-      autoClose: Math.random() * 8000 + 2000,
-      animation: {
-        open: 'slide:bottom',
-        close: 'slide:left'
-      },
-      delayOnHover: true,
-      showCountdown: true,
-      closeButton: true
-    });
-  });
-
-  $('#Notice-8').click(function () {
-    new jBox('Notice', {
-      attributes: {
-        x: 'right',
-        y: 'bottom'
-      },
-      stack: false,
-      animation: {
-        open: 'tada',
-        close: 'zoomIn'
-      },
-      autoClose: Math.random() * 8000 + 2000,
-      color: getColor(),
-      title: 'Tadaaa! I\'m single',
-      content: 'Open another notice, I won\'t stack',
-      delayOnHover: true,
-      showCountdown: true,
-      closeButton: true
-    });
-  });
-
   // Image
 
   new jBox('Image', {
@@ -437,16 +256,6 @@ $(document).ready(function () {
       index = 0;
     }
     return colors[index++];
-  };
-
-  var strings = ['Short', 'You just switched the internet off', 'Please do not click too hard - next time we\'ll notify google.', 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'];
-  var getString = function () {
-    return strings[Math.floor(Math.random() * strings.length)];
-  };
-
-  var titles = ['Congrats', 'Success', 'Thank you', false, false, false];
-  var getTitle = function () {
-    return titles[Math.floor(Math.random() * strings.length)];
   };
 
 });

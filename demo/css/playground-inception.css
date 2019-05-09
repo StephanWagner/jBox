@@ -1,0 +1,16 @@
+.inception-overlay {
+  background-color: rgba(0, 0, 0, .35);
+}
+
+.inception-modal button {
+  cursor: pointer;
+  border: 0;
+  margin: 0;
+  display: block;
+  width: 100%;
+  color: #fff;
+  background: #000;
+  height: 40px;
+  text-align: center;
+  border-radius: 4px;
+}

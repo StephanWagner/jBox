@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="../dist/jBox.all.css">
 <link rel="stylesheet" href="./css/demo.css">
 <link rel="stylesheet" href="./css/playground-avatars.css">
+<link rel="stylesheet" href="./css/playground-inception.css">
 <link rel="stylesheet" href="./css/playground-login.css">
 
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -26,86 +27,61 @@
 
 <main class="container">
 
-<h2>Tooltip</h2>
+  <h2>Tooltip</h2>
 
-<div class="targets-wrapper">
-  <div id="Tooltip-1" class="target">Hover me</div>
-  <div id="Tooltip-2" class="target">Hover me</div>
-  <div id="Tooltip-3" class="target">Hover me</div>
-  <div id="Tooltip-4" class="target">Hover me</div>
-  <div id="Tooltip-5" class="target">Hover me</div>
-  <div id="Tooltip-6" class="target">Hover me</div>
-  <div id="Tooltip-7" class="target-click">Click me</div>
-  <div id="Tooltip-8" class="target-click">Click me</div>
-</div>
+  <div class="targets-wrapper">
+    <div id="Tooltip-1" class="target">Hover me</div>
+    <div id="Tooltip-2" class="target">Hover me</div>
+    <div id="Tooltip-3" class="target">Hover me</div>
+    <div id="Tooltip-4" class="target">Hover me</div>
+    <div id="Tooltip-5" class="target">Hover me</div>
+    <div id="Tooltip-6" class="target">Hover me</div>
+    <div id="Tooltip-7" class="target-click">Click me</div>
+    <div id="Tooltip-8" class="target-click">Click me</div>
+  </div>
 
-<h2>Modal</h2>
+  <h2>Modal</h2>
 
-<div class="targets-wrapper">
-  <div id="Modal-1" class="target-click">Click me</div>
-  <div id="Modal-2" class="target-click">Click me</div>
-  <div id="Modal-3" class="target-click">Click me</div>
-  <div class="target-click" data-confirm onclick="new jBox('Notice', {content: 'Yay! You clicked the confirm button', color: 'green', attributes: {y: 'bottom'}})">Click me</div>
-  <div id="Modal-5" class="target-click">Click me</div>
-  <div id="Modal-6" class="target-click">Click me</div>
-  <div id="Modal-7" class="target-click">Click me</div>
-</div>
+  <div class="targets-wrapper">
+    <div id="Modal-1" class="target-click">Click me</div>
+    <div id="Modal-2" class="target-click">Click me</div>
+    <div id="Modal-3" class="target-click">Click me</div>
+    <div class="target-click" data-confirm onclick="new jBox('Notice', {content: 'Yay! You clicked the confirm button', color: 'green', attributes: {y: 'bottom'}})">Click me</div>
+  </div>
 
-<h2>Notice</h2>
+  <h2>Notice</h2>
 
-<div class="targets-wrapper">
-  <div id="Notice-1" class="target-notice">Click me</div>
-  <div id="Notice-2" class="target-notice">Click me</div>
-  <div id="Notice-3" class="target-notice">Click me</div>
-  <div id="Notice-4" class="target-notice">Click me</div>
-  <div id="Notice-5" class="target-notice">Click me</div>
-  <div id="Notice-6" class="target-notice">Click me</div>
-  <div id="Notice-7" class="target-notice">Click me</div>
-  <div id="Notice-8" class="target-notice">Click me</div>
-</div>
+  <div class="targets-wrapper">
+    <div id="Notice-1" class="target-notice">Click me</div>
+    <div id="Notice-2" class="target-notice">Click me</div>
+    <div id="Notice-3" class="target-notice">Click me</div>
+    <div id="Notice-4" class="target-notice">Click me</div>
+  </div>
 
-<h2>Image</h2>
+  <h2>Image</h2>
 
-<div class="targets-wrapper">
-  <a class="demo-img" href="https://stephanwagner.me/img/jBox/demo/image1.jpg" data-jbox-image="gallery1" title="Navigate with your keyboard: Press the [right] or [left] key"><img src="https://stephanwagner.me/img/jBox/demo/image1-preview.jpg" alt=""></a>
-  <a class="demo-img" href="https://stephanwagner.me/img/jBox/demo/image2.jpg" data-jbox-image="gallery1" title="jBox is smart, the next image gets preloaded"><img src="https://stephanwagner.me/img/jBox/demo/image2-preview.jpg" alt=""></a>
-  <a class="demo-img" href="https://stephanwagner.me/img/jBox/demo/image3.jpg" data-jbox-image="gallery1" title="You can easily group your images into galleries"><img src="https://stephanwagner.me/img/jBox/demo/image3-preview.jpg" alt=""></a>
-  <a class="demo-img" href="https://stephanwagner.me/img/jBox/demo/image4.jpg" data-jbox-image="gallery1" title="As usual, attaching jBox to images is easy as pie"><img src="https://stephanwagner.me/img/jBox/demo/image4-preview.jpg" alt=""></a>
-  <a href="https://stephanwagner.me/img/jBox/demo/NOT-FOUND.jpg" data-jbox-image="gallery1" title="You can adjust this image-not-found notice with CSS"></a>
-</div>
+  <div class="targets-wrapper">
+    <a class="demo-img" href="https://stephanwagner.me/img/jBox/demo/image1.jpg" data-jbox-image="gallery1" title="Navigate with your keyboard: Press the [right] or [left] key"><img src="https://stephanwagner.me/img/jBox/demo/image1-preview.jpg" alt=""></a>
+    <a class="demo-img" href="https://stephanwagner.me/img/jBox/demo/image2.jpg" data-jbox-image="gallery1" title="jBox is smart, the next image gets preloaded"><img src="https://stephanwagner.me/img/jBox/demo/image2-preview.jpg" alt=""></a>
+    <a class="demo-img" href="https://stephanwagner.me/img/jBox/demo/image3.jpg" data-jbox-image="gallery1" title="You can easily group your images into galleries"><img src="https://stephanwagner.me/img/jBox/demo/image3-preview.jpg" alt=""></a>
+    <a class="demo-img" href="https://stephanwagner.me/img/jBox/demo/image4.jpg" data-jbox-image="gallery1" title="As usual, attaching jBox to images is easy as pie"><img src="https://stephanwagner.me/img/jBox/demo/image4-preview.jpg" alt=""></a>
+    <a href="https://stephanwagner.me/img/jBox/demo/NOT-FOUND.jpg" data-jbox-image="gallery1" title="You can adjust this image-not-found notice with CSS"></a>
+  </div>
 
-<h2>Playground</h2>
+  <h2>Playground</h2>
 
-<div class="targets-wrapper">
-  <div id="DemoAvatars" class="target-click">Avatars</div>
-  <div id="DemoLogin" class="target-click">Login</div>
-</div>
+  <div class="targets-wrapper">
+    <div id="DemoInception" class="target-click">Inception</div>
+    <div id="DemoAvatars" class="target-click">Avatars</div>
+    <div id="DemoLogin" class="target-click">Login</div>
+  </div>
 
 </main>
-
-<div id="hold-pos-content">
-  <div class="norm">With <code>holdPosition:true</code>, this window will stay where you put it, as available space allows.
-    <div class="inp"><label><input type="checkbox" value="wider"> Wider</label> &emsp;
-      <label><input type="checkbox" value="taller"> Taller</label></div>
-  </div>
-  <div class="wider">With <code>holdPosition:true</code>, this window will stay where you put it, as available space allows.
-    <div class="inp"><label><input checked type="checkbox" value="wider"> Wider</label> &emsp;
-      <label><input type="checkbox" value="taller"> Taller</label> &mdash; (Wider)</div>
-  </div>
-  <div class="taller">With <code>holdPosition:true</code>, this window will stay where you put it, as available space allows.
-    <div class="inp"><label><input type="checkbox" value="wider"> Wider</label> &emsp;
-      <label><input checked type="checkbox" value="taller"> Taller</label> &mdash; (Taller)</div>
-  </div>
-  <div class="wider-taller">With <code>holdPosition:true</code>, this window will stay where you put it, as available space allows.
-    <div class="inp"><label><input checked type="checkbox" value="wider"> Wider</label> &emsp;
-      <label><input checked type="checkbox" value="taller"> Taller</label> &mdash; (Wider &amp; Taller)</div>
-    </div>
-  </div>
-</div>
 
 <script src="../dist/jBox.all.js"></script>
 <script src="./js/demo.js"></script>
 <script src="./js/playground-avatars.js"></script>
+<script src="./js/playground-inception.js"></script>
 <script src="./js/playground-login.js"></script>
 
 </body>
