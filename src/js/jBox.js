@@ -1,11 +1,11 @@
 /**
  * jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more.
  *
- * Author: Stephan Wagner (https://stephanwagner.me)
+ * Author: Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)
  *
  * License: MIT (https://opensource.org/licenses/MIT)
  *
- * Requires: jQuery 3.2.1 (https://code.jquery.com/jquery-3.2.1.min.js)
+ * Requires: jQuery 3.4.1 (https://code.jquery.com/jquery-3.4.1.min.js)
  *
  * Documentation: https://stephanwagner.me/jBox/documentation
  *
@@ -13,7 +13,7 @@
  */
 
 
-// AMD and CommonJS support: http://ifandelse.com/its-not-hard-making-your-library-support-amd-and-commonjs
+// AMD and CommonJS support: https://github.com/umdjs/umd
 
 (function (root, factory) {
 

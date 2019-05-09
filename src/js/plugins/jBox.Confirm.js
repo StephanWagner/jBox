@@ -1,7 +1,7 @@
 /**
  * jBox Confirm plugin: Add a confirm dialog to links, buttons, etc.
  *
- * Author: Stephan Wagner (https://stephanwagner.me)
+ * Author: Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)
  *
  * License: MIT (https://opensource.org/licenses/MIT)
  *
