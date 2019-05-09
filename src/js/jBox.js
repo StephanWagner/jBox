@@ -1710,8 +1710,8 @@
       var remaining = this.options.delayClose;
       var prevFrame = Date.now();
       if (this.options.showCountdown && !this.inner) {
-        var outer = jQuery('<div class="jBox-countdown"></div>');
-        this.inner = jQuery('<div class="jBox-countdown_inner"></div>');
+        var outer = jQuery('<div class="jBox-countdown" />');
+        this.inner = jQuery('<div class="jBox-countdown-inner" />');
         outer.prepend(this.inner);
         jQuery('#' + this.id).append(outer);
       }
