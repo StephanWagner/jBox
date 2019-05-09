@@ -356,9 +356,9 @@ body[class*=" jBox-blockScroll-"] {
   left: 0;
   right: 0;
   height: 3px;
+  overflow: hidden;
 
   &-inner {
-    border-radius: 4px 4px 0 0;
     top: 0;
     right: 0;
     width: 100%;
