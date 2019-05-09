@@ -26,21 +26,21 @@
 
 // jBox Tooltip
 
-.jBox-Tooltip .jBox-container,
-.jBox-Mouse .jBox-container {
-  border-radius: 3px;
-  box-shadow: 0 0 3px rgba(0, 0, 0, .25);
-}
+.jBox-Tooltip,
+.jBox-Mouse {
+  .jBox-container {
+    border-radius: 4px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, .25);
+  }
 
-.jBox-Tooltip .jBox-title,
-.jBox-Mouse .jBox-title {
-  padding: 8px 10px 0;
-  font-weight: bold;
-}
+  .jBox-title {
+    padding: 8px 10px 0;
+    font-weight: bold;
+  }
 
-.jBox-hasTitle.jBox-Tooltip .jBox-content,
-.jBox-hasTitle.jBox-Mouse .jBox-content {
-  padding-top: 5px;
+  &.jBox-hasTitle .jBox-content {
+    padding-top: 5px;
+  }
 }
 
 .jBox-Mouse {
@@ -52,97 +52,101 @@
 .jBox-pointer {
   position: absolute;
   overflow: hidden;
-}
 
-.jBox-pointer-top {
-  top: 0;
-}
+  &:after {
+    content: '';
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    background: #fff;
+    transform: rotate(45deg);
+  }
 
-.jBox-pointer-bottom {
-  bottom: 0;
-}
+  &-top {
+    top: 0;
 
-.jBox-pointer-left {
-  left: 0;
-}
+    &:after {
+      left: 5px;
+      top: 6px;
+      box-shadow: -1px -1px 2px rgba(0, 0, 0, .15);
+    }
+  }
 
-.jBox-pointer-right {
-  right: 0;
-}
+  &-right {
+    right: 0;
 
-.jBox-pointer-top,
-.jBox-pointer-bottom {
-  width: 30px;
-  height: 12px;
-}
+    &:after {
+      top: 5px;
+      right: 6px;
+      box-shadow: 1px -1px 2px rgba(0, 0, 0, .15);
+    }
+  }
 
-.jBox-pointer-left,
-.jBox-pointer-right {
-  width: 12px;
-  height: 30px;
-}
+  &-left {
+    left: 0;
 
-.jBox-pointer:after {
-  content: '';
-  width: 20px;
-  height: 20px;
-  position: absolute;
-  background: #fff;
-  transform: rotate(45deg);
-}
+    &:after {
+      top: 5px;
+      left: 6px;
+      box-shadow: -1px 1px 2px rgba(0, 0, 0, .15);
+    }
+  }
 
-.jBox-pointer-top:after {
-  left: 5px;
-  top: 6px;
-  box-shadow: -1px -1px 2px rgba(0, 0, 0, .15);
-}
+  &-bottom {
+    bottom: 0;
 
-.jBox-pointer-right:after {
-  top: 5px;
-  right: 6px;
-  box-shadow: 1px -1px 2px rgba(0, 0, 0, .15);
-}
+    &:after {
+      left: 5px;
+      bottom: 6px;
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
+    }
+  }
 
-.jBox-pointer-bottom:after {
-  left: 5px;
-  bottom: 6px;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, .15);
-}
+  &-top,
+  &-bottom {
+    width: 30px;
+    height: 12px;
+  }
 
-.jBox-pointer-left:after {
-  top: 5px;
-  left: 6px;
-  box-shadow: -1px 1px 2px rgba(0, 0, 0, .15);
+  &-left,
+  &-right {
+    width: 12px;
+    height: 30px;
+  }
 }
 
 // jBox Modal
 
-.jBox-Modal .jBox-container {
-  border-radius: 4px;
-}
+.jBox-Modal {
+  .jBox-container {
+    border-radius: 4px;
+  }
 
-.jBox-Modal .jBox-content {
-  padding: 15px 20px;
-}
+  .jBox-container,
+  &.jBox-closeButton-box:before {
+    box-shadow: 0 3px 15px rgba(0, 0, 0, .4), 0 0 5px rgba(0, 0, 0, .4);
+  }
 
-.jBox-Modal .jBox-title {
-  border-radius: 4px 4px 0 0;
-  padding: 15px 20px;
-  background: #fafafa;
-  border-bottom: 1px solid #eee;
-}
+  .jBox-content {
+    padding: 15px 20px;
+  }
 
-.jBox-Modal .jBox-footer {
-  border-radius: 0 0 4px 4px;
-}
+  .jBox-title {
+    border-radius: 4px 4px 0 0;
+    padding: 15px 20px;
+    background: #fafafa;
+    border-bottom: 1px solid #eee;
+  }
 
-.jBox-Modal.jBox-closeButton-title .jBox-title {
-  padding-right: 55px;
-}
+  &.jBox-closeButton-title {
+    .jBox-title {
+      padding-right: 65px;
+    }
+  }
 
-.jBox-Modal .jBox-container,
-.jBox-Modal.jBox-closeButton-box:before {
-  box-shadow: 0 3px 15px rgba(0, 0, 0, .4), 0 0 5px rgba(0, 0, 0, .4);
+  .jBox-footer {
+    border-radius: 0 0 4px 4px;
+  }
 }
 
 // Close button
@@ -151,110 +155,119 @@
   z-index: 1;
   cursor: pointer;
   position: absolute;
-}
 
-.jBox-closeButton svg {
-  position: absolute;
-  top: 50%;
-  right: 50%;
-}
+  svg {
+    position: absolute;
+    top: 50%;
+    right: 50%;
+  }
 
-.jBox-closeButton path {
-  transition: fill .2s;
-}
+  path {
+    fill: #aaa;
+    transition: fill .2s;
+  }
 
-.jBox-closeButton path {
-  fill: #aaa;
-}
+  &:hover {
+    path {
+      fill: #888;
+    }
+  }
 
-.jBox-closeButton:hover path {
-  fill: #888;
-}
-
-.jBox-closeButton:active path {
-  fill: #666;
+  &:active {
+    path {
+      fill: #666;
+    }
+  }
 }
 
 // Close button in overlay
 
-.jBox-overlay .jBox-closeButton {
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
-}
+.jBox-overlay {
+  .jBox-closeButton {
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
 
-.jBox-overlay .jBox-closeButton svg {
-  width: 20px;
-  height: 20px;
-  margin-top: -10px;
-  margin-right: -10px;
-}
+    svg {
+      width: 20px;
+      height: 20px;
+      margin-top: -10px;
+      margin-right: -10px;
+    }
 
-.jBox-overlay .jBox-closeButton path,
-.jBox-overlay .jBox-closeButton:active path {
-  fill: #ddd;
-}
+    path,
+    &:active path {
+      fill: #ddd;
+    }
 
-.jBox-overlay .jBox-closeButton:hover path {
-  fill: #fff;
+    &:hover path {
+      fill: #fff;
+    }
+  }
+
 }
 
 // Close button in title
 
-.jBox-closeButton-title .jBox-closeButton {
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 40px;
-}
+.jBox-closeButton-title {
+  .jBox-closeButton {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50px;
+  }
 
-.jBox-closeButton-title .jBox-closeButton svg {
-  width: 12px;
-  height: 12px;
-  margin-top: -6px;
-  margin-right: -6px;
+  svg {
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    margin-right: -6px;
+  }
 }
 
 // Close button in box
 
-.jBox-closeButton-box .jBox-closeButton {
-  top: -8px;
-  right: -10px;
-  width: 24px;
-  height: 24px;
-  background: #fff;
-  border-radius: 50%;
+.jBox-closeButton-box {
+  .jBox-closeButton {
+    top: -8px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    background: #fff;
+    border-radius: 50%;
+
+    svg {
+      width: 10px;
+      height: 10px;
+      margin-top: -5px;
+      margin-right: -5px;
+    }
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .3);
+  }
+
+  &.jBox-pointerPosition-top:before {
+    top: 5px;
+  }
+
+  &.jBox-pointerPosition-right:before {
+    right: 2px;
+  }
 }
 
-.jBox-closeButton-box .jBox-closeButton svg {
-  width: 10px;
-  height: 10px;
-  margin-top: -5px;
-  margin-right: -5px;
-}
 
-.jBox-hasTitle.jBox-Modal.jBox-closeButton-box .jBox-closeButton {
+.jBox-Modal.jBox-hasTitle.jBox-closeButton-box .jBox-closeButton {
   background: #fafafa;
-}
-
-.jBox-closeButton-box:before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  right: -10px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  box-shadow: 0 0 5px rgba(0, 0, 0, .3);
-}
-
-.jBox-pointerPosition-top.jBox-closeButton-box:before {
-  top: 5px;
-}
-
-.jBox-pointerPosition-right.jBox-closeButton-box:before {
-  right: 2px;
 }
 
 // Overlay
@@ -317,18 +330,42 @@ body[class*=" jBox-blockScroll-"] {
   height: 24px;
   margin-top: -12px;
   margin-left: -12px;
+
+  &:before {
+    display: block;
+    box-sizing: border-box;
+    content: '';
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, .2);
+    border-top-color: rgba(0, 0, 0, .8);
+    animation: jBoxLoading .6s linear infinite;
+  }
 }
 
-.jBox-spinner:before {
-  display: block;
-  box-sizing: border-box;
-  content: '';
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 2px solid rgba(0, 0, 0, .2);
-  border-top-color: rgba(0, 0, 0, .8);
-  animation: jBoxLoading .6s linear infinite;
+// Countdown
+
+.jBox-countdown {
+  border-radius: 4px 4px 0 0;
+  z-index: 0;
+  background: #000;
+  opacity: .2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+
+  &-inner {
+    border-radius: 4px 4px 0 0;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    background: #fff;
+  }
 }
 
 // Animations
@@ -337,6 +374,8 @@ body[class*=" jBox-blockScroll-"] {
 [class*=" jBox-animated-"] {
   animation-fill-mode: both;
 }
+
+// Animation tada
 
 @keyframes jBox-tada {
   0% {
@@ -370,6 +409,8 @@ body[class*=" jBox-blockScroll-"] {
   animation: jBox-tada 1s;
 }
 
+// Animation tadaSmall
+
 @keyframes jBox-tadaSmall {
   0% {
     transform: scale(1);
@@ -402,6 +443,8 @@ body[class*=" jBox-blockScroll-"] {
   animation: jBox-tadaSmall 1s;
 }
 
+// Animation flash
+
 @keyframes jBox-flash {
 
   0%,
@@ -419,6 +462,8 @@ body[class*=" jBox-blockScroll-"] {
 .jBox-animated-flash {
   animation: jBox-flash .5s;
 }
+
+// Animation shake
 
 @keyframes jBox-shake {
 
@@ -442,6 +487,8 @@ body[class*=" jBox-blockScroll-"] {
   animation: jBox-shake .4s;
 }
 
+// Animation pulseUp
+
 @keyframes jBox-pulseUp {
   0% {
     transform: scale(1);
@@ -459,6 +506,8 @@ body[class*=" jBox-blockScroll-"] {
 .jBox-animated-pulseUp {
   animation: jBox-pulseUp .25s;
 }
+
+// Animation pulseDown
 
 @keyframes jBox-pulseDown {
   0% {
@@ -478,6 +527,8 @@ body[class*=" jBox-blockScroll-"] {
   animation: jBox-pulseDown .25s;
 }
 
+// Animation popIn
+
 @keyframes jBox-popIn {
   0% {
     transform: scale(0);
@@ -495,6 +546,8 @@ body[class*=" jBox-blockScroll-"] {
 .jBox-animated-popIn {
   animation: jBox-popIn .25s;
 }
+
+// Animation popOut
 
 @keyframes jBox-popOut {
   0% {
@@ -514,6 +567,8 @@ body[class*=" jBox-blockScroll-"] {
   animation: jBox-popOut .25s;
 }
 
+// Animation fadeIn
+
 @keyframes jBox-fadeIn {
   0% {
     opacity: 0;
@@ -528,6 +583,8 @@ body[class*=" jBox-blockScroll-"] {
   animation: jBox-fadeIn .2s;
 }
 
+// Animation fadeOut
+
 @keyframes jBox-fadeOut {
   0% {
     opacity: 1;
@@ -541,6 +598,8 @@ body[class*=" jBox-blockScroll-"] {
 .jBox-animated-fadeOut {
   animation: jBox-fadeOut .2s;
 }
+
+// Animation slideUp
 
 @keyframes jBox-slideUp {
   0% {
@@ -557,6 +616,8 @@ body[class*=" jBox-blockScroll-"] {
   animation: jBox-slideUp .4s;
 }
 
+// Animation slideRight
+
 @keyframes jBox-slideRight {
   0% {
     transform: translateX(0);
@@ -571,6 +632,8 @@ body[class*=" jBox-blockScroll-"] {
 .jBox-animated-slideRight {
   animation: jBox-slideRight .4s;
 }
+
+// Animation slideDown
 
 @keyframes jBox-slideDown {
   0% {
@@ -587,6 +650,8 @@ body[class*=" jBox-blockScroll-"] {
   animation: jBox-slideDown .4s;
 }
 
+// Animation slideLeft
+
 @keyframes jBox-slideLeft {
   0% {
     transform: translateX(0);
@@ -600,32 +665,4 @@ body[class*=" jBox-blockScroll-"] {
 
 .jBox-animated-slideLeft {
   animation: jBox-slideLeft .4s;
-}
-
-.jBox-closeButton {
-  z-index: 1;
-}
-
-// Countdown
-
-.jBox-countdown {
-  border-radius: 3px 3px 0 0;
-  z-index: 0;
-  background: #000;
-  opacity: .2;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-}
-
-.jBox-countdown_inner {
-  border-radius: 3px 3px 0 0;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 3px;
-  position: absolute;
-  background: #fff;
 }

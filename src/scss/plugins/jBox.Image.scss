@@ -1,11 +1,15 @@
-.jBox-Image .jBox-container {
-  background-color: transparent;
-}
+// jBox plugin: Image
 
-.jBox-Image .jBox-content {
-  padding: 0;
-  width: 100%;
-  height: 100%;
+.jBox-Image {
+  .jBox-container {
+    background-color: transparent;
+  }
+
+  .jBox-content {
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 
 .jBox-image-container {
@@ -39,21 +43,21 @@
   opacity: 0;
   z-index: 0;
   pointer-events: none;
-}
 
-.jBox-image-label.expanded {
-  background: #000;
-}
+  &.expanded {
+    background: #000;
+  }
 
-.jBox-image-label:not(.expanded) {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
+  &:not(.expanded) {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
 
-.jBox-image-label.active {
-  opacity: 1;
-  pointer-events: all;
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+  }
 }
 
 .jBox-image-pointer-next,
@@ -69,11 +73,10 @@
   background-size: 11px auto;
   user-select: none;
   z-index: 1;
-}
 
-.jBox-image-pointer-next:hover,
-.jBox-image-pointer-prev:hover {
-  opacity: 1;
+  &:hover {
+    opacity: 1;
+  }
 }
 
 .jBox-image-pointer-next {
@@ -111,41 +114,41 @@
 
 .jBox-image-not-found {
   background: #000;
+
+  &:before {
+    content: '';
+    box-sizing: border-box;
+    display: block;
+    width: 80px;
+    height: 80px;
+    margin-top: -40px;
+    margin-left: -40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    border: 5px solid #222;
+    border-radius: 50%;
+  }
+
+  &:after {
+    content: '';
+    display: block;
+    box-sizing: content-box;
+    z-index: auto;
+    width: 6px;
+    height: 74px;
+    margin-top: -37px;
+    margin-left: -3px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: #222;
+    transform: rotateZ(45deg);
+    transform-origin: 50% 50% 0;
+  }
 }
 
-.jBox-image-not-found:before {
-  content: '';
-  box-sizing: border-box;
-  display: block;
-  width: 80px;
-  height: 80px;
-  margin-top: -40px;
-  margin-left: -40px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border: 5px solid #222;
-  border-radius: 50%;
-}
-
-.jBox-image-not-found:after {
-  content: '';
-  display: block;
-  box-sizing: content-box;
-  z-index: auto;
-  width: 6px;
-  height: 74px;
-  margin-top: -37px;
-  margin-left: -3px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  background: #222;
-  transform: rotateZ(45deg);
-  transform-origin: 50% 50% 0;
-}
-
-/* Download button */
+// Download button
 
 .jBox-image-download-button-wrapper {
   position: absolute;
@@ -177,7 +180,7 @@
   font-size: 14px;
 }
 
-/* Image spinner */
+// Image spinner
 
 @keyframes jBoxImageLoading {
   to {
