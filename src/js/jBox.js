@@ -1036,7 +1036,6 @@
     if (!this.title) {
       this.titleContainer = jQuery('<div class="jBox-title"/>');
       this.title = jQuery('<div/>').appendTo(this.titleContainer);
-      this.wrapper.addClass('jBox-hasTitle');
       if (this.options.closeButton == 'title' || (this.options.closeButton === true && !this.options.overlay)) {
         this.wrapper.addClass('jBox-closeButton-title');
         this.closeButton.appendTo(this.titleContainer);
@@ -1044,6 +1043,11 @@
       this.titleContainer.insertBefore(this.content);
       this._setTitleWidth();
     }
+
+    // Add or remove wrapper class
+    this.wrapper[title ? 'addClass' : 'removeClass']('jBox-hasTitle');
+
+    // Set title html
     this.title.html(title);
 
     // Adjust width of title
