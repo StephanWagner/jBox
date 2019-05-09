@@ -1,6 +1,10 @@
+.AvatarsModal .jBox-footer {
+  display: flex;
+}
 
 .AvatarsModal .jBox-footer button {
   width: 50%;
+  flex-shrink: 0;
   height: 50px;
   border: 0;
   padding: 0;
@@ -73,7 +77,7 @@
   color: #999;
 }
 
-#AvatarsComplete.AvatarsModal .jBox-content > div {
+#AvatarsComplete.AvatarsModal .jBox-content>div {
   position: absolute;
   top: calc(50% - 23px);
   left: 25px;
@@ -131,39 +135,39 @@
   right: 4px;
 }
 
-.AvatarsCollection > div {
+.AvatarsCollection>div {
   width: 47px;
   height: 45px;
   padding: 0 1px;
 }
 
-.AvatarsCollection#DislikedAvatars > div {
+.AvatarsCollection#DislikedAvatars>div {
   float: left;
 }
 
-.AvatarsCollection#LikedAvatars > div {
+.AvatarsCollection#LikedAvatars>div {
   float: right;
 }
 
-.AvatarsCollection > div > div {
+.AvatarsCollection>div>div {
   position: relative;
   overflow: hidden;
   width: 45px;
   height: 45px;
-  border: 2px solid red;
+  border: 2px solid;
   border-radius: 50%;
   background: #000;
 }
 
-.AvatarsCollection#DislikedAvatars > div > div {
+.AvatarsCollection#DislikedAvatars>div>div {
   border-color: #e33;
 }
 
-.AvatarsCollection#LikedAvatars > div > div {
+.AvatarsCollection#LikedAvatars>div>div {
   border-color: #7d0;
 }
 
-.AvatarsCollection > div > div > img {
+.AvatarsCollection>div>div>img {
   position: absolute;
   top: 50%;
   left: 50%;
