@@ -34,21 +34,29 @@
   }
 }
 
-.jBox-Notice .jBox-title {
+.jBox-Notice.jBox-hasTitle .jBox-title {
   padding: 12px 20px 0;
   font-weight: bold;
 }
 
 @media (max-width: 768px) {
-  .jBox-Notice .jBox-title {
+  .jBox-Notice.jBox-hasTitle .jBox-title {
     padding: 10px 15px 0;
   }
 }
 
 @media (max-width: 500px) {
-  .jBox-Notice .jBox-title {
+  .jBox-Notice.jBox-hasTitle .jBox-title {
     padding: 8px 10px 0;
   }
+}
+
+.jBox-Notice.jBox-closeButton-title .jBox-title {
+  padding-right: 55px;
+}
+
+.jBox-Notice.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton {
+  width: 40px;
 }
 
 .jBox-Notice.jBox-Notice-black .jBox-container {
@@ -56,9 +64,19 @@
   background: #000;
 }
 
+.jBox-Notice.jBox-Notice-black.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-black.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
+}
+
 .jBox-Notice.jBox-Notice-gray .jBox-container {
   color: #222;
   background: #f6f6f6;
+}
+
+.jBox-Notice.jBox-Notice-gray.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-gray.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #222;
 }
 
 .jBox-Notice.jBox-Notice-red .jBox-container {
@@ -66,19 +84,39 @@
   background: #d00;
 }
 
+.jBox-Notice.jBox-Notice-red.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-red.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
+}
+
 .jBox-Notice.jBox-Notice-green .jBox-container {
   color: #fff;
   background: #5d0;
 }
 
+.jBox-Notice.jBox-Notice-green.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-green.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
+}
+
 .jBox-Notice.jBox-Notice-blue .jBox-container {
   color: #fff;
-  background: #07d;
+  background: #49d;
+}
+
+.jBox-Notice.jBox-Notice-blue.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-blue.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
 }
 
 .jBox-Notice.jBox-Notice-yellow .jBox-container {
   color: #000;
   background: #fd0;
+}
+
+.jBox-Notice.jBox-Notice-yellow.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-yellow.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
 }
 
 /*# sourceMappingURL=jBox.Notice.css.map */

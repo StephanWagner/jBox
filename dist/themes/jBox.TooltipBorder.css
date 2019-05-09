@@ -1,9 +1,6 @@
-.jBox-TooltipBorder .jBox-container {
-  border: 2px solid #000;
-}
-
+.jBox-TooltipBorder .jBox-container,
 .jBox-TooltipBorder .jBox-pointer:after {
-  border: 2px solid #000;
+  border: 2px solid #49d;
 }
 
 .jBox-TooltipBorder .jBox-pointer-top,
@@ -21,7 +18,7 @@
 .jBox-TooltipBorder.jBox-closeButton-box:before {
   width: 28px;
   height: 28px;
-  background: #000;
+  background: #49d;
 }
 
 /*# sourceMappingURL=jBox.TooltipBorder.css.map */

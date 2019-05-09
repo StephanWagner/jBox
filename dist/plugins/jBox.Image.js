@@ -1,7 +1,7 @@
 /**
  * jBox Image plugin: Adds a lightbox to your images
  *
- * Author: Stephan Wagner (https://stephanwagner.me)
+ * Author: Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)
  *
  * License: MIT (https://opensource.org/licenses/MIT)
  *
@@ -265,7 +265,7 @@ jQuery(document).ready(function () {
             if (this.images[this.currentImage.gallery][this.currentImage.id].downloadUrl) {
               var currentImageUrl = this.images[this.currentImage.gallery][this.currentImage.id].downloadUrl;
             } else {
-              var currentImage = this.wrapper.find('.jBox-image-default-current');
+              var currentImage = this.wrapper.find('.jBox-image-' + this.currentImage.gallery + '-current');
               var currentImageStyle = currentImage[0].style.backgroundImage;
               var currentImageUrl = currentImageStyle.slice(4, -1).replace(/["']/g, '');
             }

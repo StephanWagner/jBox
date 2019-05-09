@@ -1,7 +1,7 @@
 /**
  * jBox Notice plugin: Opens a popup notice
  *
- * Author: Stephan Wagner (https://stephanwagner.me)
+ * Author: Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)
  *
  * License: MIT (https://opensource.org/licenses/MIT)
  *

@@ -155,10 +155,6 @@
   fill: #888;
 }
 
-.jBox-closeButton:active path {
-  fill: #666;
-}
-
 .jBox-overlay .jBox-closeButton {
   top: 0;
   right: 0;
@@ -173,8 +169,7 @@
   margin-right: -10px;
 }
 
-.jBox-overlay .jBox-closeButton path,
-.jBox-overlay .jBox-closeButton:active path {
+.jBox-overlay .jBox-closeButton path {
   fill: #ddd;
 }
 

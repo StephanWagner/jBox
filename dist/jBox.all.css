@@ -155,10 +155,6 @@
   fill: #888;
 }
 
-.jBox-closeButton:active path {
-  fill: #666;
-}
-
 .jBox-overlay .jBox-closeButton {
   top: 0;
   right: 0;
@@ -173,8 +169,7 @@
   margin-right: -10px;
 }
 
-.jBox-overlay .jBox-closeButton path,
-.jBox-overlay .jBox-closeButton:active path {
+.jBox-overlay .jBox-closeButton path {
   fill: #ddd;
 }
 
@@ -854,21 +849,29 @@ body[class*=" jBox-blockScroll-"] {
   }
 }
 
-.jBox-Notice .jBox-title {
+.jBox-Notice.jBox-hasTitle .jBox-title {
   padding: 12px 20px 0;
   font-weight: bold;
 }
 
 @media (max-width: 768px) {
-  .jBox-Notice .jBox-title {
+  .jBox-Notice.jBox-hasTitle .jBox-title {
     padding: 10px 15px 0;
   }
 }
 
 @media (max-width: 500px) {
-  .jBox-Notice .jBox-title {
+  .jBox-Notice.jBox-hasTitle .jBox-title {
     padding: 8px 10px 0;
   }
+}
+
+.jBox-Notice.jBox-closeButton-title .jBox-title {
+  padding-right: 55px;
+}
+
+.jBox-Notice.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton {
+  width: 40px;
 }
 
 .jBox-Notice.jBox-Notice-black .jBox-container {
@@ -876,9 +879,19 @@ body[class*=" jBox-blockScroll-"] {
   background: #000;
 }
 
+.jBox-Notice.jBox-Notice-black.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-black.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
+}
+
 .jBox-Notice.jBox-Notice-gray .jBox-container {
   color: #222;
   background: #f6f6f6;
+}
+
+.jBox-Notice.jBox-Notice-gray.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-gray.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #222;
 }
 
 .jBox-Notice.jBox-Notice-red .jBox-container {
@@ -886,19 +899,39 @@ body[class*=" jBox-blockScroll-"] {
   background: #d00;
 }
 
+.jBox-Notice.jBox-Notice-red.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-red.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
+}
+
 .jBox-Notice.jBox-Notice-green .jBox-container {
   color: #fff;
   background: #5d0;
 }
 
+.jBox-Notice.jBox-Notice-green.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-green.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
+}
+
 .jBox-Notice.jBox-Notice-blue .jBox-container {
   color: #fff;
-  background: #07d;
+  background: #49d;
+}
+
+.jBox-Notice.jBox-Notice-blue.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-blue.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
 }
 
 .jBox-Notice.jBox-Notice-yellow .jBox-container {
   color: #000;
   background: #fd0;
+}
+
+.jBox-Notice.jBox-Notice-yellow.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton path,
+.jBox-Notice.jBox-Notice-yellow.jBox-closeButton-title.jBox-hasTitle .jBox-closeButton:hover path {
+  fill: #fff;
 }
 
 .jBox-NoticeFancy .jBox-content,
@@ -938,7 +971,7 @@ body[class*=" jBox-blockScroll-"] {
 }
 
 .jBox-NoticeFancy.jBox-Notice-blue .jBox-container:after {
-  background-color: #07d;
+  background-color: #49d;
 }
 
 .jBox-NoticeFancy.jBox-Notice-yellow .jBox-container:after {
@@ -950,12 +983,9 @@ body[class*=" jBox-blockScroll-"] {
   border-radius: 0 4px 0 0;
 }
 
-.jBox-TooltipBorder .jBox-container {
-  border: 2px solid #000;
-}
-
+.jBox-TooltipBorder .jBox-container,
 .jBox-TooltipBorder .jBox-pointer:after {
-  border: 2px solid #000;
+  border: 2px solid #49d;
 }
 
 .jBox-TooltipBorder .jBox-pointer-top,
@@ -973,7 +1003,7 @@ body[class*=" jBox-blockScroll-"] {
 .jBox-TooltipBorder.jBox-closeButton-box:before {
   width: 28px;
   height: 28px;
-  background: #000;
+  background: #49d;
 }
 
 .jBox-TooltipBorderThick .jBox-container {
