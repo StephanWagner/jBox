@@ -24,7 +24,7 @@
 
 .jBox-Tooltip .jBox-container,
 .jBox-Mouse .jBox-container {
-  border-radius: 3px;
+  border-radius: 4px;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
 }
 
@@ -34,8 +34,8 @@
   font-weight: bold;
 }
 
-.jBox-hasTitle.jBox-Tooltip .jBox-content,
-.jBox-hasTitle.jBox-Mouse .jBox-content {
+.jBox-Tooltip.jBox-hasTitle .jBox-content,
+.jBox-Mouse.jBox-hasTitle .jBox-content {
   padding-top: 5px;
 }
 
@@ -48,34 +48,6 @@
   overflow: hidden;
 }
 
-.jBox-pointer-top {
-  top: 0;
-}
-
-.jBox-pointer-bottom {
-  bottom: 0;
-}
-
-.jBox-pointer-left {
-  left: 0;
-}
-
-.jBox-pointer-right {
-  right: 0;
-}
-
-.jBox-pointer-top,
-.jBox-pointer-bottom {
-  width: 30px;
-  height: 12px;
-}
-
-.jBox-pointer-left,
-.jBox-pointer-right {
-  width: 12px;
-  height: 30px;
-}
-
 .jBox-pointer:after {
   content: '';
   width: 20px;
@@ -85,10 +57,18 @@
   transform: rotate(45deg);
 }
 
+.jBox-pointer-top {
+  top: 0;
+}
+
 .jBox-pointer-top:after {
   left: 5px;
   top: 6px;
   box-shadow: -1px -1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.jBox-pointer-right {
+  right: 0;
 }
 
 .jBox-pointer-right:after {
@@ -97,10 +77,8 @@
   box-shadow: 1px -1px 2px rgba(0, 0, 0, 0.15);
 }
 
-.jBox-pointer-bottom:after {
-  left: 5px;
-  bottom: 6px;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+.jBox-pointer-left {
+  left: 0;
 }
 
 .jBox-pointer-left:after {
@@ -109,8 +87,32 @@
   box-shadow: -1px 1px 2px rgba(0, 0, 0, 0.15);
 }
 
+.jBox-pointer-bottom {
+  bottom: 0;
+}
+
+.jBox-pointer-bottom:after {
+  left: 5px;
+  bottom: 6px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.jBox-pointer-top, .jBox-pointer-bottom {
+  width: 30px;
+  height: 12px;
+}
+
+.jBox-pointer-left, .jBox-pointer-right {
+  width: 12px;
+  height: 30px;
+}
+
 .jBox-Modal .jBox-container {
   border-radius: 4px;
+}
+
+.jBox-Modal .jBox-container, .jBox-Modal.jBox-closeButton-box:before {
+  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.4), 0 0 5px rgba(0, 0, 0, 0.4);
 }
 
 .jBox-Modal .jBox-content {
@@ -124,17 +126,12 @@
   border-bottom: 1px solid #eee;
 }
 
+.jBox-Modal.jBox-closeButton-title .jBox-title {
+  padding-right: 65px;
+}
+
 .jBox-Modal .jBox-footer {
   border-radius: 0 0 4px 4px;
-}
-
-.jBox-Modal.jBox-closeButton-title .jBox-title {
-  padding-right: 55px;
-}
-
-.jBox-Modal .jBox-container,
-.jBox-Modal.jBox-closeButton-box:before {
-  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.4), 0 0 5px rgba(0, 0, 0, 0.4);
 }
 
 .jBox-closeButton {
@@ -150,11 +147,8 @@
 }
 
 .jBox-closeButton path {
-  transition: fill .2s;
-}
-
-.jBox-closeButton path {
   fill: #aaa;
+  transition: fill .2s;
 }
 
 .jBox-closeButton:hover path {
@@ -192,10 +186,10 @@
   top: 0;
   right: 0;
   bottom: 0;
-  width: 40px;
+  width: 50px;
 }
 
-.jBox-closeButton-title .jBox-closeButton svg {
+.jBox-closeButton-title svg {
   width: 12px;
   height: 12px;
   margin-top: -6px;
@@ -218,10 +212,6 @@
   margin-right: -5px;
 }
 
-.jBox-hasTitle.jBox-Modal.jBox-closeButton-box .jBox-closeButton {
-  background: #fafafa;
-}
-
 .jBox-closeButton-box:before {
   content: '';
   position: absolute;
@@ -233,12 +223,16 @@
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
-.jBox-pointerPosition-top.jBox-closeButton-box:before {
+.jBox-closeButton-box.jBox-pointerPosition-top:before {
   top: 5px;
 }
 
-.jBox-pointerPosition-right.jBox-closeButton-box:before {
+.jBox-closeButton-box.jBox-pointerPosition-right:before {
   right: 2px;
+}
+
+.jBox-Modal.jBox-hasTitle.jBox-closeButton-box .jBox-closeButton {
+  background: #fafafa;
 }
 
 .jBox-overlay {
@@ -303,6 +297,28 @@ body[class*=" jBox-blockScroll-"] {
   border: 2px solid rgba(0, 0, 0, 0.2);
   border-top-color: rgba(0, 0, 0, 0.8);
   animation: jBoxLoading .6s linear infinite;
+}
+
+.jBox-countdown {
+  border-radius: 4px 4px 0 0;
+  z-index: 0;
+  background: #000;
+  opacity: .2;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  overflow: hidden;
+}
+
+.jBox-countdown-inner {
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 3px;
+  position: absolute;
+  background: #fff;
 }
 
 [class^="jBox-animated-"],
@@ -545,32 +561,6 @@ body[class*=" jBox-blockScroll-"] {
 
 .jBox-animated-slideLeft {
   animation: jBox-slideLeft .4s;
-}
-
-.jBox-closeButton {
-  z-index: 1;
-}
-
-.jBox-countdown {
-  border-radius: 3px 3px 0 0;
-  z-index: 0;
-  background: #000;
-  opacity: .2;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
-}
-
-.jBox-countdown_inner {
-  border-radius: 3px 3px 0 0;
-  top: 0;
-  right: 0;
-  width: 100%;
-  height: 3px;
-  position: absolute;
-  background: #fff;
 }
 
 /*# sourceMappingURL=jBox.css.map */

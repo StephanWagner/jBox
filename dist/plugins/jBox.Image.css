@@ -145,7 +145,6 @@
   transform-origin: 50% 50% 0;
 }
 
-/* Download button */
 .jBox-image-download-button-wrapper {
   position: absolute;
   top: -40px;
@@ -176,7 +175,6 @@
   font-size: 14px;
 }
 
-/* Image spinner */
 @keyframes jBoxImageLoading {
   to {
     transform: rotate(360deg);

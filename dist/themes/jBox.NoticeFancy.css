@@ -1,7 +1,3 @@
-.jBox-NoticeFancy .jBox-container {
-  border-radius: 5px;
-}
-
 .jBox-NoticeFancy .jBox-content,
 .jBox-NoticeFancy .jBox-title {
   padding-left: 25px;
@@ -48,11 +44,7 @@
 
 .jBox-NoticeFancy .jBox-countdown {
   left: 8px;
-}
-
-.jBox-NoticeFancy .jBox-countdown,
-.jBox-NoticeFancy .jBox-countdown_inner {
-  border-radius: 0 3px 0 0;
+  border-radius: 0 4px 0 0;
 }
 
 /*# sourceMappingURL=jBox.NoticeFancy.css.map */
