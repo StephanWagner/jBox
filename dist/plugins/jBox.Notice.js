@@ -8,7 +8,7 @@
  * Requires: jBox (https://cdn.jsdelivr.net/gh/StephanWagner/jBox@latest/dist/jBox.min.js)
  */
 
-jQuery(document).ready(function () {
+function jBoxNoticeWrapper(jBox, jQuery) {
 
   new jBox.plugin('Notice', {
 
@@ -168,6 +168,6 @@ jQuery(document).ready(function () {
 
   });
 
-});
+};
 
 //# sourceMappingURL=jBox.Notice.js.map

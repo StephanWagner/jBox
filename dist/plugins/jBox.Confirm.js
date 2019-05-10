@@ -8,7 +8,7 @@
  * Requires: jBox (https://cdn.jsdelivr.net/gh/StephanWagner/jBox@latest/dist/jBox.min.js)
  */
 
-jQuery(document).ready(function () {
+function jBoxConfirmWrapper(jBox, jQuery) {
 
   new jBox.plugin('Confirm', {
 
@@ -73,6 +73,6 @@ jQuery(document).ready(function () {
 
   });
 
-});
+};
 
 //# sourceMappingURL=jBox.Confirm.js.map

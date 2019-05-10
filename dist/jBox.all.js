@@ -1,141 +1,3 @@
-// UMD wrapper from https://github.com/umdjs/umd
-(function (root, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof module === 'object' && module.exports) {
-    module.exports = factory();
-  } else {
-    root.unscroll = factory();
-  }
-}(typeof self !== 'undefined' ? self : this, function () {
-
-  // Main function to remove scrollbar and adjust elements
-  function unscroll(elements) {
-
-    // Store reusable vars
-    this.set = function (id, value) {
-      if (!window.unscrollStore) {
-        window.unscrollStore = {};
-      }
-      window.unscrollStore[id] = value;
-    };
-
-    // Get reusable vars
-    this.get = function (id) {
-      return window.unscrollStore ? window.unscrollStore[id] : null;
-    };
-
-    // Get the width of the scroll bar in pixel
-    this.getScrollbarWidth = function () {
-      if (this.get('scrollbarWidth')) {
-        return this.get('scrollbarWidth') + 'px';
-      }
-      var scrollElement = document.createElement('div');
-      scrollElement.style.width = '100px';
-      scrollElement.style.height = '100px';
-      scrollElement.style.overflow = 'scroll';
-      scrollElement.style.position = 'absolute';
-      scrollElement.style.top = '-10000';
-
-      document.body.appendChild(scrollElement);
-      var scrollbarWidth = scrollElement.offsetWidth - scrollElement.clientWidth;
-      document.body.removeChild(scrollElement);
-
-      this.set('scrollbarWidth', scrollbarWidth);
-      return scrollbarWidth + 'px';
-    }
-
-    // Add unscroll class to head
-    function addUnscrollClassName() {
-      if (document.getElementById('unscroll-class-name')) {
-        return;
-      }
-      var css = '.unscrollable { overflow-y: hidden !important; }',
-        head = document.head || document.getElementsByTagName('head')[0],
-        style = document.createElement('style');
-      style.type = 'text/css';
-      style.setAttribute('id', 'unscroll-class-name');
-      style.appendChild(document.createTextNode(css));
-      head.appendChild(style);
-    }
-
-    // Get the elements to adjust, force body element
-    this.getElementsToAdjust = function (elements) {
-      !elements && (elements = []);
-      
-      if (typeof elements === 'string') {
-        elements = [
-          [elements, 'padding-right']
-        ];
-      }
-
-      elements.forEach(function (element, index) {
-        if (typeof element === 'string') {
-          elements[index] = [element, 'padding-right'];
-        }
-      });
-
-      var bodyFound = false;
-      for (var i = 0; i < elements.length; i++) {
-        if (elements[i][0].indexOf('body') !== -1) {
-          bodyFound = true;
-        }
-      };
-
-      if (bodyFound === false) {
-        elements.push(['body', 'padding-right']);
-      }
-
-      return elements;
-    }
-
-    this.pageHasScrollbar = function () {
-      return this.getScrollbarWidth() && document.body.offsetHeight > window.innerHeight;
-    }
-
-    // Clean up elements
-    if (this.pageHasScrollbar()) {
-      elements = this.getElementsToAdjust(elements);
-
-      // Loop through elements and adjust accordingly
-      for (var i = 0; i < elements.length; i++) {
-        var elementsDOM = document.querySelectorAll(elements[i][0]);
-        for (var j = 0; j < elementsDOM.length; j++) {
-          if (elementsDOM[j].getAttribute('data-unscroll')) {
-            return;
-          }
-          var attribute = elements[i][1];
-          var computedStyles = window.getComputedStyle(elementsDOM[j]);
-          var computedStyle = computedStyles.getPropertyValue(attribute);
-          elementsDOM[j].setAttribute('data-unscroll', attribute);
-          if (!computedStyle) {
-            computedStyle = '0px';
-          }
-          var operator = attribute == 'padding-right' || attribute == 'right' ? '+' : '-';
-          elementsDOM[j].style[attribute] = 'calc(' + computedStyle + ' ' + operator + ' ' + this.getScrollbarWidth() + ')';
-        }
-      }
-    }
-
-    // Make the page unscrollable
-    addUnscrollClassName();
-    document.body.classList.add('unscrollable');
-  }
-
-  // Reset elements and make page scrollable again
-  unscroll.reset = function () {
-    var elements = document.querySelectorAll('[data-unscroll]');
-
-    for (var i = 0; i < elements.length; i++) {
-      var attribute = elements[i].getAttribute('data-unscroll');
-      elements[i].style[attribute] = null;
-      elements[i].removeAttribute('data-unscroll');
-    }
-    document.body.classList.remove('unscrollable');
-  }
-
-  return unscroll;
-}));
 /**
  * jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more.
  *
@@ -150,37 +12,8 @@
  * Demos: https://stephanwagner.me/jBox/demos
  */
 
+function jBoxWrapper(jQuery) {
 
-// AMD and CommonJS support: https://github.com/umdjs/umd
-
-(function (root, factory) {
-
-  // AMD support
-
-  if (typeof define === 'function' && define.amd) {
-
-    define(['jquery'], function(jQuery) {
-      return (root.jBox = factory(jQuery));
-    });
-
-  // CommonJS support
-
-  } else if (typeof module === 'object' && module.exports) {
-
-    module.exports = (root.jBox = factory(require('jquery')));
-
-  // Browser
-
-  } else {
-
-    root.jBox = factory(root.jQuery);
-
-  }
-
-}(this, function (jQuery) {
-
-
-  // The actual jBox plugin starts here
 
   var jBox = function jBox(type, options) {
 
@@ -1612,6 +1445,133 @@
   };
 
 
+  // Block scrolling
+  // Borrowed from https://github.com/StephanWagner/unscroll
+
+  jBox.prototype.unscroll = function (elements) {
+
+    // Store reusable vars
+    this.set = function (id, value) {
+      if (!window.unscrollStore) {
+        window.unscrollStore = {};
+      }
+      window.unscrollStore[id] = value;
+    };
+
+    // Get reusable vars
+    this.get = function (id) {
+      return window.unscrollStore ? window.unscrollStore[id] : null;
+    };
+
+    // Get the width of the scroll bar in pixel
+    this.getScrollbarWidth = function () {
+      if (this.get('scrollbarWidth')) {
+        return this.get('scrollbarWidth') + 'px';
+      }
+      var scrollElement = document.createElement('div');
+      scrollElement.style.width = '100px';
+      scrollElement.style.height = '100px';
+      scrollElement.style.overflow = 'scroll';
+      scrollElement.style.position = 'absolute';
+      scrollElement.style.top = '-10000';
+
+      document.body.appendChild(scrollElement);
+      var scrollbarWidth = scrollElement.offsetWidth - scrollElement.clientWidth;
+      document.body.removeChild(scrollElement);
+
+      this.set('scrollbarWidth', scrollbarWidth);
+      return scrollbarWidth + 'px';
+    }
+
+    // Add unscroll class to head
+    function addUnscrollClassName() {
+      if (document.getElementById('unscroll-class-name')) {
+        return;
+      }
+      var css = '.unscrollable { overflow: hidden !important; }',
+        head = document.head || document.getElementsByTagName('head')[0],
+        style = document.createElement('style');
+      style.type = 'text/css';
+      style.setAttribute('id', 'unscroll-class-name');
+      style.appendChild(document.createTextNode(css));
+      head.appendChild(style);
+    }
+
+    // Get the elements to adjust, force body element
+    this.getElementsToAdjust = function (elements) {
+      !elements && (elements = []);
+
+      if (typeof elements === 'string') {
+        elements = [
+          [elements, 'padding-right']
+        ];
+      }
+
+      elements.forEach(function (element, index) {
+        if (typeof element === 'string') {
+          elements[index] = [element, 'padding-right'];
+        }
+      });
+
+      var bodyFound = false;
+      for (var i = 0; i < elements.length; i++) {
+        if (elements[i][0].indexOf('body') !== -1) {
+          bodyFound = true;
+        }
+      };
+
+      if (bodyFound === false) {
+        elements.push(['body', 'padding-right']);
+      }
+
+      return elements;
+    }
+
+    this.pageHasScrollbar = function () {
+      return this.getScrollbarWidth() && document.body.offsetHeight > window.innerHeight;
+    }
+
+    // Clean up elements
+    if (this.pageHasScrollbar()) {
+      elements = this.getElementsToAdjust(elements);
+
+      // Loop through elements and adjust accordingly
+      for (var i = 0; i < elements.length; i++) {
+        var elementsDOM = document.querySelectorAll(elements[i][0]);
+        for (var j = 0; j < elementsDOM.length; j++) {
+          if (elementsDOM[j].getAttribute('data-unscroll')) {
+            return;
+          }
+          var attribute = elements[i][1];
+          var computedStyles = window.getComputedStyle(elementsDOM[j]);
+          var computedStyle = computedStyles.getPropertyValue(attribute);
+          elementsDOM[j].setAttribute('data-unscroll', attribute);
+          if (!computedStyle) {
+            computedStyle = '0px';
+          }
+          var operator = attribute == 'padding-right' || attribute == 'right' ? '+' : '-';
+          elementsDOM[j].style[attribute] = 'calc(' + computedStyle + ' ' + operator + ' ' + this.getScrollbarWidth() + ')';
+        }
+      }
+    }
+
+    // Make the page unscrollable
+    addUnscrollClassName();
+    document.body.classList.add('unscrollable');
+  }
+
+  jBox.prototype.unscroll.reset = function () {
+    var elements = document.querySelectorAll('[data-unscroll]');
+
+    for (var i = 0; i < elements.length; i++) {
+      var attribute = elements[i].getAttribute('data-unscroll');
+      elements[i].style[attribute] = null;
+      elements[i].removeAttribute('data-unscroll');
+    }
+    document.body.classList.remove('unscrollable');
+  }
+
+
   // Open jBox
 
   jBox.prototype.open = function (options)
@@ -1709,7 +1669,7 @@
               jBox.blockScrollScopes++;
             } else {
               jBox.blockScrollScopes = 1;
-              unscroll(Array.isArray(this.options.blockScrollAdjust) || typeof this.options.blockScrollAdjust === 'string' ? this.options.blockScrollAdjust : null);
+              this.unscroll(Array.isArray(this.options.blockScrollAdjust) || typeof this.options.blockScrollAdjust === 'string' ? this.options.blockScrollAdjust : null);
             }
           } else {
             jQuery('body').addClass('jBox-blockScroll-' + this.id);
@@ -1807,7 +1767,7 @@
         if (this.options.blockScroll) {
           if (this.options.blockScrollAdjust) {
             jBox.blockScrollScopes = jBox.blockScrollScopes ? --jBox.blockScrollScopes : 0;
-            !jBox.blockScrollScopes && unscroll.reset();
+            !jBox.blockScrollScopes && this.unscroll.reset();
           } else {
             jQuery('body').removeClass('jBox-blockScroll-' + this.id);
           }
@@ -2172,8 +2132,7 @@
 
   // Make jBox usable with jQuery selectors
 
-  jQuery.fn.jBox = function (type, options)
-  {
+  jQuery.fn.jBox = function (type, options) {
     // Variables type and object are required
     !type && (type = {});
     !options && (options = {});
@@ -2185,7 +2144,8 @@
   };
 
   return jBox;
-}));
+
+};
 
 /**
  * jBox Confirm plugin: Add a confirm dialog to links, buttons, etc.
@@ -2197,7 +2157,7 @@
  * Requires: jBox (https://cdn.jsdelivr.net/gh/StephanWagner/jBox@latest/dist/jBox.min.js)
  */
 
-jQuery(document).ready(function () {
+function jBoxConfirmWrapper(jBox, jQuery) {
 
   new jBox.plugin('Confirm', {
 
@@ -2262,7 +2222,7 @@ jQuery(document).ready(function () {
 
   });
 
-});
+};
 
 /**
  * jBox Image plugin: Adds a lightbox to your images
@@ -2274,7 +2234,7 @@ jQuery(document).ready(function () {
  * Requires: jBox (https://cdn.jsdelivr.net/gh/StephanWagner/jBox@latest/dist/jBox.min.js)
  */
 
-jQuery(document).ready(function () {
+function jBoxImageWrapper(jBox, jQuery) {
 
   new jBox.plugin('Image', {
 
@@ -2581,7 +2541,7 @@ jQuery(document).ready(function () {
 
   });
 
-});
+};
 
 /**
  * jBox Notice plugin: Opens a popup notice
@@ -2593,7 +2553,7 @@ jQuery(document).ready(function () {
  * Requires: jBox (https://cdn.jsdelivr.net/gh/StephanWagner/jBox@latest/dist/jBox.min.js)
  */
 
-jQuery(document).ready(function () {
+function jBoxNoticeWrapper(jBox, jQuery) {
 
   new jBox.plugin('Notice', {
 
@@ -2753,6 +2713,26 @@ jQuery(document).ready(function () {
 
   });
 
-});
+};
+
+(function (root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery'], function (jQuery) {
+      return (root.jBox = factory(jQuery));
+    });
+  } else if (typeof module === 'object' && module.exports) {
+    module.exports = (root.jBox = factory(require('jquery')));
+  } else {
+    root.jBox = factory(root.jQuery);
+  }
+}(this, function (jQuery) {
+  var jBox = jBoxWrapper(jQuery);
+  try {
+    jBoxConfirmWrapper && jBoxConfirmWrapper(jBox, jQuery);
+    jBoxImageWrapper && jBoxImageWrapper(jBox, jQuery);
+    jBoxNoticeWrapper && jBoxNoticeWrapper(jBox, jQuery);
+  } catch(e) { console.error(e); }
+  return jBox;
+}));
 
 //# sourceMappingURL=jBox.all.js.map
