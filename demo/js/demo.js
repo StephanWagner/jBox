@@ -191,7 +191,7 @@ $(document).ready(function () {
       color: getColor(),
       content: 'Oooh! They also come in colors',
       delayOnHover: true,
-      showCountdown: true,
+      showCountdown: true
     });
   });
 
