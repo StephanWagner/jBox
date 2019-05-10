@@ -1,5 +1,3 @@
-'use strict';
-
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var cleanCSS = require('gulp-clean-css');
@@ -27,18 +25,15 @@ var themes = [
 ];
 
 // CSS
-var styles = [
-  {
-    name: 'jBox',
-    src: ['./src/scss/jBox.scss'],
-    dest: './dist/'
-  },
-  {
-    name: 'jBox.all',
-    src: ['./src/scss/**/*.scss'],
-    dest: './dist/'
-  }
-];
+var styles = [{
+  name: 'jBox',
+  src: ['./src/scss/jBox.scss'],
+  dest: './dist/'
+}, {
+  name: 'jBox.all',
+  src: ['./src/scss/**/*.scss'],
+  dest: './dist/'
+}];
 
 for (let plugin of plugins) {
   styles.push({
@@ -57,25 +52,22 @@ for (let theme of themes) {
 }
 
 // JavaScript
-var scripts = [
-  {
-    name: 'jBox',
-    src: [
-      './src/js/jBox.js',
-      './src/js/umd.js'
-    ],
-    dest: './dist/'
-  },
-  {
-    name: 'jBox.all',
-    src: [
-      './src/js/jBox.js',
-      './src/js/plugins/*.js',
-      './src/js/umd.js'
-    ],
-    dest: './dist/'
-  }
-];
+var scripts = [{
+  name: 'jBox',
+  src: [
+    './src/js/jBox.js',
+    './src/js/umd.js'
+  ],
+  dest: './dist/'
+}, {
+  name: 'jBox.all',
+  src: [
+    './src/js/jBox.js',
+    './src/js/plugins/*.js',
+    './src/js/umd.js'
+  ],
+  dest: './dist/'
+}];
 
 for (let plugin of plugins) {
   scripts.push({
@@ -94,11 +86,13 @@ let watchTasks = [];
 for (const item of styles) {
 
   // Concat CSS
-  const cssConcat = function() {
+  const cssConcat = function () {
     return gulp
       .src(item.src)
       .pipe(sourcemaps.init())
-      .pipe(sass({outputStyle: 'expanded'}).on('error', sass.logError))
+      .pipe(sass({
+        outputStyle: 'expanded'
+      }).on('error', sass.logError))
       .pipe(concat(item.name + '.css'))
       .pipe(sourcemaps.write('./'))
       .pipe(gulp.dest(item.dest));
@@ -117,7 +111,7 @@ for (const item of styles) {
   });
 
   // Build CSS
-  const cssBuild = function() {
+  const cssBuild = function () {
     return gulp
       .src(item.dest + item.name + '.css')
       .pipe(rename(item.name + '.min.css'))
@@ -136,7 +130,7 @@ for (const item of styles) {
 for (let item of scripts) {
 
   // Concat JavaScript
-  const jsConcat = function() {
+  const jsConcat = function () {
     return gulp
       .src(item.src)
       .pipe(sourcemaps.init())
@@ -158,7 +152,7 @@ for (let item of scripts) {
   });
 
   // Build JavaScript
-  const jsBuild = function() {
+  const jsBuild = function () {
     return gulp
       .src(item.dest + item.name + '.js')
       .pipe(rename(item.name + '.min.js'))
