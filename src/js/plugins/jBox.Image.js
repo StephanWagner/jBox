@@ -8,7 +8,7 @@
  * Requires: jBox (https://cdn.jsdelivr.net/gh/StephanWagner/jBox@latest/dist/jBox.min.js)
  */
 
-jQuery(document).ready(function () {
+function jBoxImageWrapper(jBox, jQuery) {
 
   new jBox.plugin('Image', {
 
@@ -315,4 +315,4 @@ jQuery(document).ready(function () {
 
   });
 
-});
+};
