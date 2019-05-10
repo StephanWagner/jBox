@@ -19,10 +19,10 @@ var plugins = [
 var themes = [
   'NoticeFancy',
   'TooltipBorder',
-  'TooltipBorderThick', 
-  'TooltipDark', 
-  'TooltipError', 
-  'TooltipSmall', 
+  'TooltipBorderThick',
+  'TooltipDark',
+  'TooltipError',
+  'TooltipSmall',
   'TooltipSmallGray'
 ];
 
@@ -61,17 +61,17 @@ var scripts = [
   {
     name: 'jBox',
     src: [
-      './node_modules/unscroll/unscroll.js',
-      './src/js/jBox.js'
+      './src/js/jBox.js',
+      './src/js/umd.js'
     ],
     dest: './dist/'
   },
   {
     name: 'jBox.all',
     src: [
-      './node_modules/unscroll/unscroll.js',
       './src/js/jBox.js',
       './src/js/plugins/*.js',
+      './src/js/umd.js'
     ],
     dest: './dist/'
   }
@@ -127,7 +127,7 @@ for (const item of styles) {
 
   // Store as a task
   gulp.task('cssBuild-' + item.name, cssBuild);
-  
+
   // Add to build tasks
   buildTasks.push('cssBuild-' + item.name);
 }
@@ -168,7 +168,7 @@ for (let item of scripts) {
 
   // Store as a task
   gulp.task('jsBuild-' + item.name, jsBuild);
-  
+
   // Add to build tasks
   buildTasks.push('jsBuild-' + item.name);
 }
