@@ -1,6 +1,6 @@
 {
   "name": "jbox",
-  "version": "0.8.1",
+  "version": "1.0.0",
   "description": "jBox is a jQuery plugin that makes it easy to create customizable tooltips, modal windows, image galleries and more.",
   "keywords": [
     "jquery-plugin",
