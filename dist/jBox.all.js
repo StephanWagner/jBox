@@ -2728,9 +2728,9 @@ function jBoxNoticeWrapper(jBox, jQuery) {
 }(this, function (jQuery) {
   var jBox = jBoxWrapper(jQuery);
   try {
-    jBoxConfirmWrapper && jBoxConfirmWrapper(jBox, jQuery);
-    jBoxImageWrapper && jBoxImageWrapper(jBox, jQuery);
-    jBoxNoticeWrapper && jBoxNoticeWrapper(jBox, jQuery);
+    window.jBoxConfirmWrapper && window.jBoxConfirmWrapper(jBox, jQuery);
+    window.jBoxImageWrapper && window.jBoxImageWrapper(jBox, jQuery);
+    window.jBoxNoticeWrapper && window.jBoxNoticeWrapper(jBox, jQuery);
   } catch(e) { console.error(e); }
   return jBox;
 }));
