@@ -16,10 +16,14 @@
 }
 
 .jBox-content {
-  padding: 8px 10px;
+  padding: 8px 12px;
   overflow-x: hidden;
   overflow-y: auto;
   transition: opacity .2s;
+}
+
+.jBox-footer {
+  box-sizing: border-box;
 }
 
 .jBox-Tooltip .jBox-container,
@@ -46,6 +50,7 @@
 .jBox-pointer {
   position: absolute;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .jBox-pointer:after {
@@ -55,6 +60,7 @@
   position: absolute;
   background: #fff;
   transform: rotate(45deg);
+  box-sizing: border-box;
 }
 
 .jBox-pointer-top {
@@ -138,6 +144,7 @@
   z-index: 1;
   cursor: pointer;
   position: absolute;
+  box-sizing: border-box;
 }
 
 .jBox-closeButton svg {
@@ -189,6 +196,10 @@
   height: 12px;
   margin-top: -6px;
   margin-right: -6px;
+}
+
+.jBox-closeButton-box {
+  box-sizing: border-box;
 }
 
 .jBox-closeButton-box .jBox-closeButton {
@@ -941,8 +952,7 @@ body[class*=" jBox-blockScroll-"] {
 
 .jBox-NoticeFancy.jBox-Notice-color .jBox-container {
   color: #fff;
-  background: #222;
-  text-shadow: 0 -1px 0 #000;
+  background: #000;
 }
 
 .jBox-NoticeFancy.jBox-Notice-color .jBox-container:after {
@@ -988,16 +998,31 @@ body[class*=" jBox-blockScroll-"] {
   border: 2px solid #49d;
 }
 
+.jBox-TooltipBorder .jBox-pointer:after {
+  width: 22px;
+  height: 22px;
+}
+
 .jBox-TooltipBorder .jBox-pointer-top,
 .jBox-TooltipBorder .jBox-pointer-bottom {
   width: 34px;
   height: 13px;
 }
 
+.jBox-TooltipBorder .jBox-pointer-top:after,
+.jBox-TooltipBorder .jBox-pointer-bottom:after {
+  left: 6px;
+}
+
 .jBox-TooltipBorder .jBox-pointer-left,
 .jBox-TooltipBorder .jBox-pointer-right {
   width: 13px;
   height: 34px;
+}
+
+.jBox-TooltipBorder .jBox-pointer-left:after,
+.jBox-TooltipBorder .jBox-pointer-right:after {
+  top: 6px;
 }
 
 .jBox-TooltipBorder.jBox-closeButton-box:before {
@@ -1015,6 +1040,8 @@ body[class*=" jBox-blockScroll-"] {
 .jBox-TooltipBorderThick .jBox-pointer:after {
   box-shadow: none;
   border: 4px solid #ccc;
+  width: 24px;
+  height: 24px;
 }
 
 .jBox-TooltipBorderThick .jBox-pointer-top,

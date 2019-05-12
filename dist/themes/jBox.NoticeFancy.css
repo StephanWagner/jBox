@@ -5,8 +5,7 @@
 
 .jBox-NoticeFancy.jBox-Notice-color .jBox-container {
   color: #fff;
-  background: #222;
-  text-shadow: 0 -1px 0 #000;
+  background: #000;
 }
 
 .jBox-NoticeFancy.jBox-Notice-color .jBox-container:after {

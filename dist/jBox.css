@@ -16,10 +16,14 @@
 }
 
 .jBox-content {
-  padding: 8px 10px;
+  padding: 8px 12px;
   overflow-x: hidden;
   overflow-y: auto;
   transition: opacity .2s;
+}
+
+.jBox-footer {
+  box-sizing: border-box;
 }
 
 .jBox-Tooltip .jBox-container,
@@ -46,6 +50,7 @@
 .jBox-pointer {
   position: absolute;
   overflow: hidden;
+  box-sizing: border-box;
 }
 
 .jBox-pointer:after {
@@ -55,6 +60,7 @@
   position: absolute;
   background: #fff;
   transform: rotate(45deg);
+  box-sizing: border-box;
 }
 
 .jBox-pointer-top {
@@ -138,6 +144,7 @@
   z-index: 1;
   cursor: pointer;
   position: absolute;
+  box-sizing: border-box;
 }
 
 .jBox-closeButton svg {
@@ -189,6 +196,10 @@
   height: 12px;
   margin-top: -6px;
   margin-right: -6px;
+}
+
+.jBox-closeButton-box {
+  box-sizing: border-box;
 }
 
 .jBox-closeButton-box .jBox-closeButton {
