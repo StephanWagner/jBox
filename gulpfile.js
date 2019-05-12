@@ -31,7 +31,11 @@ var styles = [{
   dest: './dist/'
 }, {
   name: 'jBox.all',
-  src: ['./src/scss/**/*.scss'],
+  src: [
+    './src/scss/jBox.scss',
+    './src/scss/plugins/*.scss',
+    './src/scss/themes/*.scss'
+  ],
   dest: './dist/'
 }];
 
