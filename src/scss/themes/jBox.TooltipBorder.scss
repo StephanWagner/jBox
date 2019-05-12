@@ -6,16 +6,29 @@
     border: 2px solid #49d;
   }
 
+  .jBox-pointer:after {
+    width: 22px;
+    height: 22px;
+  }
+
   .jBox-pointer-top,
   .jBox-pointer-bottom {
     width: 34px;
     height: 13px;
+
+    &:after {
+      left: 6px;
+    }
   }
 
   .jBox-pointer-left,
   .jBox-pointer-right {
     width: 13px;
     height: 34px;
+
+    &:after {
+      top: 6px;
+    }
   }
 
   &.jBox-closeButton-box:before {
