@@ -2159,9 +2159,9 @@ function jBoxWrapper(jQuery) {
   }
 }(this, function (jQuery) {
   var jBox = jBoxWrapper(jQuery);
-  try { jBoxConfirmWrapper && jBoxConfirmWrapper(jBox, jQuery); } catch(e) { console.error(e); }
-  try { jBoxImageWrapper && jBoxImageWrapper(jBox, jQuery); } catch(e) { console.error(e); }
-  try { jBoxNoticeWrapper && jBoxNoticeWrapper(jBox, jQuery); } catch(e) { console.error(e); }
+  try { typeof jBoxConfirmWrapper !== 'undefined' && jBoxConfirmWrapper && jBoxConfirmWrapper(jBox, jQuery); } catch(e) { console.error(e); }
+  try { typeof jBoxImageWrapper !== 'undefined' && jBoxImageWrapper && jBoxImageWrapper(jBox, jQuery); } catch(e) { console.error(e); }
+  try { typeof jBoxNoticeWrapper !== 'undefined' && jBoxNoticeWrapper && jBoxNoticeWrapper(jBox, jQuery); } catch(e) { console.error(e); }
   return jBox;
 }));
 
