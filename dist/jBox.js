@@ -1057,8 +1057,17 @@ function jBoxWrapper(jQuery) {
 
     // Set the new content
     switch (jQuery.type(content)) {
-      case 'string': this.content.html(content); break;
-      case 'object': this.content.html(''); content.attr('data-jbox-content-appended', 1).appendTo(this.content).css({display: 'block'}); break;
+      case 'string':
+        this.content.html(content);
+        break;
+      case 'object':
+        if (content instanceof jQuery) {
+          this.content.html('');
+          content.attr('data-jbox-content-appended', 1).appendTo(this.content).css({display: 'block'});
+        } else {
+          this.content.html(JSON.stringify(content));
+        }
+        break;
      }
 
     // Adjust title width
@@ -1994,7 +2003,10 @@ function jBoxWrapper(jQuery) {
   // Abort an ajax call
 
   jBox.prototype.cancelAjax = function () {
-    this.ajaxRequest && this.ajaxRequest.abort();
+    if (this.ajaxRequest) {
+      this.ajaxRequest.abort();
+      this.ajaxLoaded = false;
+    }
   };
 
 
