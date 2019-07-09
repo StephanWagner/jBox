@@ -42,7 +42,10 @@ function jBoxConfirmWrapper(jBox, jQuery) {
     {
       // Extract the href or the onclick event if no submit event is passed
       if (!this.options.confirm) {
-        var submit = el.attr('onclick') ? el.attr('onclick') : (el.attr('href') ? (el.attr('target') ? 'window.open("' + el.attr('href') + '", "' + el.attr('target') + '");'  : 'window.location.href = "' + el.attr('href') + '";') : '');
+        var submit = el.attr('onclick') ? el.attr('onclick') : (
+          el.attr('href') ? (
+            el.attr('target') ? 'window.open("' + el.attr('href') + '", "' + el.attr('target') + '");'  : 'window.location.href = "' + el.attr('href') + '";'
+          ) : '');
         el.prop('onclick', null).data('jBox-Confirm-submit', submit);
       }
     },
@@ -57,8 +60,19 @@ function jBoxConfirmWrapper(jBox, jQuery) {
 
       // Add a footer to the jBox container
       this.footer = jQuery('<div class="jBox-Confirm-footer"/>');
-      jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-cancel"/>').html(this.options.cancelButton).click(function () { this.options.cancel && this.options.cancel(); this.close(); }.bind(this)).appendTo(this.footer);
-      this.submitButton = jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-submit"/>').html(this.options.confirmButton).appendTo(this.footer);
+
+      jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-cancel"/>')
+        .html(this.options.cancelButton)
+        .click(function () {
+          this.options.cancel && this.options.cancel(this.source);
+          this.close();
+        }.bind(this))
+        .appendTo(this.footer);
+
+      this.submitButton = jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-submit"/>')
+        .html(this.options.confirmButton)
+        .appendTo(this.footer);
+
       this.footer.appendTo(this.container);
     },
 
@@ -68,7 +82,12 @@ function jBoxConfirmWrapper(jBox, jQuery) {
     _onOpen: function ()
     {
       // Set the new action for the submit button
-      this.submitButton.off('click.jBox-Confirm' + this.id).on('click.jBox-Confirm' + this.id, function () { this.options.confirm ? this.options.confirm() : eval(this.source.data('jBox-Confirm-submit')); this.options.closeOnConfirm && this.close(); }.bind(this));
+      this.submitButton
+        .off('click.jBox-Confirm' + this.id)
+        .on('click.jBox-Confirm' + this.id, function () {
+          this.options.confirm ? this.options.confirm(this.source) : eval(this.source.data('jBox-Confirm-submit'));
+          this.options.closeOnConfirm && this.close();
+        }.bind(this));
     }
 
   });
