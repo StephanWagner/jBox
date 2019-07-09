@@ -64,7 +64,7 @@ function jBoxConfirmWrapper(jBox, jQuery) {
       jQuery('<div class="jBox-Confirm-button jBox-Confirm-button-cancel"/>')
         .html(this.options.cancelButton)
         .click(function () {
-          this.options.cancel && this.options.cancel();
+          this.options.cancel && this.options.cancel(this.source);
           this.close();
         }.bind(this))
         .appendTo(this.footer);
@@ -85,7 +85,7 @@ function jBoxConfirmWrapper(jBox, jQuery) {
       this.submitButton
         .off('click.jBox-Confirm' + this.id)
         .on('click.jBox-Confirm' + this.id, function () {
-          this.options.confirm ? this.options.confirm() : eval(this.source.data('jBox-Confirm-submit'));
+          this.options.confirm ? this.options.confirm(this.source) : eval(this.source.data('jBox-Confirm-submit'));
           this.options.closeOnConfirm && this.close();
         }.bind(this));
     }
