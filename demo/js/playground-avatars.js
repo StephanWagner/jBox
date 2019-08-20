@@ -1,6 +1,4 @@
-
-/* Playground Demo: Avatars */
-
+// Playground Demo: Avatars
 
 // All data we are using for this demo we will store in the variable DemoAvatars
 
@@ -9,20 +7,18 @@ var DemoAvatars = {
   Modals: {}
 };
 
-
 // All the magic happens in the function generateAvatarJBox
 
-function generateAvatarJBox(initial)
-{
+function generateAvatarJBox(initial) {
   // We only need to initialize the tooltips for the avatar collection once
   // We can later refer to this jBox instance with DemoAvatars.AvatarsTooltip
 
   !DemoAvatars.AvatarsTooltip && (DemoAvatars.AvatarsTooltip = new jBox('Tooltip', {
-    theme: 'TooltipBorder',             // We are using the border theme...
-    addClass: 'AvatarsTooltip',         // ...and add a class so we can adjust the theme with CSS
-    attach: '[data-avatar-tooltip]',    // We attach the tooltip to the elements with the attribute data-avatar-tooltip...
-    getContent: 'data-avatar-tooltip',  // ... and also get the content from the same attribute
-    zIndex: 12000,                      // These tooltips have the highest z-index
+    theme: 'TooltipBorder', // We are using the border theme...
+    addClass: 'AvatarsTooltip', // ...and add a class so we can adjust the theme with CSS
+    attach: '[data-avatar-tooltip]', // We attach the tooltip to the elements with the attribute data-avatar-tooltip...
+    getContent: 'data-avatar-tooltip', // ... and also get the content from the same attribute
+    zIndex: 12000, // These tooltips have the highest z-index
     animation: 'move',
 
     // Adding the liked or disliked class depending on the container the avatar is in
@@ -31,7 +27,6 @@ function generateAvatarJBox(initial)
     }
   }));
 
-
   // When we are creating the initial jBox, reset global variables
 
   if (initial) {
@@ -39,11 +34,9 @@ function generateAvatarJBox(initial)
     DemoAvatars.current = -1;
   }
 
-
   // Increase current avatar index
 
   DemoAvatars.current++;
-
 
   // When we looped through all the avatars, show a jBox Modal with a hint that there are no more avatars nearby
 
@@ -84,7 +77,6 @@ function generateAvatarJBox(initial)
     return null;
   }
 
-
   // We are creating a new jBox Modal with the avatars each time this function gets called
 
   var jBoxAvatar = new jBox('Modal', {
@@ -104,10 +96,10 @@ function generateAvatarJBox(initial)
 
     // We are setting these options differently for the initial and the following jBoxes
     id: initial ? 'AvatarsInitial' : 'AvatarsModal' + DemoAvatars.current,
-    overlay: initial ? true : false,            // Only one overlay is needed
-    blockScroll: initial ? true : false,        // The initial jBox will block scrolling, no need for the others to o the same
-    closeButton: initial ? 'overlay' : false,   // The initial jBox will have the close button in the overlay, the others won't need one
-    closeOnEsc: initial ? true : false,         // Only the inital jBox can be closed with [ESC] button
+    overlay: initial ? true : false, // Only one overlay is needed
+    blockScroll: initial ? true : false, // The initial jBox will block scrolling, no need for the others to o the same
+    closeButton: initial ? 'overlay' : false, // The initial jBox will have the close button in the overlay, the others won't need one
+    closeOnEsc: initial ? true : false, // Only the inital jBox can be closed with [ESC] button
 
     // Placing the buttons in the footer area
     footer: '<button class="button-cross cross"></button><button class="button-heart heart"></button>',
@@ -185,7 +177,9 @@ function generateAvatarJBox(initial)
 
       // Set title and content depending on current index
       this.setTitle(DemoAvatars.Avatars[DemoAvatars.current]);
-      this.content.css({backgroundImage: 'url(https://stephanwagner.me/img/jBox/avatar/' + DemoAvatars.Avatars[DemoAvatars.current] + '.svg)'});
+      this.content.css({
+        backgroundImage: 'url(https://stephanwagner.me/img/jBox/avatar/' + DemoAvatars.Avatars[DemoAvatars.current] + '.svg)'
+      });
 
       // If it's the inital jBox, show the tooltips after a short delay
       initial && setTimeout(function () {
@@ -222,8 +216,7 @@ function generateAvatarJBox(initial)
   });
 
   // If it's the inital jBox add onClose events
-  initial && (jBoxAvatar.options.onClose = function ()
-  {
+  initial && (jBoxAvatar.options.onClose = function () {
     // Loop through all avatar jBoxes and close them if they are not removed yet
     $.each(DemoAvatars.Modals, function (index, jBox) {
       jBox.id != 'AvatarsInitial' && !jBox.AvatarRemoved && jBox.close();
@@ -245,8 +238,7 @@ function generateAvatarJBox(initial)
   });
 
   // If it's the inital jBox add onCloseComplete events
-  initial && (jBoxAvatar.options.onCloseComplete = function ()
-  {
+  initial && (jBoxAvatar.options.onCloseComplete = function () {
     // Loop through all modal jBoxes and remove them from DOM
     $.each(DemoAvatars.Modals, function (index, jBox) {
       jBox.destroy();
@@ -262,11 +254,12 @@ function generateAvatarJBox(initial)
   DemoAvatars.Modals[jBoxAvatar.id] = jBoxAvatar;
 }
 
-
 // On domready, add the click event to the button
 
-$(document).ready(function() {
+$(document).ready(function () {
 
-  $('#DemoAvatars').click(function () { generateAvatarJBox(true); });
+  $('#DemoAvatars').click(function () {
+    generateAvatarJBox(true);
+  });
 
 });
