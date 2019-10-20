@@ -1431,7 +1431,7 @@ function jBoxWrapper(jQuery) {
 
           // Add overlapping space on left or top window edge
           if (outMove == this._getOpp(this._getTL(outMove)) && pos[this._getTL(outMove)] - spaceDiff < windowDimensions[this._getTL(outMove)] + options.adjustDistance[this._getTL(outMove)]) {
-            spaceDiff -= windowDimensions[this._getTL(outMove)] + options.adjustDistance[this._getTL(outMove)] - (this.pos[this._getTL(outMove)] - spaceDiff);
+            spaceDiff -= windowDimensions[this._getTL(outMove)] + options.adjustDistance[this._getTL(outMove)] - (pos[this._getTL(outMove)] - spaceDiff);
           }
 
           // Only adjust the maximum availible
