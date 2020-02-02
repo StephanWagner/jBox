@@ -1099,6 +1099,9 @@ function jBoxWrapper(jQuery) {
     // Adjust title width
     type == 'width' && this._setTitleWidth();
 
+    // Update options
+    this.options[type] = value;
+
     // Reposition by default
     (pos == undefined || pos) && this.position();
   };
