@@ -1889,7 +1889,14 @@ function jBoxWrapper(jQuery) {
   jBox.prototype.hide = function ()
   {
     this.disable();
-    this.wrapper && this.wrapper.css({display: 'none'});
+    if (this.wrapper) {
+      this.cacheWrapperDisplay = this.wrapper.css('display');
+      this.wrapper.css({display: 'none'});
+    }
+    if (this.overlay) {
+      this.cacheOverlayDisplay = this.overlay.css('display');
+      this.overlay.css({display: 'none'});
+    }
     return this;
   };
 
@@ -1899,7 +1906,14 @@ function jBoxWrapper(jQuery) {
   jBox.prototype.show = function ()
   {
     this.enable();
-    this.wrapper && this.wrapper.css({display: 'block'});
+    if (this.wrapper && this.cacheWrapperDisplay) {
+      this.wrapper.css({display: this.cacheWrapperDisplay});
+      this.cacheWrapperDisplay = null;
+    }
+    if (this.overlay && this.cacheOverlayDisplay) {
+      this.overlay.css({display: this.cacheOverlayDisplay});
+      this.cacheOverlayDisplay = null;
+    }
     return this;
   };
 
