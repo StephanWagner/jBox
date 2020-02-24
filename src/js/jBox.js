@@ -1061,7 +1061,7 @@ function jBoxWrapper(jQuery) {
         this.content.html(content);
         break;
       case 'object':
-        if (content instanceof jQuery) {
+        if (content && (content instanceof jQuery || content.constructor.prototype.jquery)) {
           this.content.html('');
           content.attr('data-jbox-content-appended', 1).appendTo(this.content).css({display: 'block'});
         } else {
