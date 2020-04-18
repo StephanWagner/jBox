@@ -60,7 +60,9 @@ function jBoxImageWrapper(jBox, jQuery) {
         item = jQuery(item);
 
         // Abort if the item was added to a gallery already
-        if (item.data('jBox-image-gallery')) return;
+        if (item.data('jBox-image-gallery')) {
+          return;
+        }
 
         // Get the image src
         var src = item.attr(this.options.src);
@@ -110,6 +112,16 @@ function jBoxImageWrapper(jBox, jQuery) {
           opacity: (instant ? 1 : 0),
           zIndex: (show ? this.imageZIndex++ : 0)
         }).appendTo(this.content);
+
+        // Add swipe events
+        this.swipeDetector(image)
+          .on("swipeLeft.sd swipeRight.sd", function (event) {
+            if (event.type === "swipeLeft") {
+              this.showImage('next');
+            } else if (event.type === "swipeRight") {
+              this.showImage('prev');
+            }
+          }.bind(this));
 
         // Create labels
         jQuery('<div/>', {
