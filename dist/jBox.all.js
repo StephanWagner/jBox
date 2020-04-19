@@ -2409,9 +2409,9 @@ function jBoxImageWrapper(jBox, jQuery) {
     height: '100%',
     adjustDistance: {
       top: 40,
-      right: 5,
+      right: 0,
       bottom: 40,
-      left: 5
+      left: 0
     },
 
 
@@ -2494,7 +2494,7 @@ function jBoxImageWrapper(jBox, jQuery) {
         jQuery('<div/>', {
           id: 'jBox-image-label-' + gallery + '-' + id,
           'class': 'jBox-image-label' + (show ? ' active' : '')
-        }).html(this.images[gallery][id].label).click(function () { jQuery(this).toggleClass('expanded'); }).appendTo(this.imageLabel);
+        }).html(this.images[gallery][id].label).click(function () { jQuery(this).toggleClass('expanded'); }).appendTo(this.imageLabelContainer);
 
         // Show image
         show && image.animate({opacity: 1}, instant ? 0 : this.options.imageFade);
@@ -2627,9 +2627,25 @@ function jBoxImageWrapper(jBox, jQuery) {
 
     _onCreated: function ()
     {
-      // Append image label containers
-      this.imageLabel = jQuery('<div/>', {'class': 'jBox-image-label-container'}).appendTo(this.wrapper);
-      this.imageLabel.append(jQuery('<div/>', {'class': 'jBox-image-pointer-prev', click: function () { this.showImage('prev'); }.bind(this)})).append(jQuery('<div/>', {'class': 'jBox-image-pointer-next', click: function () { this.showImage('next'); }.bind(this)}));
+      // Create image label and navigation buttons
+      this.imageLabelWrapper = jQuery('<div class="jBox-image-label-wrapper"/>').appendTo(this.wrapper);
+
+      this.imagePrevButton = jQuery('<div class="jBox-image-pointer-prev"/>')
+        .on('click', function () {
+          this.showImage('prev');
+        }.bind(this));
+
+      this.imageNextButton = jQuery('<div class="jBox-image-pointer-next"/>')
+        .on('click', function () {
+          this.showImage('next');
+        }.bind(this));
+
+      this.imageLabelContainer = jQuery('<div class="jBox-image-label-container"/>');
+
+      this.imageLabelWrapper
+        .append(this.imagePrevButton)
+        .append(this.imageLabelContainer)
+        .append(this.imageNextButton);
 
       // Append the download button
       if (this.options.downloadButton) {
@@ -2654,7 +2670,7 @@ function jBoxImageWrapper(jBox, jQuery) {
 
       // Creating the image counter containers
       if (this.options.imageCounter) {
-        this.imageCounter = jQuery('<div/>', {'class': 'jBox-image-counter-container'}).appendTo(this.wrapper);
+        this.imageCounter = jQuery('<div/>', {'class': 'jBox-image-counter-container'}).insertAfter(this.imageLabelContainer);
         this.imageCounter.append(jQuery('<span/>', {'class': 'jBox-image-counter-current'})).append(jQuery('<span/>').html(this.options.imageCounterSeparator)).append(jQuery('<span/>', {'class': 'jBox-image-counter-all'}));
       }
     },

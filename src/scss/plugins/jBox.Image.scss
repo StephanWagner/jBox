@@ -20,24 +20,31 @@
   opacity: 0;
 }
 
-.jBox-image-label-container {
+.jBox-image-label-wrapper {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   height: 40px;
   z-index: 100;
+  display: flex;
+}
+
+.jBox-image-label-container {
+  position: relative;
+  flex: 1;
 }
 
 .jBox-image-label {
   box-sizing: border-box;
   position: absolute;
+  left: 0;
   bottom: 0;
   width: 100%;
   text-align: center;
-  left: 0;
   color: #fff;
-  padding: 8px 40px;
+  padding: 8px 12px;
+  font-size: 15px;
   line-height: 24px;
   transition: opacity .36s;
   opacity: 0;
@@ -58,12 +65,15 @@
     opacity: 1;
     pointer-events: all;
   }
+
+  @media (max-width: 600px) {
+    font-size: 13px;
+  }
 }
 
 .jBox-image-pointer-next,
 .jBox-image-pointer-prev {
-  position: absolute;
-  bottom: 0;
+  flex-shrink: 0;
   width: 40px;
   height: 40px;
   cursor: pointer;
@@ -80,17 +90,12 @@
 }
 
 .jBox-image-pointer-next {
-  right: 0;
   transform: scaleX(-1);
 }
 
-.jBox-image-pointer-prev {
-  left: 0;
-}
-
 .jBox-image-counter-container {
-  position: absolute;
-  right: 40px;
+  flex-shrink: 0;
+  white-space: nowrap;
   height: 40px;
   line-height: 40px;
   font-size: 13px;
@@ -101,11 +106,6 @@
 
 .jBox-image-has-counter .jBox-image-counter-container {
   display: block;
-}
-
-.jBox-image-has-counter .jBox-image-label:not(.expanded) {
-  padding-right: 80px;
-  text-indent: 40px;
 }
 
 .jBox-overlay.jBox-overlay-Image {
