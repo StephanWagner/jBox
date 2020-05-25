@@ -117,7 +117,7 @@ declare namespace jBox {
 
     /** Animation when jBox opens or closes. To use different animations for opening and closing, use an object: {open: 'tada', close: 'flip'}.
      * You can also set the direction of the move and slide animations: {open: 'move:right', close: 'slide:top'} */
-    animation?: jBoxAnimations | { open?: jBoxAnimations; close?: jBoxAnimations };
+    animation?: jBoxAnimations | { open?: jBoxAnimations; close?: jBoxAnimations } | boolean;
 
     /** Set a jBox theme class, e.g. 'TooltipDark' */
     theme?: string;
