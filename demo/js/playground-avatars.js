@@ -99,7 +99,7 @@ function generateAvatarJBox(initial) {
     overlay: initial ? true : false, // Only one overlay is needed
     blockScroll: initial ? true : false, // The initial jBox will block scrolling, no need for the others to o the same
     closeButton: initial ? 'overlay' : false, // The initial jBox will have the close button in the overlay, the others won't need one
-    closeOnEsc: initial ? true : false, // Only the inital jBox can be closed with [ESC] button
+    closeOnEsc: initial ? true : false, // Only the initial jBox can be closed with [ESC] button
 
     // Placing the buttons in the footer area
     footer: '<button class="button-cross cross"></button><button class="button-heart heart"></button>',
@@ -181,7 +181,7 @@ function generateAvatarJBox(initial) {
         backgroundImage: 'url(https://stephanwagner.me/img/jBox/avatar/' + DemoAvatars.Avatars[DemoAvatars.current] + '.svg)'
       });
 
-      // If it's the inital jBox, show the tooltips after a short delay
+      // If it's the initial jBox, show the tooltips after a short delay
       initial && setTimeout(function () {
 
         // We are creating the two tooltips in a loop as they are very similar
@@ -215,7 +215,7 @@ function generateAvatarJBox(initial) {
     }
   });
 
-  // If it's the inital jBox add onClose events
+  // If it's the initial jBox add onClose events
   initial && (jBoxAvatar.options.onClose = function () {
     // Loop through all avatar jBoxes and close them if they are not removed yet
     $.each(DemoAvatars.Modals, function (index, jBox) {
@@ -237,7 +237,7 @@ function generateAvatarJBox(initial) {
     DemoAvatars.AvatarsTooltipDislike && DemoAvatars.AvatarsTooltipDislike.close();
   });
 
-  // If it's the inital jBox add onCloseComplete events
+  // If it's the initial jBox add onCloseComplete events
   initial && (jBoxAvatar.options.onCloseComplete = function () {
     // Loop through all modal jBoxes and remove them from DOM
     $.each(DemoAvatars.Modals, function (index, jBox) {
