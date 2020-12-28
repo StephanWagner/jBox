@@ -31,20 +31,22 @@
   "main": "dist/jBox.all.js",
   "types": "src/js/jBox.d.ts",
   "dependencies": {
-    "jquery": "^3.5.0"
+    "jquery": "^3.5.1"
   },
   "devDependencies": {
     "gulp": "^4.0.2",
     "gulp-clean-css": "^4.3.0",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^2.0.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.5",
+    "gulp-sass": "^4.1.0",
+    "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
-    "jest": "^25.3.0",
-    "node-sass": "^4.13.1"
+    "jest": "^26.6.3",
+    "node-sass": "^5.0.0"
   },
   "scripts": {
+    "watch": "gulp watch",
+    "build": "gulp build",
     "test": "jest"
   }
 }
