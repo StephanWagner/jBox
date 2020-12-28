@@ -127,7 +127,12 @@ function jBoxImageWrapper(jBox, jQuery) {
         jQuery('<div/>', {
           id: 'jBox-image-label-' + gallery + '-' + id,
           'class': 'jBox-image-label' + (show ? ' active' : '')
-        }).html(this.images[gallery][id].label).click(function () { jQuery(this).toggleClass('expanded'); }).appendTo(this.imageLabelContainer);
+        })
+        .html(this.images[gallery][id].label)
+        .on('click tap', function () {
+          jQuery(this).toggleClass('expanded');
+        })
+        .appendTo(this.imageLabelContainer);
 
         // Show image
         show && image.animate({opacity: 1}, instant ? 0 : this.options.imageFade);
@@ -264,12 +269,12 @@ function jBoxImageWrapper(jBox, jQuery) {
       this.imageLabelWrapper = jQuery('<div class="jBox-image-label-wrapper"/>').appendTo(this.wrapper);
 
       this.imagePrevButton = jQuery('<div class="jBox-image-pointer-prev"/>')
-        .on('click', function () {
+        .on('click tap', function () {
           this.showImage('prev');
         }.bind(this));
 
       this.imageNextButton = jQuery('<div class="jBox-image-pointer-next"/>')
-        .on('click', function () {
+        .on('click tap', function () {
           this.showImage('next');
         }.bind(this));
 
@@ -289,7 +294,7 @@ function jBoxImageWrapper(jBox, jQuery) {
           )
           .append(
             jQuery('<div/>', {'class': 'jBox-image-download-button-icon'})
-          ).on('click touchdown', function () {
+          ).on('click tap', function () {
             if (this.images[this.currentImage.gallery][this.currentImage.id].downloadUrl) {
               var currentImageUrl = this.images[this.currentImage.gallery][this.currentImage.id].downloadUrl;
             } else {
