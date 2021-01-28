@@ -151,7 +151,7 @@ function jBoxNoticeWrapper(jBox, jQuery) {
             stacks[pos].reverse();
             var margin = 0;
             for (var i in stacks[pos]) {
-                el = stacks[pos][i];
+                var el = jQuery(stacks[pos][i]);
                 el.css('margin-' + direction, margin);
                 margin += el.outerHeight() + this.options.stackSpacing;
             }
