@@ -28,7 +28,7 @@
   },
   "author": "Stephan Wagner <stephanwagner.me@gmail.com> (https://stephanwagner.me)",
   "license": "MIT",
-  "main": "dist/jBox.all.js",
+  "main": "dist/jBox.all.min.js",
   "types": "src/js/jBox.d.ts",
   "dependencies": {
     "jquery": "^3.5.1"
