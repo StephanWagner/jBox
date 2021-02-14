@@ -1,4 +1,4 @@
-$(function () {
+jQuery(function () {
   // Tooltip
 
   new jBox('Tooltip', {
@@ -93,7 +93,7 @@ $(function () {
     theme: 'TooltipBorder',
     trigger: 'click',
     width: 200,
-    height: $(window).height() - 160,
+    height: jQuery(window).height() - 160,
     adjustTracker: true,
     closeOnClick: 'body',
     closeOnEsc: true,
@@ -188,14 +188,14 @@ $(function () {
 
   // Notice
 
-  $('#Notice-1').click(function () {
+  jQuery('#Notice-1').on('click', function () {
     new jBox('Notice', {
       content: "Hello, I'm a notice",
       color: 'black'
     });
   });
 
-  $('#Notice-2').click(function () {
+  jQuery('#Notice-2').on('click', function () {
     new jBox('Notice', {
       animation: 'flip',
       color: getColor(),
@@ -205,7 +205,7 @@ $(function () {
     });
   });
 
-  $('#Notice-3').click(function () {
+  jQuery('#Notice-3').on('click', function () {
     new jBox('Notice', {
       theme: 'NoticeFancy',
       attributes: {
@@ -223,7 +223,7 @@ $(function () {
     });
   });
 
-  $('#Notice-4').click(function () {
+  jQuery('#Notice-4').on('click', function () {
     new jBox('Notice', {
       attributes: {
         x: 'right',
@@ -249,16 +249,16 @@ $(function () {
 
   // Additional JS for demo purposes
 
-  $('#Tooltip-4').on('mouseenter mouseleave', function () {
-    $('#Tooltip-4').addClass('active').html('Wait...');
+  jQuery('#Tooltip-4').on('mouseenter mouseleave', function () {
+    jQuery('#Tooltip-4').addClass('active').html('Wait...');
   });
 
-  $('.target-notice')
+  jQuery('.target-notice')
     .on('click', function () {
-      $(this).addClass('active').html('Click me again');
+      jQuery(this).addClass('active').html('Click me again');
     })
     .on('mouseleave', function () {
-      $(this).removeClass('active').html('Click me');
+      jQuery(this).removeClass('active').html('Click me');
     });
 
   var colors = ['red', 'green', 'blue', 'yellow'];

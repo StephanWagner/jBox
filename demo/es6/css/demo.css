@@ -1,0 +1,233 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  position: relative;
+  font-family: Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.4;
+  color: #222;
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+* {
+  outline: none;
+  box-sizing: border-box;
+}
+
+p {
+  margin: 0 0 15px;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: normal;
+}
+
+main {
+  padding: 20px 0;
+}
+
+.container {
+  position: relative;
+  width: calc(100% - 60px);
+  max-width: 1000px;
+  margin: auto;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: calc(100% - 30px);
+  }
+}
+
+/* Target elements */
+
+.targets-wrapper {
+  margin: 0 -5px;
+  padding: 10px 0 20px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.target,
+.target-click,
+.target-notice {
+  cursor: default;
+  font-size: 14px;
+  line-height: 50px;
+  height: 52px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 2px solid #e2e2e2;
+  background: #fafafa;
+  text-align: center;
+  font-weight: 500;
+  position: relative;
+  text-transform: uppercase;
+  width: calc(25% - 10px);
+  margin: 5px;
+  transition: border-color .2s, background-color .2s;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.target:hover,
+.target-click:hover,
+.target-notice:hover {
+  border-color: #bbb;
+  background-color: #eee;
+}
+
+.target-click,
+.target-notice {
+  cursor: pointer;
+}
+
+.target.active,
+.target-click.active,
+.target-notice.active {
+  color: #49d;
+}
+
+@media (max-width: 768px) {
+
+  .target,
+  .target-click,
+  .target-notice {
+    width: calc(50% - 10px);
+  }
+}
+
+.demo-img {
+  width: calc(25% - 10px);
+  margin: 5px;
+}
+
+@media (max-width: 500px) {
+  .demo-img {
+    width: calc(50% - 10px);
+  }
+}
+
+.demo-img>img {
+  border: 4px solid #e2e2e2;
+  border-radius: 4px;
+  width: 100%;
+  height: auto;
+  filter: grayscale(100%);
+  transition: filter .2s, border-color .2s;
+}
+
+.demo-img:hover>img {
+  filter: none;
+  border-color: #bbb;
+}
+
+@media (max-width: 768px) {
+  .demo-img>img {
+    border-width: 2px;
+  }
+}
+
+/* Header */
+
+header {
+  height: 50px;
+  line-height: 50px;
+  font-size: 17px;
+  background: #000;
+  color: #aaa;
+  box-shadow: 0 0 3px rgba(0, 0, 0, .6);
+}
+
+header a {
+  margin-right: 20px;
+  color: #aaa;
+  text-decoration: none;
+  transition: color .2s;
+}
+
+header a:last-child,
+header a:nth-child(2) {
+  margin-right: 0;
+}
+
+header a.active,
+header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+#stephan {
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  transform: translateY(-50%);
+  border-radius: 3px;
+  background: no-repeat center center url(https://stephanwagner.me/img/stephan.jpg);
+  background-size: 100%;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .3);
+}
+
+#stephan>span {
+  font-size: 0;
+  line-height: 0;
+  white-space: nowrap;
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  pointer-events: none;
+  transition: font-size .2s, margin .2s, opacity .2s, line-height .2s;
+  opacity: 0;
+}
+
+#stephan:hover>span {
+  opacity: 1;
+  font-size: 17px;
+  margin-right: 40px;
+}
+
+@media (max-width: 500px) {
+  #stephan>span {
+    display: none;
+  }
+}
+
+/* jBox styles */
+
+.ajax-sending {
+  color: #49d;
+}
+
+.ajax-complete {
+  color: #390;
+}
+
+.ajax-success tt {
+  color: #666;
+  display: block;
+  padding-top: 10px;
+  font-size: 14px;
+}
+
+.ajax-error {
+  color: #d00;
+}
