@@ -215,7 +215,7 @@ jQuery('#Notice-3').on('click', function () {
     },
     color: getColor(),
     content: "Hello, I'm down here",
-    audio: '../assets/audio/bling2',
+    audio: 'https://cdn.jsdelivr.net/gh/StephanWagner/jBox@latest/assets/audio/bling2',
     volume: 80,
     animation: {
       open: 'slide:bottom',
