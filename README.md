@@ -6,6 +6,30 @@ Demo: https://stephanwagner.me/jBox
 
 Docs: https://stephanwagner.me/jBox/documentation
 
+---
+
+## Install
+
+### ES6
+
+```bash
+npm install --save jbox
+```
+
+```javascript
+import jBox from 'jbox';
+import 'jbox/dist/jBox.all.css';
+```
+
+### CDN
+
+```html
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v1.2.7/dist/jBox.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v1.2.7/dist/jBox.all.min.css" rel="stylesheet">
+```
+
+---
 
 ## Tooltips
 
@@ -24,6 +48,8 @@ Now elements with `class="tooltip"` will open tooltips:
 <span class="tooltip" title="My second tooltip">Hover me!</span>
 ```
 
+---
+
 ## Modal windows
 
 You can set up modal windows the same way as tooltips.
@@ -38,10 +64,12 @@ new jBox('Modal', {
   content: '<i>Hello there!</i>'
 });
 ```
+
 ```html
 <div id="myModal">Click me to open a modal window!</div>
 ```
 
+---
 
 ## Confirm windows
 
@@ -54,10 +82,13 @@ new jBox('Confirm', {
   cancelButton: 'Nope'
 });
 ```
+
 ```html
 <div onclick="alert('Yay! You did it!')" data-confirm="Do you really want to do this?">Click me!</div>
 <a href="https://stephanwagner.me/jBox" data-confirm="Do you really want to leave this page?">Click me!</a>
 ```
+
+---
 
 ## Notices
 
@@ -69,6 +100,8 @@ new jBox('Notice', {
 });
 ```
 
+---
+
 ## Images
 
 To create image windows you only need following few lines:
@@ -76,9 +109,14 @@ To create image windows you only need following few lines:
 ```javascript
 new jBox('Image');
 ```
+
 ```html
-<a href="/image-large.jpg" data-jbox-image="gallery1" title="My image"><img src="/image.jpg" alt=""></a>
+<a href="/image-large.jpg" data-jbox-image="gallery1" title="My image">
+  <img src="/image.jpg" alt="">
+</a>
 ```
+
+---
 
 ## Learn more
 
