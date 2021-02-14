@@ -1,5 +1,4 @@
-$(document).ready(function () {
-
+$(function () {
   // Tooltip
 
   new jBox('Tooltip', {
@@ -25,7 +24,7 @@ $(document).ready(function () {
     attach: '#Tooltip-3',
     theme: 'TooltipDark',
     animation: 'zoomOut',
-    content: 'Use themes to change appearance',
+    content: 'Use themes to change appearance'
   });
 
   new jBox('Tooltip', {
@@ -58,7 +57,7 @@ $(document).ready(function () {
     width: 280,
     closeOnMouseleave: true,
     animation: 'zoomIn',
-    content: 'I won\'t close when you move your mouse over me'
+    content: "I won't close when you move your mouse over me"
   });
 
   new jBox('Tooltip', {
@@ -79,7 +78,8 @@ $(document).ready(function () {
     offset: {
       x: 25
     },
-    content: 'You can position your tooltips at any element.<br>Scroll up and down to see this tooltip flip position!',
+    content:
+      'You can position your tooltips at any element.<br>Scroll up and down to see this tooltip flip position!',
     onOpen: function () {
       this.source.addClass('active').html('Now scroll');
     },
@@ -93,7 +93,7 @@ $(document).ready(function () {
     theme: 'TooltipBorder',
     trigger: 'click',
     width: 200,
-    height: ($(window).height() - 160),
+    height: $(window).height() - 160,
     adjustTracker: true,
     closeOnClick: 'body',
     closeOnEsc: true,
@@ -103,7 +103,8 @@ $(document).ready(function () {
       y: 'center'
     },
     outside: 'x',
-    content: 'Scroll up and down or resize your browser, I will adjust my position!<br><br>Press [ESC] or click anywhere to close.',
+    content:
+      'Scroll up and down or resize your browser, I will adjust my position!<br><br>Press [ESC] or click anywhere to close.',
     onOpen: function () {
       this.source.addClass('active').html('Now scroll');
     },
@@ -117,8 +118,9 @@ $(document).ready(function () {
   new jBox('Modal', {
     attach: '#Modal-1',
     height: 200,
-    title: 'I\'m a basic jBox modal window',
-    content: '<div style="line-height: 30px;">Try to scroll ...it\'s blocked.<br>Press [ESC] or click anywhere to close.</div>'
+    title: "I'm a basic jBox modal window",
+    content:
+      '<div style="line-height: 30px;">Try to scroll ...it\'s blocked.<br>Press [ESC] or click anywhere to close.</div>'
   });
 
   new jBox('Modal', {
@@ -154,16 +156,24 @@ $(document).ready(function () {
       setContent: false,
       beforeSend: function () {
         this.setContent('');
-        this.setTitle('<div class="ajax-sending">Sending AJAX request...</div>');
+        this.setTitle(
+          '<div class="ajax-sending">Sending AJAX request...</div>'
+        );
       },
       complete: function () {
         this.setTitle('<div class="ajax-complete">AJAX request complete</div>');
       },
       success: function (response) {
-        this.setContent('<div class="ajax-success">Response:<tt>' + JSON.stringify(response) + '</tt></div>');
+        this.setContent(
+          '<div class="ajax-success">Response:<tt>' +
+            JSON.stringify(response) +
+            '</tt></div>'
+        );
       },
       error: function () {
-        this.setContent('<div class="ajax-error">Oops, something went wrong</div>');
+        this.setContent(
+          '<div class="ajax-error">Oops, something went wrong</div>'
+        );
       }
     }
   });
@@ -180,7 +190,7 @@ $(document).ready(function () {
 
   $('#Notice-1').click(function () {
     new jBox('Notice', {
-      content: 'Hello, I\'m a notice',
+      content: "Hello, I'm a notice",
       color: 'black'
     });
   });
@@ -203,7 +213,7 @@ $(document).ready(function () {
         y: 'bottom'
       },
       color: getColor(),
-      content: 'Hello, I\'m down here',
+      content: "Hello, I'm down here",
       audio: '../assets/audio/bling2',
       volume: 80,
       animation: {
@@ -225,8 +235,8 @@ $(document).ready(function () {
         close: 'zoomIn'
       },
       color: getColor(),
-      title: 'Tadaaa! I\'m single',
-      content: 'Open another notice, I won\'t stack'
+      title: "Tadaaa! I'm single",
+      content: "Open another notice, I won't stack"
     });
   });
 
@@ -243,11 +253,13 @@ $(document).ready(function () {
     $('#Tooltip-4').addClass('active').html('Wait...');
   });
 
-  $('.target-notice').on('click', function () {
-    $(this).addClass('active').html('Click me again');
-  }).on('mouseleave', function () {
-    $(this).removeClass('active').html('Click me');
-  });
+  $('.target-notice')
+    .on('click', function () {
+      $(this).addClass('active').html('Click me again');
+    })
+    .on('mouseleave', function () {
+      $(this).removeClass('active').html('Click me');
+    });
 
   var colors = ['red', 'green', 'blue', 'yellow'];
   var index = 0;
@@ -257,5 +269,4 @@ $(document).ready(function () {
     }
     return colors[index++];
   };
-
 });
