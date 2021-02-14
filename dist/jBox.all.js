@@ -2129,8 +2129,8 @@ function jBoxWrapper(jQuery) {
       options = jQuery.extend(defaultSettings, options);
       // Support touch and mouse as well.
       swipeTarget.on("mousedown touchstart", swipeStart);
-      $("html").on("mouseup touchend", swipeEnd);
-      $("html").on("mousemove touchmove", swiping);
+      jQuery("html").on("mouseup touchend", swipeEnd);
+      jQuery("html").on("mousemove touchmove", swiping);
     })();
 
     function swipeStart(event) {
@@ -2159,16 +2159,16 @@ function jBoxWrapper(jQuery) {
         ) {
           // Horizontal Swipe
           if (pixelOffsetX < 0) {
-            swipeTarget.trigger($.Event("swipeLeft.sd"));
+            swipeTarget.trigger(jQuery.Event("swipeLeft.sd"));
           } else {
-            swipeTarget.trigger($.Event("swipeRight.sd"));
+            swipeTarget.trigger(jQuery.Event("swipeRight.sd"));
           }
         } else if (Math.abs(pixelOffsetY) > options.swipeThreshold) {
           // Vertical swipe
           if (pixelOffsetY < 0) {
-            swipeTarget.trigger($.Event("swipeUp.sd"));
+            swipeTarget.trigger(jQuery.Event("swipeUp.sd"));
           } else {
-            swipeTarget.trigger($.Event("swipeDown.sd"));
+            swipeTarget.trigger(jQuery.Event("swipeDown.sd"));
           }
         }
       }
