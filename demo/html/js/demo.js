@@ -214,7 +214,7 @@ jQuery(function () {
       },
       color: getColor(),
       content: "Hello, I'm down here",
-      audio: '../assets/audio/bling2',
+      audio: '../../assets/audio/bling2',
       volume: 80,
       animation: {
         open: 'slide:bottom',
