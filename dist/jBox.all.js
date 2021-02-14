@@ -762,7 +762,7 @@ function jBoxWrapper(jQuery) {
       var generateKeyframeCSS = function (ev, position)
       {
         // Generate keyframes CSS
-        keyframe_css = '@keyframes jBox-' + this.id + '-animation-' + this.options.animation[ev] + '-' + ev + (position ? '-' + position : '') + ' {';
+        var keyframe_css = '@keyframes jBox-' + this.id + '-animation-' + this.options.animation[ev] + '-' + ev + (position ? '-' + position : '') + ' {';
         jQuery.each(animations[this.options.animation[ev]].css, function (index, item) {
           var translate = position ? item[1].replace('%XY', this._getXY(position).toUpperCase()) : item[1];
           animations[this.options.animation[ev]].positions && (translate = translate.replace('%V', animations[this.options.animation[ev]].positions[position][item[0]]));
