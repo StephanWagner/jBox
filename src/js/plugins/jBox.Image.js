@@ -179,28 +179,33 @@ function jBoxImageWrapper(jBox, jQuery) {
       // Show images when they are loaded or load them if not
       this.showImage = function (img) {
         // Get the gallery and the image id from the next or the previous image
+        var gallery;
+        var id;
+
         if (img != 'open') {
-          var gallery = this.currentImage.gallery;
-          var id = this.currentImage.id + (1 * (img == 'prev') ? -1 : 1);
+          gallery = this.currentImage.gallery;
+          id = this.currentImage.id + (1 * (img == 'prev') ? -1 : 1);
           id = id > (this.images[gallery].length - 1) ? 0 : (id < 0 ? (this.images[gallery].length - 1) : id);
 
         // Or get image data from source element
         } else {
           // Get gallery and image id from source element
           if (this.source) {
-            var gallery = this.source.data('jBox-image-gallery');
-            var id = this.source.data('jBox-image-id');
+            gallery = this.source.data('jBox-image-gallery');
+            id = this.source.data('jBox-image-id');
 
           // Get gallery and image id attached elements
           } else if (this.attachedElements && this.attachedElements.length) {
-            var gallery = jQuery(this.attachedElements[0]).data('jBox-image-gallery');
-            var id = jQuery(this.attachedElements[0]).data('jBox-image-id');
+            gallery = jQuery(this.attachedElements[0]).data('jBox-image-gallery');
+            id = jQuery(this.attachedElements[0]).data('jBox-image-id');
           } else {
             return;
           }
 
           // Remove or show the next and prev buttons
-          jQuery('.jBox-image-pointer-prev, .jBox-image-pointer-next').css({display: (this.images[gallery].length > 1 ? 'block' : 'none')});
+          if (this.images && this.images[gallery]) {
+            jQuery('.jBox-image-pointer-prev, .jBox-image-pointer-next').css({display: (this.images[gallery].length > 1 ? 'block' : 'none')});
+          }
         }
 
         // If there is a current image already shown, hide it
