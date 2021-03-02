@@ -351,11 +351,24 @@ function jBoxWrapper(jQuery) {
       // Add mouse events
       handle.addClass('jBox-draggable').data('jBox-draggable', true).on('touchstart mousedown', function (ev)
       {
-        if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) return;
+        if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) {
+          return;
+        }
+
+        var pageX;
+        var pageY;
+
+        if (ev.type == 'touchstart' && ev.touches && ev.touches[0]) {
+          pageX = ev.touches[0].pageX;
+          pageY = ev.touches[0].pageY;
+        } else {
+          pageX = ev.pageX;
+          pageY = ev.pageY;
+        }
 
         // Store current mouse position
-        this.draggingStartX = ev.pageX;
-        this.draggingStartY = ev.pageY;
+        this.draggingStartX = pageX;
+        this.draggingStartY = pageY;
 
         // Adjust z-index when dragging jBox over another draggable jBox
         if (this.options.dragOver && !this.trueModal && parseInt(this.wrapper.css('zIndex'), 10) <= jBox.zIndexMaxDragover) {
@@ -365,20 +378,32 @@ function jBoxWrapper(jQuery) {
 
         var drg_h = this.wrapper.outerHeight();
         var drg_w = this.wrapper.outerWidth();
-        var pos_y = this.wrapper.offset().top + drg_h - ev.pageY;
-        var pos_x = this.wrapper.offset().left + drg_w - ev.pageX;
+        var pos_y = this.wrapper.offset().top + drg_h - pageY;
+        var pos_x = this.wrapper.offset().left + drg_w - pageX;
 
         jQuery(document).on('touchmove.jBox-draggable-' + this.id + ' mousemove.jBox-draggable-' + this.id, function (ev) {
+
+          var movingPageX;
+          var movingPageY;
+
+          if (ev.type == 'touchmove' && ev.touches && ev.touches[0]) {
+            movingPageX = ev.touches[0].pageX;
+            movingPageY = ev.touches[0].pageY;
+          } else {
+            movingPageX = ev.pageX;
+            movingPageY = ev.pageY;
+          }
+
           // Fire onDragStart event when jBox moves
-          if (!this.dragging && this.draggingStartX != ev.pageX && this.draggingStartY != ev.pageY) {
+          if (!this.dragging && this.draggingStartX != movingPageX && this.draggingStartY != movingPageY) {
             this._fireEvent('onDragStart');
             this.dragging = true;
           }
 
           // Adjust position
           this.wrapper.offset({
-            top: ev.pageY + pos_y - drg_h,
-            left: ev.pageX + pos_x - drg_w
+            top: movingPageY + pos_y - drg_h,
+            left: movingPageX + pos_x - drg_w
           });
         }.bind(this));
         ev.preventDefault();
