@@ -6,7 +6,7 @@
   "license": "ISC",
   "main": "index.js",
   "dependencies": {
-    "jbox": "^1.2.10"
+    "jbox": "^1.2.11"
   },
   "devDependencies": {
     "snowpack": "^3.0.11"
