@@ -354,6 +354,10 @@ function jBoxWrapper(jQuery) {
       handle.addClass('jBox-draggable').data('jBox-draggable', true).on('touchstart mousedown', function (ev)
       {
         if (ev.button == 2 || jQuery(ev.target).hasClass('jBox-noDrag') || jQuery(ev.target).parents('.jBox-noDrag').length) {
+          // Hacky fix for jBox not closing on mobile devices when using draggable
+          if (ev.type == 'touchstart' && (jQuery(ev.target).hasClass('jBox-closeButton') || jQuery(ev.target).parents('.jBox-closeButton').length)) {
+            this.close({ignoreDelay: true});
+          }
           return;
         }
 
@@ -483,7 +487,7 @@ function jBoxWrapper(jQuery) {
       if (this.options.closeButton) {
         var closeButtonSVG = this._createSVG('svg', [['viewBox', '0 0 24 24']]);
         closeButtonSVG.appendChild(this._createSVG('path', [['d', 'M22.2,4c0,0,0.5,0.6,0,1.1l-6.8,6.8l6.9,6.9c0.5,0.5,0,1.1,0,1.1L20,22.3c0,0-0.6,0.5-1.1,0L12,15.4l-6.9,6.9c-0.5,0.5-1.1,0-1.1,0L1.7,20c0,0-0.5-0.6,0-1.1L8.6,12L1.7,5.1C1.2,4.6,1.7,4,1.7,4L4,1.7c0,0,0.6-0.5,1.1,0L12,8.5l6.8-6.8c0.5-0.5,1.1,0,1.1,0L22.2,4z']]));
-        this.closeButton = jQuery('<div class="jBox-closeButton jBox-noDrag"/>').on('click tap', function (ev) { this.close({ignoreDelay: true}); ev.stopPropagation(); }.bind(this)).append(closeButtonSVG);
+        this.closeButton = jQuery('<div class="jBox-closeButton jBox-noDrag"/>').on('click tap', function (ev) { this.close({ignoreDelay: true}); }.bind(this)).append(closeButtonSVG);
 
         // Add close button to jBox container
         if (this.options.closeButton == 'box' || (this.options.closeButton === true && !this.options.overlay && !this.options.title && !this.options.getTitle)) {
