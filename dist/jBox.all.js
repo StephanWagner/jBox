@@ -2628,7 +2628,7 @@ function jBoxImageWrapper(jBox, jQuery) {
 
         // Update the image counter numbers
         if (this.imageCounter) {
-          if (this.images[gallery].length > 1) {
+          if (this.images[gallery] && this.images[gallery].length > 1) {
             this.wrapper.addClass('jBox-image-has-counter');
             this.imageCounter.find('.jBox-image-counter-all').html(this.images[gallery].length);
             this.imageCounter.find('.jBox-image-counter-current').html(id + 1);
@@ -2638,7 +2638,7 @@ function jBoxImageWrapper(jBox, jQuery) {
         }
 
         // Preload next image
-        if (this.images[gallery].length - 1) {
+        if (this.images[gallery] && this.images[gallery].length - 1) {
 	        var next_id = id + 1;
 	        next_id = next_id > (this.images[gallery].length - 1) ? 0 : (next_id < 0 ? (this.images[gallery].length - 1) : next_id);
 
