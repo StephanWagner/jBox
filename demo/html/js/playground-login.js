@@ -30,7 +30,7 @@ var jBoxLogin = {
   }
 };
 
-$(document).ready(function () {
+$(function () {
 
   if (!$('#DemoLogin').length) {
     return;

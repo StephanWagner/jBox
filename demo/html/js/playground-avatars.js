@@ -256,9 +256,9 @@ function generateAvatarJBox(initial) {
 
 // On domready, add the click event to the button
 
-$(document).ready(function () {
+$(function () {
 
-  $('#DemoAvatars').click(function () {
+  $('#DemoAvatars').on('click', function () {
     generateAvatarJBox(true);
   });
 

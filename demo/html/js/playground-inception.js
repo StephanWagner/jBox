@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
 
   $('#DemoInception').on('click', function () {
     openInceptionModal();
