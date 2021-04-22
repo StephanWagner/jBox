@@ -135,6 +135,7 @@ function jBoxWrapper(jQuery) {
       onPosition: null,            // Fired when jBox is positioned
       onCreated: null,             // Fired when jBox is created and availible in DOM
       onOpen: null,                // Fired when jBox opens
+      onOpenComplete: null,        // Fired when jBox is completely open (when fading is finished)
       onClose: null,               // Fired when jBox closes
       onCloseComplete: null,       // Fired when jBox is completely closed (when fading is finished)
       onDragStart: null,           // Fired when dragging starts
@@ -798,6 +799,7 @@ function jBoxWrapper(jQuery) {
           var translate = position ? item[1].replace('%XY', this._getXY(position).toUpperCase()) : item[1];
           animations[this.options.animation[ev]].positions && (translate = translate.replace('%V', animations[this.options.animation[ev]].positions[position][item[0]]));
           keyframe_css += item[0] + ' {transform:' + translate + ';}';
+
         }.bind(this));
         keyframe_css += '}';
 
@@ -1744,6 +1746,9 @@ function jBoxWrapper(jQuery) {
               this.isOpening = true;
               this.wrapper.css({display: 'block'});
             }.bind(this),
+            complete: function () {
+              this._fireEvent('onOpenComplete');
+            }.bind(this),
             always: function () {
               this.isOpening = false;
 
@@ -1754,6 +1759,7 @@ function jBoxWrapper(jQuery) {
         } else {
           this.wrapper.css({display: 'block', opacity: 1});
           this.positionOnFadeComplete && this.position() && (this.positionOnFadeComplete = false);
+          this._fireEvent('onOpenComplete');
         }
       }
     }.bind(this);
