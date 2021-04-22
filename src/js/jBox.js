@@ -2099,6 +2099,50 @@ function jBoxWrapper(jQuery) {
     return this;
   };
 
+  // Apply custom animations to jBox (being used in playground demos)
+
+  jBox._animationSpeeds = {
+    'tada': 1000,
+    'tadaSmall': 1000,
+    'flash': 500,
+    'shake': 400,
+    'pulseUp': 250,
+    'pulseDown': 250,
+    'popIn': 250,
+    'popOut': 250,
+    'fadeIn': 200,
+    'fadeOut': 200,
+    'slideUp': 400,
+    'slideRight': 400,
+    'slideLeft': 400,
+    'slideDown': 400
+  };
+
+  jBox.prototype.animate = function (animation, options)
+  {
+    // Options are required
+    !options && (options = {});
+
+    // Timout needs to be an object
+    !this.animationTimeout && (this.animationTimeout = {});
+
+    // Use jBox wrapper by default
+    !options.element && (options.element = this.wrapper);
+
+    // Give the element an unique id
+    !options.element.data('jBox-animating-id') && options.element.data('jBox-animating-id', jBox._getUniqueElementID());
+
+    // Abort if element is animating
+    if (options.element.data('jBox-animating')) {
+      options.element.removeClass(options.element.data('jBox-animating')).data('jBox-animating', null);
+      this.animationTimeout[options.element.data('jBox-animating-id')] && clearTimeout(this.animationTimeout[options.element.data('jBox-animating-id')]);
+    }
+
+    // Animate the element
+    options.element.addClass('jBox-animated-' + animation).data('jBox-animating', 'jBox-animated-' + animation);
+    this.animationTimeout[options.element.data('jBox-animating-id')] = setTimeout((function() { options.element.removeClass(options.element.data('jBox-animating')).data('jBox-animating', null); options.complete && options.complete(); }), jBox._animationSpeeds[animation]);
+  };
+
   // https://gist.github.com/AlexEmashev/ee8302b5036b01362f63dab35948401f
   jBox.prototype.swipeDetector = function (swipeTarget, options) {
     // States: 0 - no swipe, 1 - swipe started, 2 - swipe released
