@@ -135,6 +135,7 @@ function jBoxWrapper(jQuery) {
       onPosition: null,            // Fired when jBox is positioned
       onCreated: null,             // Fired when jBox is created and availible in DOM
       onOpen: null,                // Fired when jBox opens
+      onOpenComplete: null,        // Fired when jBox is completely open (when fading is finished)
       onClose: null,               // Fired when jBox closes
       onCloseComplete: null,       // Fired when jBox is completely closed (when fading is finished)
       onDragStart: null,           // Fired when dragging starts
@@ -798,6 +799,7 @@ function jBoxWrapper(jQuery) {
           var translate = position ? item[1].replace('%XY', this._getXY(position).toUpperCase()) : item[1];
           animations[this.options.animation[ev]].positions && (translate = translate.replace('%V', animations[this.options.animation[ev]].positions[position][item[0]]));
           keyframe_css += item[0] + ' {transform:' + translate + ';}';
+
         }.bind(this));
         keyframe_css += '}';
 
@@ -864,7 +866,9 @@ function jBoxWrapper(jQuery) {
       ev == 'close' && (animationDuration = Math.min(animationDuration, this.options.fade));
 
       // Remove animation classes when animation is finished
-      setTimeout(function () { this.wrapper.removeClass(classnames); }.bind(this), animationDuration);
+      setTimeout(function () {
+        this.wrapper && this.wrapper.removeClass(classnames);
+      }.bind(this), animationDuration);
     };
 
 
@@ -1350,7 +1354,7 @@ function jBoxWrapper(jQuery) {
             adjustWrapper += (this.pointer.align != options.position[this._getOpp(options.outside)]) ?
 
             // If pointer align is different to position align
-            (this.dimensions[this._getOpp(options.outside)] * (jQuery.inArray(this.pointer.align, ['top', 'left']) !== -1 ? 1 : -1)) + ((this.pointer.dimensions[this._getOpp(options.outside)] / 2) * (jQuery.inArray(this.pointer.align, ['top', 'left']) !== -1 ? -1 : 1)) :
+            (jBoxDimensions[this._getOpp(options.outside)] * (jQuery.inArray(this.pointer.align, ['top', 'left']) !== -1 ? 1 : -1)) + ((this.pointer.dimensions[this._getOpp(options.outside)] / 2) * (jQuery.inArray(this.pointer.align, ['top', 'left']) !== -1 ? -1 : 1)) :
 
             // If pointer align is same as position align
             (this.pointer.dimensions[this._getOpp(options.outside)] / 2) * (jQuery.inArray(this.pointer.align, ['top', 'left']) !== -1 ? 1 : -1);
@@ -1742,6 +1746,9 @@ function jBoxWrapper(jQuery) {
               this.isOpening = true;
               this.wrapper.css({display: 'block'});
             }.bind(this),
+            complete: function () {
+              this._fireEvent('onOpenComplete');
+            }.bind(this),
             always: function () {
               this.isOpening = false;
 
@@ -1752,6 +1759,7 @@ function jBoxWrapper(jQuery) {
         } else {
           this.wrapper.css({display: 'block', opacity: 1});
           this.positionOnFadeComplete && this.position() && (this.positionOnFadeComplete = false);
+          this._fireEvent('onOpenComplete');
         }
       }
     }.bind(this);
@@ -2089,51 +2097,6 @@ function jBoxWrapper(jQuery) {
     jBox._audio[url].play();
 
     return this;
-  };
-
-
-  // Apply custom animations to jBox
-
-  jBox._animationSpeeds = {
-    'tada': 1000,
-    'tadaSmall': 1000,
-    'flash': 500,
-    'shake': 400,
-    'pulseUp': 250,
-    'pulseDown': 250,
-    'popIn': 250,
-    'popOut': 250,
-    'fadeIn': 200,
-    'fadeOut': 200,
-    'slideUp': 400,
-    'slideRight': 400,
-    'slideLeft': 400,
-    'slideDown': 400
-  };
-
-  jBox.prototype.animate = function (animation, options)
-  {
-    // Options are required
-    !options && (options = {});
-
-    // Timout needs to be an object
-    !this.animationTimeout && (this.animationTimeout = {});
-
-    // Use jBox wrapper by default
-    !options.element && (options.element = this.wrapper);
-
-    // Give the element an unique id
-    !options.element.data('jBox-animating-id') && options.element.data('jBox-animating-id', jBox._getUniqueElementID());
-
-    // Abort if element is animating
-    if (options.element.data('jBox-animating')) {
-      options.element.removeClass(options.element.data('jBox-animating')).data('jBox-animating', null);
-      this.animationTimeout[options.element.data('jBox-animating-id')] && clearTimeout(this.animationTimeout[options.element.data('jBox-animating-id')]);
-    }
-
-    // Animate the element
-    options.element.addClass('jBox-animated-' + animation).data('jBox-animating', 'jBox-animated-' + animation);
-    this.animationTimeout[options.element.data('jBox-animating-id')] = setTimeout((function() { options.element.removeClass(options.element.data('jBox-animating')).data('jBox-animating', null); options.complete && options.complete(); }), jBox._animationSpeeds[animation]);
   };
 
   // https://gist.github.com/AlexEmashev/ee8302b5036b01362f63dab35948401f
