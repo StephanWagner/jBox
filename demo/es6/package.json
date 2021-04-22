@@ -9,7 +9,7 @@
     "jbox": "*"
   },
   "devDependencies": {
-    "snowpack": "^3.0.13"
+    "snowpack": "^3.3.5"
   },
   "scripts": {
     "start": "snowpack dev"
