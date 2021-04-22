@@ -864,7 +864,9 @@ function jBoxWrapper(jQuery) {
       ev == 'close' && (animationDuration = Math.min(animationDuration, this.options.fade));
 
       // Remove animation classes when animation is finished
-      setTimeout(function () { this.wrapper.removeClass(classnames); }.bind(this), animationDuration);
+      setTimeout(function () {
+        this.wrapper && this.wrapper.removeClass(classnames);
+      }.bind(this), animationDuration);
     };
 
 
