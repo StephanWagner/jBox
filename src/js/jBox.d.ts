@@ -198,7 +198,7 @@ declare namespace jBox {
     onOpen?: () => void;
 
     /** Fired when jBox is completely open (when fading is finished) */
-    onCloseComplete?: () => void;
+    onOpenComplete?: () => void;
 
     /** Fired when jBox closes */
     onClose?: () => void;
