@@ -25,8 +25,8 @@ import 'jbox/dist/jBox.all.css';
 
 ```html
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v1.3.1/dist/jBox.all.min.js"></script>
-<link href="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v1.3.1/dist/jBox.all.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v1.3.2/dist/jBox.all.min.js"></script>
+<link href="https://cdn.jsdelivr.net/gh/StephanWagner/jBox@v1.3.2/dist/jBox.all.min.css" rel="stylesheet">
 ```
 
 ---
