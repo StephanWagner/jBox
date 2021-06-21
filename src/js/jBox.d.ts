@@ -349,6 +349,7 @@ declare namespace jBox {
 declare interface jBoxOptionsMap {
   Tooltip: jBox.jBoxOptions;
   Modal: jBox.jBoxOptions;
+  Mouse: jBox.jBoxOptions;
   Confirm: jBox.jBoxConfirmOptions;
   Notice: jBox.jBoxNoticeOptions;
   Image: jBox.jBoxImageOptions;
