@@ -42,7 +42,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-uglify": "^3.0.2",
     "jest": "^27.0.4",
-    "node-sass": "^7.0.0"
+    "node-sass": "^9.0.0"
   },
   "scripts": {
     "watch": "gulp watch",
