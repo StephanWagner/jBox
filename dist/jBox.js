@@ -195,7 +195,7 @@ function jBoxWrapper(jQuery) {
 
     // Set the jBox type
 
-    jQuery.type(type) == 'string' && (this.type = type);
+    typeof(type) === 'string' && (this.type = type);
 
 
     // Checks if the user is on a touch device, borrowed from https://github.com/Modernizr/Modernizr/blob/master/feature-detects/touchevents.js
